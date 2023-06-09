@@ -15,4 +15,5 @@
     <string name="AddButton">+</string>
     <string name="HomeStock">HomeStock</string>
     <string name="Menu">Menu</string>
+    <string name="ScrollViewText">Shows the user the items present in the database</string>
 </resources>

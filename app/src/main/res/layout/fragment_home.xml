@@ -6,20 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".fragment_home">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <SearchView
+        android:layout_width="370dp"
         android:layout_height="wrap_content"
-        android:id="@+id/TextSearchBar"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentStart="true"
+        android:id="@+id/SearchViewItemSearch"
         android:text="@string/Search"
         android:textColor="@color/lavender"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:background="@color/Blue"
+        android:backgroundTint="@color/Blue"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        />
+
+    <ScrollView
+        android:layout_width="370dp"
+        android:layout_height="500dp"
+        android:id="@+id/ScrollViewItems"
+        android:contentDescription="@string/ScrollViewText"
+        android:background="@color/black"
+        android:backgroundTint="@color/lavender"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="12dp"
+        />
 
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/ButtonEditItem"
+        android:theme="@style/Base.Theme.PNP2Inventoryapp"
         android:text="@string/Edit"
         android:textSize="20sp"
         android:layout_alignParentBottom="true"
@@ -30,10 +50,11 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/ButtonAddItem"
+        android:theme="@style/Base.Theme.PNP2Inventoryapp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:text="@string/AddButton"
-        android:textSize="20sp">
-    </Button>
+        android:textSize="20sp"
+        />
 
 </RelativeLayout>
