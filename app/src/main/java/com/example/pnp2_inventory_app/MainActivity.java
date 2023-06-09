@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity{
         //the code for the navigation bar is in the Navigation java file
         //The constructor takes in the context from MainActivity(this)
         //The NavigationCreate takes in the mainActivity as the Activity(this)
-        SetContext navigation = new SetContext(this);//initialises the Navigation object
+        Navigation navigation = new Navigation(this);//initialises the Navigation object
         navigation.NavigationCreate(this); //if the context is not null then it will be used for the navigation bar
         if (savedInstanceState == null) {//if the saved Instance(basically the programs screen) is not active we set the home screen to the fragment being shown
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new fragment_home()).commit(); //Sets the screen to home if nothing is displayed

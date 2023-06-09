@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SetContext"
+        <activity android:name=".Navigation"
             android:label="navigation"/>
 
     </application>
