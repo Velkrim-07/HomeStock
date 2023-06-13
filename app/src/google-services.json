@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "971497335491",
+    "project_id": "pnp2-inventory-app-ee270",
+    "storage_bucket": "pnp2-inventory-app-ee270.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971497335491:android:5d22da99c1949d50b55076",
+        "android_client_info": {
+          "package_name": "com.example.pnp2_inventory_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971497335491-7vm814lf672snvo1rjbes87n9p2u3p3q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2qVvedZulvM6b1tPayGabJuVvuRS5Z3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971497335491-7vm814lf672snvo1rjbes87n9p2u3p3q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
