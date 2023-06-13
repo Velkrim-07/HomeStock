@@ -23,6 +23,10 @@ public class Item_Class
     private String m_InsertDate;
     //A protected string variable that will be used to store the date of when the item was last updated
     protected String m_LastUpdated;
+    //A protected int variable that will be used only internally in for the frequency algorithm
+    //The user will not be able to access this variable and it will only be manipulated in the algorithm
+    //to better help it understand what the user is buying
+    protected int m_Frequency;
 
     //This method will set the name of the string so the data is protected
     public void SetName(String name)
