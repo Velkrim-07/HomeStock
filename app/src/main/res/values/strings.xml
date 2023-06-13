@@ -16,4 +16,9 @@
     <string name="HomeStock">HomeStock</string>
     <string name="Menu">Menu</string>
     <string name="ScrollViewText">Shows the user the items present in the database</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
 </resources>
