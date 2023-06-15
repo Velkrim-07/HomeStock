@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment_camera">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/ImageViewPicture"
+        android:contentDescription="@string/ImageViewContentDescription"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/AcceptPicture"
+        android:id="@+id/AcceptPicture"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="600dp"
+        android:layout_marginEnd="5dp"
+        />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/RetakePicture"
+        android:id="@+id/RetakePicture"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="600dp"
+        android:layout_marginEnd="5dp"
+        />
+
+</FrameLayout>

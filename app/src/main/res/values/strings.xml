@@ -16,4 +16,8 @@
     <string name="HomeStock">HomeStock</string>
     <string name="Menu">Menu</string>
     <string name="ScrollViewText">Shows the user the items present in the database</string>
+    <string name="AcceptPicture">Accept</string>
+    <string name="RetakePicture">Retake</string>
+    <string name="ImageViewContentDescription">Allows the user to see images that they take</string>
+    <string name="ImageButtonContentDescription">Allows the user to take a picture</string>
 </resources>
