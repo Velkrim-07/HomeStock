@@ -3,6 +3,7 @@ package com.example.pnp2_inventory_app;
 //This class will be used to create the Variables needed in order to name, group, and delete
 //the items that will be going into the database.
 //
+//
 public class Item_Class
 {
     //A private String variable that will be used to store the name of the product being entered
