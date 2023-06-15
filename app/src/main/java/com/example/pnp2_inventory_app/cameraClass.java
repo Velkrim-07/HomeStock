@@ -15,20 +15,20 @@ import androidx.fragment.app.Fragment;
 
 public class cameraClass {
     private Navigation navigation;
-    private Activity mainActivty;
+    private Activity mainActivity;
     androidx.fragment.app.FragmentActivity fragmentActivity;
     private static final int REQUEST_IMAGE_CAPTURE = 1; //this allows us to use the camera
 
-    cameraClass(Navigation navigation, Activity mainActivty, androidx.fragment.app.FragmentActivity fragmentActivity){
+    cameraClass(Navigation navigation, Activity mainActivity, androidx.fragment.app.FragmentActivity fragmentActivity){
         this.navigation = navigation;
-        this.mainActivty = mainActivty;
+        this.mainActivity = mainActivity;
         this.fragmentActivity = fragmentActivity;
     }
 
     @SuppressWarnings("deprecation")
     public void dispatchTakePictureIntent() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); //this changes the screen to the camera
-        mainActivty.startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE); //this start the camera activity
+        mainActivity.startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE); //this start the camera activity
     }
 
     public void RetakePictureHandler(View fragmentView){

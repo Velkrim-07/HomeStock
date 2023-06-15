@@ -3,7 +3,7 @@ package com.example.pnp2_inventory_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 // map and hash for testing
-import com.google.firebase.FirebaseApp;
+//import com.google.firebase.FirebaseApp;
 
 // buttonTesting
 import android.widget.Button;
@@ -38,8 +38,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState); //creates the instance of the program
         setContentView(R.layout.activity_main); //sets the current view to the activity
 
+        //initialises the Navigation object
+        navigation = new Navigation(this);
+
         cameraClass = new cameraClass(navigation,this,this);
-        navigation = new Navigation(this);//initialises the Navigation object
         ImageButton ImgBtnCamera = findViewById(R.id.ImgBtnCam); //this is the camera button on the navigation bar
 
         ImgBtnCamera.setOnClickListener(v -> {
@@ -66,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Firebase!!
         // FirebaseApp.initializeApp(this);
-
         FirebaseConfig dbActions = new FirebaseConfig();
 
         // initialize stuff
