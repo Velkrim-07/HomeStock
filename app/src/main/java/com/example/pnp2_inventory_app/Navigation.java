@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 import android.content.Context;
@@ -48,6 +49,11 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
         }
         else if(itemId == R.id.nav_category) {
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new fragment_categories()).commit();
+        }
+        else if (itemId == R.id.nav_logout) {
+            Intent intent = new Intent(context, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
