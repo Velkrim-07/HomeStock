@@ -48,7 +48,7 @@ public class cameraClass {
         });
     }
 
-    public void OnActivtyHelper(int requestCode, int resultCode, Intent data, Fragment fragment){
+    public void OnActivityHelper(int requestCode, int resultCode, Intent data, Fragment fragment){
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) { //if the picture is accepted then the data will be used to create the bitmap
             // Picture captured successfully
             Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
