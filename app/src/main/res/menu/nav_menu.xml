@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+
+    <!--Creates the navigation menu of the app-->
+    <group android:checkableBehavior="single">
+
+        <!--Creates the item for home on the menu-->
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/nav_home"
+            android:title="@string/Home"/>
+
+        <!--Creates the item for home on the menu-->
+        <item
+            android:id="@+id/nav_category"
+            android:icon="@drawable/nav_category"
+            android:title="@string/Categories"/>
+
+        <!--Creates the item for home on the menu-->
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/nav_settings"
+            android:title="@string/Setting"/>
+    </group>
+</menu>
