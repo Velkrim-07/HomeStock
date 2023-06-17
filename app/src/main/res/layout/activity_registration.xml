@@ -7,6 +7,7 @@
     android:gravity="center"
     android:padding="20dp"
     android:layout_height="match_parent"
+    android:background="@color/lavender"
     tools:context=".RegistrationActivity">
 
     <TextView
@@ -64,7 +65,8 @@
         android:id="@+id/reg_butt"
         android:text="@string/register"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/peach"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -77,6 +79,7 @@
         android:id="@+id/loginreg"
         android:text="@string/login"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/peach"/>
 
 </LinearLayout>
