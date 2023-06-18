@@ -7,22 +7,36 @@
     android:background="@color/lavender"
     tools:context=".fragment_home">
 
+    <TextView
+        android:id="@+id/textViewHomeStock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Home"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <!-- ScrollView to contain the content -->
+
+    <!-- Button for editing items -->
     <ScrollView
         android:id="@+id/ScrollViewItems"
         android:layout_width="370dp"
         android:layout_height="500dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="19dp"
+        android:layout_marginStart="21dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="70dp"
         android:layout_marginRight="10dp"
         android:background="@color/lavender"
-        android:contentDescription="@string/ScrollViewText" >
+        android:contentDescription="@string/ScrollViewText">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <!-- ImageButton for search -->
             <ImageButton
                 android:id="@+id/searchButton"
                 android:layout_width="match_parent"
@@ -30,6 +44,7 @@
                 android:background="@color/lavender"
                 android:src="@drawable/img_rectangle1041" />
 
+            <!-- EditText for search input -->
             <EditText
                 android:id="@+id/SearchViewItemSearch"
                 android:layout_width="370dp"
@@ -42,8 +57,6 @@
                 android:text="@string/Search"
                 android:textColor="@color/black"
                 android:textSize="30sp" />
-
-            <!-- Your other views inside the ScrollView go here -->
 
         </RelativeLayout>
     </ScrollView>
@@ -59,6 +72,7 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
+    <!-- ImageButton for adding items -->
     <ImageButton
         android:id="@+id/ButtonAddItem"
         android:layout_width="100dp"

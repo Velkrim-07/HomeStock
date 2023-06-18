@@ -13,7 +13,7 @@
     <string name="Search">Search:</string>
     <string name="Edit">Edit</string>
     <string name="AddButton">+</string>
-    <string name="HomeStock">HomeStock</string>
+    <string name="HomeStock">homeStock</string>
     <string name="Menu">Menu</string>
     <string name="ScrollViewText">Shows the user the items present in the database</string>
     <string name="email">Email</string>
