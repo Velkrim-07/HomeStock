@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment_categories">
+    tools:context=".fragment_categories"
+    android:background="@color/lavender">
 
     <TextView
         android:layout_width="match_parent"
@@ -24,6 +25,7 @@
         android:textSize="40sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:backgroundTint="@color/peach"
         />
 
     <Button
@@ -34,6 +36,7 @@
         android:layout_alignParentEnd="true"
         android:text="@string/Office"
         android:textSize="40sp"
+        android:backgroundTint="@color/peach"
         />
 
 
