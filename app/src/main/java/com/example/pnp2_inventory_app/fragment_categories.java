@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -18,8 +19,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Button;
 
 public class fragment_categories extends Fragment {
+    private Button foodButton;
+    private Button officeButton;
+
     int ButtonCounter = 1;
     Context context;
     View view;
@@ -42,6 +47,37 @@ public class fragment_categories extends Fragment {
         });
 
         // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_categories, container, false);
+
+        //Button is used to direct to food category page
+        foodButton = (Button) rootView.findViewById(R.id.ButtonFoodCategory);
+        foodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToFoodFragment(v);
+            }
+        });
+
+        officeButton = (Button) rootView.findViewById(R.id.ButtonOfficeCategory);
+        officeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToOfficeFragment();
+            }
+        });
+
+
+
+        // Return the inflated view
+        return rootView;
+    }
+
+    public void navigateToFoodFragment(View view) {
+        Fragment fragment = new fragment_food();
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
         return view;
     }
     private void AlertBox(){
@@ -79,4 +115,15 @@ public class fragment_categories extends Fragment {
         CategoryBtn.layout(300, 300, 300, 300);
         ButtonCounter++;
     }
+
+    public void navigateToOfficeFragment() {
+        Fragment fragment = new fragment_office(); // Replace fragment_office with your office fragment class
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 }
+
+

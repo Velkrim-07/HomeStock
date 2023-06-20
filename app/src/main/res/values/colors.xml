@@ -7,4 +7,24 @@
     <color name="Blue">#8BABF1</color>
     <color name="lavender">#8B95F6</color>
     <color name="Purple">#9B8BF4</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="gray_100_7f">#7ff7f7f7</color>
+    <color name="bluegray_900_ab">#ab303030</color>
+    <color name="bluegray_100">#d9d9d9</color>
+    <color name="indigo_50_7f">#7fdcdffb</color>
+    <color name="indigo_800_0c">#0c183c82</color>
+    <color name="bluegray_900_87">#87303030</color>
+    <color name="gray_900_07">#07001226</color>
+    <color name="bluegray_900_83">#83303030</color>
+    <color name="bluegray_900">#303030</color>
+    <color name="white_A700_00">#00ffffff</color>
+    <color name="black_900">#000000</color>
+    <color name="deep_purple_A100">#a48eff</color>
+    <color name="bluegray_900_7e">#7e303030</color>
+    <color name="white_A700">#ffffff</color>
+    <color name="peach">#FCC9B6</color>
 </resources>
