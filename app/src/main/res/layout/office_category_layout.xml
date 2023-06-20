@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragment_office"
     android:background="@color/lavender"
-    android:name="catagory_office">
+    android:name="category_office">
 
     <TextView
         android:id="@+id/textViewOffice"

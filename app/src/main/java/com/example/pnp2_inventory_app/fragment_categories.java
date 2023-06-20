@@ -33,9 +33,11 @@ public class fragment_categories extends Fragment {
         officeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToFoodFragment(v);
+                navigateToOfficeFragment();
             }
         });
+
+
 
         // Return the inflated view
         return rootView;
@@ -48,6 +50,15 @@ public class fragment_categories extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    public void navigateToOfficeFragment() {
+        Fragment fragment = new fragment_office(); // Replace fragment_office with your office fragment class
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 }
 
 

@@ -23,7 +23,7 @@ public class fragment_office extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.food_category_layout, container, false);
+        View rootView = inflater.inflate(R.layout.office_category_layout, container, false);
 
         // Create a sample list of items
         List<Item> itemList = new ArrayList<>();
@@ -88,3 +88,4 @@ public class fragment_office extends Fragment {
         return rootView;
     }
 }
+
