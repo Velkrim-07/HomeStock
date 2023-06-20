@@ -45,7 +45,7 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new fragment_home()).commit();
         }
         else if(itemId == R.id.nav_settings) {//id of the settings menu
-            ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new fragement_settings()).commit();
+            ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new fragment_Settings()).commit();
         }
         else if(itemId == R.id.nav_category) {
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new fragment_categories()).commit();

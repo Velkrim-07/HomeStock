@@ -27,4 +27,8 @@
     <string name="RetakePicture">Retake</string>
     <string name="ImageViewContentDescription">Allows the user to see images that they take</string>
     <string name="ImageButtonContentDescription">Allows the user to take a picture</string>
+    <string name="dialog_message">Enter the Name of the Category you would like to create</string>
+    <string name="dialog_title">Create Category</string>
+    <string name="AlertAccept"> Create Category</string>
+    <string name="AlertCancel"> Cancel</string>
 </resources>
