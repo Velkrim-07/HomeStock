@@ -136,16 +136,18 @@ public class FirebaseConfig {
 
         db.collection("InventoryItems")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Map<String, Object> data = document.getData();
-                                    resultList.add(data);
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+
+                        // for each document inside the collection that matches the filter,
+                        // adds to the resultList
+                        for (DocumentSnapshot document : documents) {
+                            Map<String, Object> data = document.getData();
+                            resultList.add(data);
+
+                            Log.d(TAG, "GetAll from: " + document.getId());
                         }
                     }
                 });

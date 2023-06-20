@@ -35,9 +35,9 @@
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/fragment_container"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -55,6 +55,10 @@
         app:itemIconTint where we can put a tint on out icons
         app:itemTextColor changes our text color
         -->
+
+
+
+
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

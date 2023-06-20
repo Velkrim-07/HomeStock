@@ -16,6 +16,13 @@
     <string name="HomeStock">HomeStock</string>
     <string name="Menu">Menu</string>
     <string name="ScrollViewText">Shows the user the items present in the database</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="already_have_a_homestock_account">Already have a HomeStock account?</string>
+    <string name="logout">Logout</string>
     <string name="AcceptPicture">Accept</string>
     <string name="RetakePicture">Retake</string>
     <string name="ImageViewContentDescription">Allows the user to see images that they take</string>
