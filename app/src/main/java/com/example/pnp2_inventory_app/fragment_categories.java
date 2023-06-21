@@ -41,16 +41,12 @@ public class fragment_categories extends Fragment {
         AddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertBox();
-                //open dialog box here
+                AlertBox();//opens the dialog box
             }
         });
 
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_categories, container, false);
-
         //Button is used to direct to food category page
-        foodButton = (Button) rootView.findViewById(R.id.ButtonFoodCategory);
+        foodButton = (Button) view.findViewById(R.id.ButtonFoodCategory);
         foodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +54,7 @@ public class fragment_categories extends Fragment {
             }
         });
 
-        officeButton = (Button) rootView.findViewById(R.id.ButtonOfficeCategory);
+        officeButton = (Button) view.findViewById(R.id.ButtonOfficeCategory);
         officeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,13 +62,11 @@ public class fragment_categories extends Fragment {
             }
         });
 
-
-
         // Return the inflated view
-        return rootView;
+        return view;
     }
 
-    public void navigateToFoodFragment(View view) {
+    public View navigateToFoodFragment(View view) {
         Fragment fragment = new fragment_food();
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
@@ -123,7 +117,6 @@ public class fragment_categories extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 }
 
 
