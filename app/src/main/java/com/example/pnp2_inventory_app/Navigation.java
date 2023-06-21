@@ -14,7 +14,7 @@ import android.content.Context;
 public class Navigation implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout; //this is need to create the navigation bar
     private NavigationView navigationView; //creates an object for Navigation view so it can be passed to main(GetNavigationBar)
-    private Context context; //creates a Context object
+    private final Context context; //creates a Context object
 
     public Navigation(Context context){//this is the constructor for the Navigation.
         this.context = context; //the context for the Navigation is set here

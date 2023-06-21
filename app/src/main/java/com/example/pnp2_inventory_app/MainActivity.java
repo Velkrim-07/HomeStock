@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 //import com.google.firebase.FirebaseApp;
 
 // buttonTesting
-import android.widget.Button;
+//import android.widget.Button;
 import android.os.Bundle;
 
 // camera and UI

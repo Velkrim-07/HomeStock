@@ -1,103 +1,55 @@
 package com.example.pnp2_inventory_app;
 
-import static java.lang.ref.Cleaner.create;
-
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Button;
 
 public class fragment_categories extends Fragment {
-    private Button foodButton;
-    private Button officeButton;
-
-    int ButtonCounter = 1;
-    Context context;
-    View view;
-    static LinearLayout.LayoutParams params;
+    int ButtonCounter = 1; //keeps count of the amount of buttons being added
+    Context context; //allows for the context to be accessed throughout the class
+    View view;//allows for the view to be accessed throughout the class
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_categories, container, false);
         context = getContext();
-        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         Button AddCategory = view.findViewById(R.id.ButtonAddCategory);
-        AddCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertBox();//opens the dialog box
-            }
+        AddCategory.setOnClickListener(v -> {
+            AlertBox();//opens the dialog box
         });
 
         //Button is used to direct to food category page
-        foodButton = (Button) view.findViewById(R.id.ButtonFoodCategory);
-        foodButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToFoodFragment(v);
-            }
-        });
+        Button foodButton = (Button) view.findViewById(R.id.ButtonFoodCategory);
+        foodButton.setOnClickListener(this::navigateToFoodFragment);
 
-        officeButton = (Button) view.findViewById(R.id.ButtonOfficeCategory);
-        officeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToOfficeFragment();
-            }
-        });
+        Button officeButton = (Button) view.findViewById(R.id.ButtonOfficeCategory);
+        officeButton.setOnClickListener(v -> navigateToOfficeFragment());
 
         // Return the inflated view
         return view;
     }
 
-    public View navigateToFoodFragment(View view) {
+    public void navigateToFoodFragment(View view) {
         Fragment fragment = new fragment_food();
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-        return view;
-    }
-    private void AlertBox(){
-        final EditText edittext = new EditText(context);
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-        alertBuilder.create();
-        alertBuilder.setTitle("Create Category");
-        alertBuilder.setMessage("Type in the name of the category you would like to create");
-        alertBuilder.setView(edittext);
-        alertBuilder.setPositiveButton("Yes Option", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String YouEditTextValue = edittext.getText().toString();
-                AddCategory(YouEditTextValue);
-            }
-        });
-        alertBuilder.setNegativeButton("No Option", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // what ever you want to do with No option.
-            }
-        });
-
-        alertBuilder.show();
     }
 
     public void AddCategory(String CategoryName){
         LinearLayout usedLinearLayout;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         if(ButtonCounter/2 < 1){usedLinearLayout = view.findViewById(R.id.LeftLayout);}
         else{usedLinearLayout = view.findViewById(R.id.RightLayout);}
         Button CategoryBtn = new Button(this.context);
@@ -116,6 +68,26 @@ public class fragment_categories extends Fragment {
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private void AlertBox(){
+        final EditText edittext = new EditText(context); //creates a editable text box for the user to name their button
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context); //create an alertbox object
+        alertBuilder.create(); //creates the objects to be used
+        alertBuilder.setTitle("Create Category"); //sets the title the user will see
+        alertBuilder.setMessage("Type in the name of the category you would like to create"); //sets the message the user will see
+        alertBuilder.setView(edittext); //sets a view as the editable text we created before
+        //creates the Accept button in the alert box
+        alertBuilder.setPositiveButton("Accept", (dialog, whichButton) -> {
+            String YouEditTextValue = edittext.getText().toString();
+            AddCategory(YouEditTextValue);
+        });
+        //creates the cancel button in the alert box
+        alertBuilder.setNegativeButton("Cancel", (dialog, whichButton) -> {
+            // what ever you want to do with No option.
+        });
+
+        alertBuilder.show(); //shows the alert box
     }
 }
 

@@ -18,19 +18,15 @@
             android:id="@+id/ButtonOfficeCategory"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_alignParentEnd="true"
             android:text="@string/Office"
             android:textSize="40sp"
             android:backgroundTint="@color/peach"
-            android:onClick="navigateToOfficeFragment"
             android:theme="@style/Base.Theme.PNP2Inventoryapp" />
 
         <Button
             android:id="@+id/ButtonAddCategory"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:text="@string/AddButton"
             android:textSize="40sp"
             android:backgroundTint="@color/peach"
@@ -50,9 +46,6 @@
             android:text="@string/Food"
             android:textSize="40sp"
             android:backgroundTint="@color/peach"
-            android:onClick="navigateToFoodFragment"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
             />
     </LinearLayout>
 </LinearLayout>

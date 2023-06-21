@@ -65,25 +65,17 @@ public class fragment_office extends Fragment {
 
         // Find the "Add" button and set its click listener
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
-        buttonAddItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the visibility of the "Edit" button
-                if (buttonEditItem.getVisibility() == View.VISIBLE) {
-                    buttonEditItem.setVisibility(View.GONE);
-                } else {
-                    buttonEditItem.setVisibility(View.VISIBLE);
-                }
+        buttonAddItem.setOnClickListener(v -> {
+            // Toggle the visibility of the "Edit" button
+            if (buttonEditItem.getVisibility() == View.VISIBLE) {
+                buttonEditItem.setVisibility(View.GONE);
+            } else {
+                buttonEditItem.setVisibility(View.VISIBLE);
             }
         });
 
         // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
-        rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonEditItem.setVisibility(View.GONE);
-            }
-        });
+        rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
 
         return rootView;
     }
