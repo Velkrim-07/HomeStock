@@ -29,6 +29,18 @@ public class Login extends AppCompatActivity {
     FirebaseAuth mAuth;
 
     @Override
+    public void onStart(){
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Toast.makeText(Login.this, "Welcome back, " + currentUser.getEmail(), Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
