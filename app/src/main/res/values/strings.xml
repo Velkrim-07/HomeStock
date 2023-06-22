@@ -34,4 +34,6 @@
     <string name="dialog_title">Create Category</string>
     <string name="AlertAccept"> Create Category</string>
     <string name="AlertCancel"> Cancel</string>
+    <string name="Settings"> Settings</string>
+    <string name="ManageHome"> Manage Home</string>
 </resources>

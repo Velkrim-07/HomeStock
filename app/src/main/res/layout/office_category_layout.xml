@@ -8,6 +8,7 @@
     android:background="@color/lavender"
     android:name="category_office">
 
+    <!-- TextView displaying the title "Office" -->
     <TextView
         android:id="@+id/textViewOffice"
         android:layout_width="wrap_content"
@@ -18,6 +19,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp" />
 
+    <!-- ScrollView for the search functionality -->
     <ScrollView
         android:id="@+id/ScrollViewItems"
         android:layout_width="370dp"
@@ -34,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <!-- ImageButton for search -->
             <ImageButton
                 android:id="@+id/searchButton"
                 android:layout_width="match_parent"
@@ -42,7 +45,7 @@
                 android:src="@drawable/img_rectangle1041"
                 android:contentDescription="@string/searchButtonDescription" />
 
-
+            <!-- EditText for search query -->
             <EditText
                 android:id="@+id/SearchViewItemSearch"
                 android:layout_width="370dp"
@@ -60,6 +63,7 @@
         </RelativeLayout>
     </ScrollView>
 
+    <!-- Button for editing items -->
     <Button
         android:id="@+id/ButtonEditItem"
         android:layout_width="100dp"
@@ -71,6 +75,7 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
+    <!-- ImageButton for adding items -->
     <ImageButton
         android:id="@+id/ButtonAddItem"
         android:layout_width="100dp"
@@ -81,17 +86,15 @@
         android:text="@string/AddButton"
         android:textSize="20sp"
         android:src="@drawable/img_plus"
-        android:contentDescription="@string/ButtonAddItemDescription"
-        />
+        android:contentDescription="@string/ButtonAddItemDescription" />
 
-
-    <!-- ListView for items -->
+    <!-- ListView for displaying items -->
     <ListView
         android:id="@+id/listViewItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ScrollViewItems"
-        android:layout_marginTop="30dp"
-        />
+        android:layout_marginTop="30dp" />
 
 </RelativeLayout>
+
