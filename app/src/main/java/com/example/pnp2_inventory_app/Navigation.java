@@ -9,12 +9,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import android.content.Context;
 
 public class Navigation implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout; //this is need to create the navigation bar
     private NavigationView navigationView; //creates an object for Navigation view so it can be passed to main(GetNavigationBar)
-    private final Context context; //creates a Context object
+    private Context context; //creates a Context object
+    FirebaseAuth mAuth;
 
     public Navigation(Context context){//this is the constructor for the Navigation.
         this.context = context; //the context for the Navigation is set here
@@ -51,9 +55,11 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new fragment_categories()).commit();
         }
         else if (itemId == R.id.nav_logout) {
-            Intent intent = new Intent(context, Login.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            context.startActivity(intent);
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent((AppCompatActivity)context, Login.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                context.startActivity(intent);
+                ((AppCompatActivity) context).finish();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -41,6 +43,44 @@ public class RegistrationActivity extends AppCompatActivity {
         loginreg = findViewById(R.id.loginreg);
         progressBar = findViewById(R.id.progressBar);
 
+        //Add OnEditorActionListener to editTextPassword
+        //pressing enter key to register
+        editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    reg.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        //Add OnEditorActionListener to editTextEmail
+        //pressing enter key to register
+        editTextEmail.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    reg.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        //Add OnEditorActionListener to editTextConPassword
+        //pressing enter key to register
+        editTextConPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    reg.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         //event handler for register button
         reg.setOnClickListener(new View.OnClickListener() {
