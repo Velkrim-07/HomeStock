@@ -139,7 +139,7 @@ public class fragment_home extends Fragment {
                     }
                 });
                 //items.setText(temp.toString());
-
+                // test
 
             }
         });
