@@ -37,7 +37,7 @@ public class Login extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            Toast.makeText(Login.this, "Welcome back, " + currentUser.getEmail(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Welcome back, " + currentUser.getEmail(), Toast.LENGTH_SHORT).show();
             startActivity(intent);
             finish();
         }
