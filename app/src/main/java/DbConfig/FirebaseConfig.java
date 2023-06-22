@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 // imports for the Get method
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -129,26 +130,21 @@ public class FirebaseConfig {
     // Gets everything inside the collection
     // PROBLEM: it will be necessary some kind of pagination maybe depending on the amount of items in the collection
     // TODO: implement error handling
-    public List<Map<String, Object>> GetAll(){
+    public List<Map<String, Object>> GetAll(String collection, FirestoreCallback callback){
+
+        CollectionReference reference = db.collection(collection);
 
         // for testing currently
         List<Map<String, Object>> resultList = new ArrayList<>();
 
-        db.collection("InventoryItems")
-                .get()
+
+                reference.get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
 
-                        // for each document inside the collection that matches the filter,
-                        // adds to the resultList
-                        for (DocumentSnapshot document : documents) {
-                            Map<String, Object> data = document.getData();
-                            resultList.add(data);
+                        callback.OnCallBack(queryDocumentSnapshots);
 
-                            Log.d(TAG, "GetAll from: " + document.getId());
-                        }
                     }
                 });
 
@@ -201,6 +197,10 @@ public class FirebaseConfig {
     // Updates whatever you want from the Db based on the documentId
     public void UpdateFromId(String _documentId){
 
+    }
+
+    public interface FirestoreCallback{
+        void OnCallBack(QuerySnapshot querySnapshot);
     }
 }
 

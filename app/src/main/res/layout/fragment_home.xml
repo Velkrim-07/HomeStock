@@ -7,6 +7,7 @@
     android:background="@color/lavender"
     tools:context=".fragment_home">
 
+    <!-- TextView displaying the title "HomeStock" -->
     <TextView
         android:id="@+id/textViewHomeStock"
         android:layout_width="wrap_content"
@@ -17,6 +18,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp" />
 
+    <!-- ScrollView for the search functionality -->
     <ScrollView
         android:id="@+id/ScrollViewItems"
         android:layout_width="370dp"
@@ -29,17 +31,21 @@
         android:background="@color/lavender"
         android:contentDescription="@string/ScrollViewText">
 
+        <!-- Relative layout inside the ScrollView -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <!-- ImageButton for search -->
             <ImageButton
                 android:id="@+id/searchButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/lavender"
-                android:src="@drawable/img_rectangle1041" />
+                android:src="@drawable/img_rectangle1041"
+                android:contentDescription="@string/Search"/>
 
+            <!-- EditText for search query -->
             <EditText
                 android:id="@+id/SearchViewItemSearch"
                 android:layout_width="370dp"
@@ -57,6 +63,7 @@
         </RelativeLayout>
     </ScrollView>
 
+    <!-- Button for editing items -->
     <Button
         android:id="@+id/ButtonEditItem"
         android:layout_width="100dp"
@@ -68,6 +75,7 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
+    <!-- Button for adding items -->
     <Button
         android:id="@+id/ButtonAdd"
         android:layout_width="90dp"
@@ -79,6 +87,7 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
+    <!-- ImageButton for adding items -->
     <ImageButton
         android:id="@+id/ButtonAddItem"
         android:layout_width="100dp"
@@ -88,10 +97,11 @@
         android:theme="@style/Base.Theme.PNP2Inventoryapp"
         android:text="@string/AddButton"
         android:textSize="20sp"
+        android:contentDescription="@string/add_add"
         android:src="@drawable/img_plus"
         />
 
-    <!-- ListView for items -->
+    <!-- ListView for displaying items -->
     <ListView
         android:id="@+id/listViewItems"
         android:layout_width="match_parent"
@@ -101,3 +111,4 @@
         />
 
 </RelativeLayout>
+
