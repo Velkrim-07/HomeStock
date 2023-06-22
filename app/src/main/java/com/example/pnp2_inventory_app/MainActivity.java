@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         // getAll testing
         // TODO: works sometimes for some reason?
         List<Map<String, Object>> resultList = new ArrayList<>();
-        resultList = dbActions.GetAll();
+        //resultList = dbActions.GetAll();
 
         // GetByParameter testing
         // TODO: works sometimes for some reason?
