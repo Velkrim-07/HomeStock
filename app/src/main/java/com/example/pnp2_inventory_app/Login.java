@@ -31,6 +31,7 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseAuth mAuth;
 
+    //welcomes user if they're already logged in
     @Override
     public void onStart(){
         super.onStart();
