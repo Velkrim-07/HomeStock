@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".fragment_food"
     android:background="@color/lavender"
-    tools:context=".fragment_home">
+    android:name="category_food">
 
-    <!-- TextView displaying the title "HomeStock" -->
+    <!-- TextView displaying the title "Food" -->
     <TextView
-        android:id="@+id/textViewHomeStock"
+        android:id="@+id/textViewFood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/HomeStock"
+        android:text="@string/Food"
         android:textSize="32sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
@@ -31,7 +32,6 @@
         android:background="@color/lavender"
         android:contentDescription="@string/ScrollViewText">
 
-        <!-- Relative layout inside the ScrollView -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -43,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/lavender"
                 android:src="@drawable/img_rectangle1041"
-                android:contentDescription="@string/Search"/>
+                android:contentDescription="@string/searchButtonDescription" />
 
             <!-- EditText for search query -->
             <EditText
@@ -75,18 +75,6 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
-    <!-- Button for adding items -->
-    <Button
-        android:id="@+id/ButtonAdd"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:theme="@style/Base.Theme.PNP2Inventoryapp"
-        android:text="@string/add_add"
-        android:textSize="20sp"
-        android:visibility="gone" />
-
     <!-- ImageButton for adding items -->
     <ImageButton
         android:id="@+id/ButtonAddItem"
@@ -97,9 +85,8 @@
         android:theme="@style/Base.Theme.PNP2Inventoryapp"
         android:text="@string/AddButton"
         android:textSize="20sp"
-        android:contentDescription="@string/add_add"
         android:src="@drawable/img_plus"
-        />
+        android:contentDescription="@string/ButtonAddItemDescription" />
 
     <!-- ListView for displaying items -->
     <ListView
@@ -107,8 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ScrollViewItems"
-        android:layout_marginTop="30dp"
-        />
+        android:layout_marginTop="30dp" />
 
 </RelativeLayout>
 

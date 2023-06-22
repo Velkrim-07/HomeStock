@@ -1,6 +1,7 @@
 package com.example.pnp2_inventory_app;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,20 +17,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class fragment_home extends Fragment {
+public class fragment_food extends Fragment {
     private Button buttonEditItem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.food_category_layout, container, false);
 
-// Create a sample list of items
+        // Create a sample list of items
         List<Item> itemList = new ArrayList<>();
         Item item = new Item("Corn", 5, "2023-06-30");
         itemList.add(item);
 
-// Create a custom adapter for the ListView
+        // Create a custom adapter for the ListView
         ArrayAdapter<Item> adapter = new ArrayAdapter<Item>(getContext(), R.layout.list_item_layout, itemList) {
             @NonNull
             @Override
