@@ -36,4 +36,5 @@
     <string name="AlertCancel"> Cancel</string>
     <string name="Settings"> Settings</string>
     <string name="ManageHome"> Manage Home</string>
+    <string name="categoryContentDescription">Adds a new category</string>
 </resources>
