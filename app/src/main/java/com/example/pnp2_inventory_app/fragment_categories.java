@@ -21,8 +21,8 @@ public class fragment_categories extends Fragment {
     private int ButtonCounter = 0; //keeps count of the amount of buttons being added
     private Context context; //allows for the context to be accessed throughout the class
     private View view;//allows for the view to be accessed throughout the class
-    private Button[] NewButtonArray;
-    private final Navigation navigation;
+    private Button[] NewButtonArray; //this holds the buttons used and sends it to navigation
+    private final Navigation navigation; //this allow this class to access navigation
     private LinearLayout.LayoutParams params;
 
     fragment_categories(Navigation navigation, Button[] categoryButtonArrays){
@@ -63,14 +63,15 @@ public class fragment_categories extends Fragment {
         transaction.commit();
     }
 
-    public void InitialiseButtons(){
-        NewButtonArray = navigation.GetButtonArray();
-        for (int i = 0; i < NewButtonArray.length; i++ ){
-            if(NewButtonArray[i] == null || Objects.equals((String) NewButtonArray[i].getText(), "")) {break;}
-            else{ButtonLayoutAdder(AddCategory((String)NewButtonArray[i].getText()), i);}
-        }
+    public void navigateToOfficeFragment() {
+        Fragment fragment = new fragment_office(); // Replace fragment_office with your office fragment class
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
+    //this creates the button object to be used
     public Button AddCategory(String CategoryName){
         Button CategoryBtn = new Button(this.context);
         CategoryBtn.setHeight(300);
@@ -82,6 +83,7 @@ public class fragment_categories extends Fragment {
         return CategoryBtn;
     }
 
+    //this picks which layout to use when the button is picked
     public void ButtonLayoutAdder(Button ButtonAdded, int layoutSide){
         LinearLayout usedLinearLayout;
         if(!(layoutSide/2 < 1) || layoutSide == 0){
@@ -91,14 +93,16 @@ public class fragment_categories extends Fragment {
         usedLinearLayout.addView(ButtonAdded);
     }
 
-    public void navigateToOfficeFragment() {
-        Fragment fragment = new fragment_office(); // Replace fragment_office with your office fragment class
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    //This runs through the buttons in the button array and adds them to the layout view
+    public void InitialiseButtons(){
+        NewButtonArray = navigation.GetButtonArray();
+        for (int i = 0; i < NewButtonArray.length; i++ ){
+            if(NewButtonArray[i] == null || Objects.equals((String) NewButtonArray[i].getText(), "")) {break;}
+            else{ButtonLayoutAdder(AddCategory((String)NewButtonArray[i].getText()), i);}
+        }
     }
 
+    //this pulls up the Alertbox and adds a button the user fills out the data
     private void AlertBox(){
         final EditText edittext = new EditText(context); //creates a editable text box for the user to name their button
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context); //create an alert-box object
