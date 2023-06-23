@@ -1,54 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayout"
-    android:orientation="horizontal"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment_categories"
-    >
-    <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/LeftLayout"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/ButtonOfficeCategory"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:text="@string/Office"
-            android:textSize="40sp"
-            android:backgroundTint="@color/peach"
-            android:theme="@style/Base.Theme.PNP2Inventoryapp" />
-
-        <Button
-            android:id="@+id/ButtonAddCategory"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:text="@string/AddButton"
-            android:textSize="40sp"
-            android:backgroundTint="@color/peach"
-            android:theme="@style/Base.Theme.PNP2Inventoryapp" />
-    </LinearLayout>
+        android:text="@string/Categories"
+        android:textSize="40sp"
+        android:layout_centerHorizontal="true"/>
 
     <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/RelativeLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="75dp"
+        tools:context=".fragment_categories"
+        >
+        <LinearLayout
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/LeftLayout"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/ButtonOfficeCategory"
+                android:layout_width="165dp"
+                android:layout_height="100dp"
+                android:text="@string/Office"
+                android:layout_marginStart="17.5dp"
+                android:textSize="40sp"
+                android:backgroundTint="@color/peach"
+                android:theme="@style/Base.Theme.PNP2Inventoryapp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:id="@+id/RightLayout"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="165dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="17.5dp"
+                android:id="@+id/ButtonFoodCategory"
+                android:theme="@style/Base.Theme.PNP2Inventoryapp"
+                android:text="@string/Food"
+                android:textSize="40sp"
+                android:backgroundTint="@color/peach"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ButtonAddCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/RightLayout"
-        android:orientation="vertical">
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:id="@+id/ButtonFoodCategory"
-            android:theme="@style/Base.Theme.PNP2Inventoryapp"
-            android:text="@string/Food"
-            android:textSize="40sp"
-            android:backgroundTint="@color/peach"
-            />
-    </LinearLayout>
-</LinearLayout>
+        android:layout_marginStart="325dp"
+        android:layout_marginTop="550dp"
+        android:backgroundTint="@color/peach"
+        android:contentDescription="@string/categoryContentDescription"
+        android:src="@drawable/img_plus"
+        android:text="@string/AddButton"
+        android:textSize="40sp"
+        android:theme="@style/Base.Theme.PNP2Inventoryapp" />
+
+</RelativeLayout>
 
 
 

@@ -18,14 +18,14 @@ import android.content.Intent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
+//import java.util.HashMap; //used at the moment
 
 // DbConnection package!
 import DbConfig.FirebaseConfig;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Fragment fragment;
+    private Fragment fragment; //this fragment is used in the camera class
 
     // navigation object is created so we can access the navigation throughout the file
     private Navigation navigation;
@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         cameraClass.OnActivityHelper(requestCode, resultCode, data, fragment);
+    }
+
+    public Navigation getNavigation(){
+        return navigation;
     }
 
     public void test(){
