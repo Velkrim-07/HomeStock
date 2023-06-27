@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import androidx.fragment.app.Fragment;
 import android.content.Intent;
+//import android.widget.TextView; not used
 
 // DataStructures
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ import java.util.Map;
 import DbConfig.FirebaseConfig;
 
 public class MainActivity extends AppCompatActivity {
-
     private Fragment fragment; //this fragment is used in the camera class
 
     // navigation object is created so we can access the navigation throughout the file
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         cameraClass.OnActivityHelper(requestCode, resultCode, data, fragment);
+        cameraClass.DetectText();
     }
 
     public Navigation getNavigation(){

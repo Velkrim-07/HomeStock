@@ -44,7 +44,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="240dp"
         android:backgroundTint="@color/peach"
-        android:text="@string/text_will_display_here"
+        android:text=""
         android:textAlignment="center" />
 
 </FrameLayout>

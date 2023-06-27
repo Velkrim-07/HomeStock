@@ -1,27 +1,31 @@
 package com.example.pnp2_inventory_app;
 
+//import android.content.ClipData;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+//import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+//import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.content.Context;
 
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
+//import android.widget.RelativeLayout;
+//import android.widget.ScrollView;
+//import android.widget.TextView;
 
 // DbStuff for testing
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
+//import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +33,13 @@ import java.util.Map;
 
 import DbConfig.FirebaseConfig;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.Calendar;
+//import java.util.List;
+//import java.util.Map;
+
+//import java.util.ArrayList;
+//import java.util.List;
 
 public class fragment_home extends Fragment {
     private Button buttonEditItem;
@@ -38,6 +47,7 @@ public class fragment_home extends Fragment {
     // Rafael Testing, ignore this
     private Button addItem;
     private TextView items;
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
