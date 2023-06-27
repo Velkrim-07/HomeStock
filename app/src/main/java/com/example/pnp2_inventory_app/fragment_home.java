@@ -46,7 +46,11 @@ public class fragment_home extends Fragment {
 
         // Create a sample list of items
         List<Item> itemList = new ArrayList<>();
-        Item item = new Item("Corn", 5, "2023-06-30");
+        //Item item = new Item("Corn", 5, "2023-06-30");
+
+        FirebaseConfig db = new FirebaseConfig();
+        Item item = db.CreateSampleItem();
+
         itemList.add(item);
 
         // Create a custom adapter for the ListView
@@ -84,12 +88,21 @@ public class fragment_home extends Fragment {
 
         // Find the "Add" button and set its click listener
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
-        buttonAddItem.setOnClickListener(v -> {
-            // Toggle the visibility of the "Edit" button
-            if (buttonEditItem.getVisibility() == View.VISIBLE) {
-                buttonEditItem.setVisibility(View.GONE);
-            } else {
-                buttonEditItem.setVisibility(View.VISIBLE);
+        buttonAddItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseConfig dbActions;
+                dbActions = new FirebaseConfig();
+                dbActions.ConnectDatabase();
+
+                dbActions.InsertDb(dbActions.CreateSampleItem());
+
+                // Toggle the visibility of the "Edit" button
+                if (buttonEditItem.getVisibility() == View.VISIBLE) {
+                    buttonEditItem.setVisibility(View.GONE);
+                } else {
+                    buttonEditItem.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -114,12 +127,14 @@ public class fragment_home extends Fragment {
         // for testing, deprecated
         //items = view.findViewById(R.id.textView);
 
+
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<Map<String, Object>> temp;
 
-                //dbActions.InsertDb(dbActions.CreateSampleItem());
+                //Item newItem = new Item("MilkTest", 1, "12/12/12", dbActions.GetDate(), dbActions.GetDate());
+                //dbActions.testingItemAdd(newItem);
 
                 // it takes a bit of time for the Cloudstore to return the data its getting.
                 // using a callback interface (which is configured and declared inside FirebaseConfig,
@@ -134,14 +149,10 @@ public class fragment_home extends Fragment {
                             List<String> test = new ArrayList<>();
                             test.add(json);
 
-                            // testing but deprecated
-                            //items.setText(json);
+
                         }
                     }
                 });
-                //items.setText(temp.toString());
-                // test.
-
             }
         });
     }

@@ -80,11 +80,11 @@ public class MainActivity extends AppCompatActivity {
         // testing create method
         // cannot be null, make catchers
         Map<String, Object> temp;
-        temp = dbActions.CreateItem("NEW MILK", "1l");
+        //temp = dbActions.CreateItem("NEW MILK", "1l");
 
         // testing pushToDb method
         // TODO: works fine
-        dbActions.InsertDb(temp);
+        //dbActions.InsertDb(temp);
 
         // getAll testing
         // TODO: works sometimes for some reason?
