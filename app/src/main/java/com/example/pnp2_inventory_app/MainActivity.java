@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 //import com.google.firebase.FirebaseApp;
 
 // buttonTesting
-import android.widget.Button;
+//import android.widget.Button;
 import android.os.Bundle;
 
 // camera and UI
@@ -18,14 +18,14 @@ import android.content.Intent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
+//import java.util.HashMap; //used at the moment
 
 // DbConnection package!
 import DbConfig.FirebaseConfig;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Fragment fragment;
+    private Fragment fragment; //this fragment is used in the camera class
 
     // navigation object is created so we can access the navigation throughout the file
     private Navigation navigation;
@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
         cameraClass.OnActivityHelper(requestCode, resultCode, data, fragment);
     }
 
+    public Navigation getNavigation(){
+        return navigation;
+    }
+
     public void test(){
 
         // Initialize Firebase!!
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         // getAll testing
         // TODO: works sometimes for some reason?
         List<Map<String, Object>> resultList = new ArrayList<>();
-        resultList = dbActions.GetAll();
+        //resultList = dbActions.GetAll();
 
         // GetByParameter testing
         // TODO: works sometimes for some reason?

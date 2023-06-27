@@ -7,9 +7,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +31,19 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseAuth mAuth;
 
+    //welcomes user if they're already logged in
+    @Override
+    public void onStart(){
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Toast.makeText(getApplicationContext(), "Welcome back, " + currentUser.getEmail(), Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            finish();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +55,32 @@ public class Login extends AppCompatActivity {
         login = findViewById(R.id.login_butt);
         reglogin = findViewById(R.id.reglogin);
         progressBar = findViewById(R.id.progressBar);
+
+        //Add OnEditorActionListener to editTextPassword
+        //pressing enter key to login
+        editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    login.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        //Add OnEditorActionListener to editTextEmail
+        //pressing enter key to login
+        editTextEmail.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    login.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         //button to login user if they already have an account
         login.setOnClickListener(new View.OnClickListener() {
@@ -52,11 +94,13 @@ public class Login extends AppCompatActivity {
                 //checks if the fields are empty
                 if(TextUtils.isEmpty(email))
                 {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(Login.this, "Enter email", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(TextUtils.isEmpty(password))
                 {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(Login.this, "Enter password", Toast.LENGTH_SHORT).show();
                     return;
                 }

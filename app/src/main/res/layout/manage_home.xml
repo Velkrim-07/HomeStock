@@ -1,0 +1,70 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/manageHomeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment_manage_home">
+
+    <!-- TextView displaying the title "ManageHome" -->
+    <TextView
+        android:id="@+id/textViewHomeStock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ManageHome"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <!-- ListView for displaying emails -->
+    <ListView
+        android:id="@+id/listViewEmails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewHomeStock"
+        android:layout_marginTop="20dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <!-- LinearLayout containing the buttons -->
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal">
+
+        <!-- "Add" button -->
+        <Button
+            android:id="@+id/buttonAdd"
+            android:text="Add"
+            android:backgroundTint="@color/peach"
+            android:textSize="14sp"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+
+        <!-- "Remove" button -->
+        <Button
+            android:id="@+id/buttonRemove"
+            android:text="Remove"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="@color/peach"
+            android:textSize="14sp"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+
+
+
+

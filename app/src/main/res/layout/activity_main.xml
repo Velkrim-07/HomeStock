@@ -30,7 +30,7 @@
                 android:contentDescription="@string/ImageButtonContentDescription"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="70dp"
+                android:layout_marginStart="150dp"
                 android:src= "@drawable/cam_camera"
                 />
         </androidx.appcompat.widget.Toolbar>
@@ -49,7 +49,8 @@
         android:id="@+id/nav_view"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu ="@menu/nav_menu"/>
+        app:menu ="@menu/nav_menu"
+        />
 
         <!--To be added
         app:itemIconTint=""

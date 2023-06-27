@@ -1,7 +1,7 @@
 package com.example.pnp2_inventory_app;
 
 public class Item {
-    private String m_Name;
+    private final String m_Name;
     protected int m_Quantity;
     protected String m_ExpirationDate;
 

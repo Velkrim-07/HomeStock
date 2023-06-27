@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    tools:showIn="navigation_view"
+    android:background="@color/lavender">
 
     <!-- Creates the navigation menu of the app -->
     <group android:checkableBehavior="single">
@@ -12,27 +14,31 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/nav_home"
             android:title="@string/Home"
-            android:gravity="center" />
+            android:gravity="center"
+            android:titleTextColor="@color/peach" />
 
         <!-- Creates the item for category on the menu -->
         <item
             android:id="@+id/nav_category"
             android:icon="@drawable/nav_category"
             android:title="@string/Categories"
-            android:gravity="center" />
+            android:gravity="center"
+            android:titleTextColor="@color/peach" />
 
         <!-- Creates the item for settings on the menu -->
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/nav_settings"
             android:title="@string/Setting"
-            android:gravity="center" />
+            android:gravity="center"
+            android:titleTextColor="@color/peach" />
 
         <!-- Creates the item for logout on the menu -->
         <item
             android:id="@+id/nav_logout"
             android:title="@string/logout"
-            android:gravity="center" />
+            android:gravity="center"
+            android:titleTextColor="@color/peach" />
 
     </group>
 </menu>
