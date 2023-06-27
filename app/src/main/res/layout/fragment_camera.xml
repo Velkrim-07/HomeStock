@@ -37,4 +37,14 @@
         android:backgroundTint="@color/peach"
         />
 
+    <TextView
+        android:id="@+id/ImageToText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="240dp"
+        android:backgroundTint="@color/peach"
+        android:text="@string/text_will_display_here"
+        android:textAlignment="center" />
+
 </FrameLayout>
