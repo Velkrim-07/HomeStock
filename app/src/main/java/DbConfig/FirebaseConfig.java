@@ -58,6 +58,19 @@ public class FirebaseConfig {
         return item;
     }
 
+    public Map<String, Object> CreateSampleItem(){
+        String date = GetDate();
+
+        item.put("name", "Chocolate Milk");
+        item.put("quantity", "2");
+        item.put("expirationDate","06/25/2023");
+        item.put("insertDate", date);
+        item.put("lastUpdated",date);
+        item.put("frequency","7");
+
+        return item;
+    }
+
     // helper method to grab date!
     public String GetDate(){
         // Get the current date and time

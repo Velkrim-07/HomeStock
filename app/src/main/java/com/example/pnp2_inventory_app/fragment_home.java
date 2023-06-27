@@ -119,6 +119,7 @@ public class fragment_home extends Fragment {
             public void onClick(View v) {
                 List<Map<String, Object>> temp;
 
+                //dbActions.InsertDb(dbActions.CreateSampleItem());
 
                 // it takes a bit of time for the Cloudstore to return the data its getting.
                 // using a callback interface (which is configured and declared inside FirebaseConfig,
