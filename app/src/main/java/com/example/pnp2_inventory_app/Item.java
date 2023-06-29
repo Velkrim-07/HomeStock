@@ -1,4 +1,6 @@
 package com.example.pnp2_inventory_app;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import com.google.firebase.firestore.PropertyName;
 public class Item {
@@ -41,5 +43,17 @@ public class Item {
     }
     public void CreateGuid(){
         documentId =  UUID.randomUUID().toString();
+    }
+    // Implement the toMap() method
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", m_Name);
+        map.put("quantity", m_Quantity);
+        map.put("expirationDate", m_ExpirationDate);
+        map.put("insertedDate", insertedDate);
+        map.put("lastUpdated", lastUpdated);
+        map.put("documentId", documentId);
+
+        return map;
     }
 }

@@ -15,6 +15,9 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 
 // DataStructures
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -72,32 +75,39 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Firebase!!
         // FirebaseApp.initializeApp(this);
-        FirebaseConfig dbActions = new FirebaseConfig();
+        // FirebaseConfig dbActions = new FirebaseConfig();
 
         // initialize stuff
-        dbActions.ConnectDatabase();
+        // dbActions.ConnectDatabase();
 
         // testing create method
-        // cannot be null, make catchers
-        Map<String, Object> temp;
-        //temp = dbActions.CreateItem("NEW MILK", "1l");
+        // Creates sample Item for testing.
+        // Item item = dbActions.CreateSampleItem();
 
-        // testing pushToDb method
-        // TODO: works fine
+        // testing pushToDb method, pushes Item objects
+        // TODO: error or null inserts handling, check the "insides" of the object before sending it
         //dbActions.InsertDb(temp);
 
         // getAll testing
-        // TODO: works sometimes for some reason?
-        List<Map<String, Object>> resultList = new ArrayList<>();
-        //resultList = dbActions.GetAll();
+        // TODO: gets all and it is handled in callback.
+        // dbActions.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
+            // @Override
+            // public void OnCallBack(QuerySnapshot querySnapshot) {
+                // for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                    // String json = document.getData().toString();
+                    // List<String> test = new ArrayList<>();
+                    // test.add(json);
+               // }
+           // }
+       // });
+
 
         // GetByParameter testing
-        // TODO: works sometimes for some reason?
-        resultList = new ArrayList<>();
-        resultList = dbActions.GetByParameterValue("Milk", "1l");
+        // TODO: needs rework
+        // resultList = new ArrayList<>();
+        // resultList = dbActions.GetByParameterValue("Milk", "1l");
 
         // testing Delete
-        // TODO: failure listeners not working
-        dbActions.DeleteFromId("ySWgoTCrn8vj5p1GG16Q");
+        //dbActions.DeleteFromId("ySWgoTCrn8vj5p1GG16Q");
     }
 }
