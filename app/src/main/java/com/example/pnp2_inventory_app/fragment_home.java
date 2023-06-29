@@ -67,7 +67,7 @@ public class fragment_home extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        rootView = inflater.inflate(R.layout.fragment_home, container, false);
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         context = getContext();
@@ -121,14 +121,12 @@ public class fragment_home extends Fragment {
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
         buttonAddItem.setOnClickListener(v -> {
             showDialogToAddItem(adapter);
-            AddToScrollView();//needs to go in alertView
         });
 
         rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
 
         return rootView;
     }
-
 
 //Creates the new item and adds it to the database/ item array
     private Item Makeitem(String itemName, int amount, int ExpireDay,int ExpireMonth, int ExpireYear){
@@ -137,27 +135,24 @@ public class fragment_home extends Fragment {
         return NewItem;
     }
 
-    private void AddToScrollView(){
-        ItemObject NewItemObject = CreateItemObject();
+    private void AddToScrollView(ItemObject newItemObject ){
         LinearLayout VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
         LinearLayout InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
         InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        NewItemObject.AmountObject.setPadding(0,0,20,0);
-        InsideLinearLayout.addView(NewItemObject.AmountObject);
-        InsideLinearLayout.addView(NewItemObject.NameObject);
-        NewItemObject.ExpireDateObject.setPadding(600,0,0,0);
-        InsideLinearLayout.addView(NewItemObject.ExpireDateObject);
+        newItemObject.AmountObject.setPadding(0,0,200,0);
+        InsideLinearLayout.addView(newItemObject.AmountObject);
+        InsideLinearLayout.addView(newItemObject.NameObject);
+        newItemObject.ExpireDateObject.setPadding(300,0,0,0);
+        InsideLinearLayout.addView(newItemObject.ExpireDateObject);
 
         VerticalLinearView.addView(InsideLinearLayout); //adds the objects to the scrollView
     }
 
-    private ItemObject CreateItemObject(){
-
+    private ItemObject CreateItemObject(String itemName, int quantity, String expirationDate){
         //AlertBox Added Here
-
-        Item NewItem = Makeitem("a", 2, 2, 2, 2); //to be done
-        ItemObject NewItemObject = new ItemObject(NewItem, context);
+        Item newItem = new Item(itemName, quantity, expirationDate);
+        ItemObject NewItemObject = new ItemObject(newItem, context);
         return NewItemObject;
     }
 
@@ -167,8 +162,8 @@ public class fragment_home extends Fragment {
         FirebaseConfig dbActions;
         dbActions = new FirebaseConfig();
         dbActions.ConnectDatabase();
-        
-        
+    }
+
     private void showDialogToAddItem(ArrayAdapter<Item> adapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Add Item");
@@ -199,26 +194,9 @@ public class fragment_home extends Fragment {
             String itemName = editTextItemName.getText().toString();
             String expirationDate = getFormattedDate(selectedDate);
 
-
-        addItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Map<String, Object>> temp;
-                // it takes a bit of time for the Cloudstore to return the data its getting.
-                // using a callback interface (which is configured and declared inside FirebaseConfig,
-                // this will return to the function when the call returns something!
-                // currently trasnforming to json
-                // TODO: figure if we want json or just convert into item class
-                temp = dbActions.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
-                    @Override
-                    public void OnCallBack(QuerySnapshot querySnapshot) {
-                        for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                            String json = document.getData().toString();
-                            List<String> test = new ArrayList<>();
-                            test.add(json);
-
-            Item newItem = new Item(itemName, quantity, expirationDate);
-            adapter.add(newItem);
+            ItemObject NewItemObject = CreateItemObject(itemName, quantity, expirationDate);
+            AddToScrollView(NewItemObject);
+            adapter.add(NewItemObject.ItemReference);
 
             // Dismiss the dialog after accepting the input
             dialog.dismiss();
