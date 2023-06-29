@@ -38,6 +38,9 @@ public class fragment_home extends Fragment {
     private  View rootView;
     private  FirebaseConfig db;
     private List<Item> itemList;
+
+    private LinearLayout InsideLinearLayout;
+    private LinearLayout VerticalLinearView;
     List<Item> testList;
 
     @Override
@@ -77,8 +80,8 @@ public class fragment_home extends Fragment {
 
     private void AddToScrollView(Item newItem){
         ItemObject newItemObject = CreateItemObject(newItem, context);
-        LinearLayout VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
-        LinearLayout InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
+        VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
+        InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
         InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
         newItemObject.AmountObject.setPadding(0,0,200,0);
@@ -147,6 +150,12 @@ public class fragment_home extends Fragment {
 
         testList = new ArrayList<>();
 
+        if(InsideLinearLayout != null){
+            InsideLinearLayout.removeAllViews();
+            VerticalLinearView.removeAllViews();
+
+        }
+
         db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
             @Override
             public void OnCallBack(QuerySnapshot querySnapshot) {
@@ -165,6 +174,7 @@ public class fragment_home extends Fragment {
                     item.lastUpdated = lastUpdated;
 
                     if (item != null) {
+                     //TODO : make sure there are no duplicates
                         testList.add(item);
                     }
                 }
