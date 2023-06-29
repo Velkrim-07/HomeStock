@@ -61,7 +61,7 @@ public class fragment_home extends Fragment {
     // Rafael Testing, ignore this
     private Button addItem;
     private ImageButton RefreshBtn;
-    private Context context;
+    public Context context;
     private  View rootView;
     private  FirebaseConfig db;
     List<Item> itemList;
@@ -69,8 +69,6 @@ public class fragment_home extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         context = getContext();
@@ -80,6 +78,12 @@ public class fragment_home extends Fragment {
 
         // Create a sample list of items
         itemList = new ArrayList<>();
+
+        ImageButton RefreshBtn = rootView.findViewById(R.id.ButtonRefresh);
+        RefreshBtn.setOnClickListener(v -> {
+            GetItemsFromDatabase();
+
+        });
 
         // Find the "Edit" button and set its initial visibility
         buttonEditItem = rootView.findViewById(R.id.ButtonEditItem);
@@ -91,16 +95,18 @@ public class fragment_home extends Fragment {
             showDialogToAddItem(itemList);
         });
 
-
-
         // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
         rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
 
         return rootView;
     }
 
-    private void AddToScrollView(Item newItem ){
-        ItemObject newItemObject = CreateItemObject(newItem);
+    public Context GetContextFragHome(){
+        return getContext();
+    }
+
+    private void AddToScrollView(Item newItem){
+        ItemObject newItemObject = CreateItemObject(newItem, context);
         LinearLayout VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
         LinearLayout InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
         InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -114,7 +120,7 @@ public class fragment_home extends Fragment {
         VerticalLinearView.addView(InsideLinearLayout); //adds the objects to the scrollView
     }
 
-    private ItemObject CreateItemObject(Item NewItem){
+    private ItemObject CreateItemObject(Item NewItem, Context context){
         ItemObject NewItemObject = new ItemObject(NewItem, context);
         return NewItemObject;
     }

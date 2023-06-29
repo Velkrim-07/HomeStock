@@ -48,18 +48,19 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
         navigationView = mainActivity.findViewById(R.id.nav_view); //set the navigation menu to what is set up in the menu/nav_view
         navigationView.setNavigationItemSelectedListener(this);//sets the listener to this
 
-        ImageButton RefreshBtn = mainActivity.findViewById(R.id.ImgBtnRefresh);
-        RefreshBtn.setOnClickListener(v -> {
-            fragment_home.GetItemsFromDatabase();
 
-        });
+
+
 
         //creates the action bar according to the all the other files created for the navigation screen
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(mainActivity, drawerLayout, toolbar, R.string.open_nav,R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
-
+    public Context GetContextFragHome(Context FragHoemContext){
+        Context FragmentHomeConext = FragHoemContext;
+        return FragmentHomeConext;
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) { //should switch the screen between the different fragments
         int itemId = item.getItemId();//gets the id of the item/ fragment the user is currently seeing
