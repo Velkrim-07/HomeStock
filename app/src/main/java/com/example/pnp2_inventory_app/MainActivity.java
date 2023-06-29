@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import androidx.fragment.app.Fragment;
 import android.content.Intent;
+import android.widget.ScrollView;
 //import android.widget.TextView; not used
 
 // DataStructures
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); //creates the instance of the program
         setContentView(R.layout.activity_main); //sets the current view to the activity
-
         //initialises the Navigation object
         navigation = new Navigation(this);
 

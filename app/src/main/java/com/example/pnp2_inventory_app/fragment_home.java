@@ -13,7 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 //import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.content.Context;
 
@@ -26,6 +29,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 //import org.w3c.dom.Text;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,16 +48,18 @@ import DbConfig.FirebaseConfig;
 
 public class fragment_home extends Fragment {
     private Button buttonEditItem;
-
     // Rafael Testing, ignore this
     private Button addItem;
     private TextView items;
     private Context context;
+    private  View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        context = getContext();
+
 
         // Create a sample list of items
         List<Item> itemList = new ArrayList<>();
@@ -85,28 +92,56 @@ public class fragment_home extends Fragment {
             }
         };
 
+        /*
         // Set the adapter to the ListView
         ListView listViewItems = rootView.findViewById(R.id.listViewItems);
         listViewItems.setAdapter(adapter);
-
+*/
         // Find the "Edit" button and set its initial visibility
         buttonEditItem = rootView.findViewById(R.id.ButtonEditItem);
 
         // Find the "Add" button and set its click listener
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
         buttonAddItem.setOnClickListener(v -> {
-            // Toggle the visibility of the "Edit" button
-            if (buttonEditItem.getVisibility() == View.VISIBLE) {
-                buttonEditItem.setVisibility(View.GONE);
-            } else {
-                buttonEditItem.setVisibility(View.VISIBLE);
-            }
+            AddToScrollView();
         });
 
         // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
         rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
 
         return rootView;
+    }
+
+
+//Creates the new item and adds it to the database/ item array
+    private Item Makeitem(String itemName, int amount, int ExpireDay,int ExpireMonth, int ExpireYear){
+        String ExpireDate = ExpireYear + "-" + ExpireMonth+ "-"+ ExpireDay;
+        Item NewItem = new Item(itemName, amount, ExpireDate);
+        return NewItem;
+    }
+
+    private void AddToScrollView(){
+        ItemObject NewItemObject = CreateItemObject();
+        LinearLayout VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
+        LinearLayout InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
+        InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        NewItemObject.AmountObject.setPadding(0,0,20,0);
+        InsideLinearLayout.addView(NewItemObject.AmountObject);
+        InsideLinearLayout.addView(NewItemObject.NameObject);
+        NewItemObject.ExpireDateObject.setPadding(600,0,0,0);
+        InsideLinearLayout.addView(NewItemObject.ExpireDateObject);
+
+        VerticalLinearView.addView(InsideLinearLayout); //adds the objects to the scrollView
+    }
+
+    private ItemObject CreateItemObject(){
+
+        //AlertBox Added Here
+
+        Item NewItem = Makeitem("a", 2, 2, 2, 2); //to be done
+        ItemObject NewItemObject = new ItemObject(NewItem, context);
+        return NewItemObject;
     }
 
     // Testing the usage of getAll with the new callback function
@@ -128,8 +163,6 @@ public class fragment_home extends Fragment {
             @Override
             public void onClick(View v) {
                 List<Map<String, Object>> temp;
-
-
                 // it takes a bit of time for the Cloudstore to return the data its getting.
                 // using a callback interface (which is configured and declared inside FirebaseConfig,
                 // this will return to the function when the call returns something!
