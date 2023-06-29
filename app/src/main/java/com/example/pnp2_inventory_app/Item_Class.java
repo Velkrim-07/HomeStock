@@ -2,8 +2,12 @@ package com.example.pnp2_inventory_app;
 
 //This class will be used to create the Variables needed in order to name, group, and delete
 //the items that will be going into the database.
-//
-//
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Vector;
+
 public class Item_Class
 {
     //A private String variable that will be used to store the name of the product being entered
@@ -29,6 +33,8 @@ public class Item_Class
     //The user will not be able to access this variable and it will only be manipulated in the algorithm
     //to better help it understand what the user is buying
     protected int m_Frequency;
+    //A Public String variable that will be used for the health bar for all of the products
+    public String m_HealthBar;
 
     //This method will set the name of the string so the data is protected
     public void SetName(String name)
@@ -53,5 +59,67 @@ public class Item_Class
     {
         return m_InsertDate;
     }
+
+    //This method will be used to show the user the "health" of their food with a food bar
+    public String DetermineFoodHealth()
+    {
+        //These ints will be used to create the LOcal
+        int year;
+        int month;
+        int day;
+        //the current date will always be whatever time it was called
+        LocalDate currentDate = LocalDate.now();
+        //insertion date will be based of of the substring for the year, month, and day
+        LocalDate insertDate = LocalDate.of(year = Integer.parseInt(m_InsertDate.substring(0,3)), month = Integer.parseInt(m_InsertDate.substring(5,7)), day = Integer.parseInt(m_InsertDate.substring(9,11)));
+        //The same will be applied for the expiration date
+        LocalDate expirationDate = LocalDate.of(year = Integer.parseInt(m_ExpirationDate.substring(0,3)), month = Integer.parseInt(m_ExpirationDate.substring(5,7)), day = Integer.parseInt(m_ExpirationDate.substring(9,11)));
+
+        //In order to calculate how far along the food is we will need to find the percentage between the days till expiration and the original days till expiration
+        long daysTillExpiration = ChronoUnit.DAYS.between(currentDate, expirationDate);
+        long originalExpirationDays = ChronoUnit.DAYS.between(insertDate, expirationDate);
+        //once the days have been calculated we will divide the days till expiration by the original days till expiration to get a double that will look something like this EX: 0.123
+        double percentExpired = daysTillExpiration / originalExpirationDays;
+
+        //array that will hold the health bar characters to be changed
+        Character[] healthBar = {'[', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', ']'};
+        //index to note which character to change
+        int index = 10;
+
+        //while loop that changes the '#' symbols to '-' symbols depending on what percentage the food is expired
+        while (percentExpired >= .1)
+        {
+            healthBar[index] = '-';
+            percentExpired -= .1;
+            index--;
+
+            //if the index gets to zero and the percentExpired is still above .1 it doesn't matter and we will break out of the loop because the bar is ready to be displayed
+            if (index < 1) break;
+        }
+
+        //String to be printed
+        String print = "";
+
+        //append all of the characters in the health bar to the print String
+        for (char element : healthBar)
+        {
+            print = print + element;
+        }
+
+        //Print out the healthbar
+        return print;
+    }
+
+    //does the same calculation as the above method but just returns the amount of days till expiration insted
+    public long daysTillExpiration ()
+    {
+        int year;
+        int month;
+        int day;
+        LocalDate insertDate = LocalDate.of(year = Integer.parseInt(m_InsertDate.substring(0,3)), month = Integer.parseInt(m_InsertDate.substring(5,7)), day = Integer.parseInt(m_InsertDate.substring(9,11)));
+        LocalDate expirationDate = LocalDate.of(year = Integer.parseInt(m_ExpirationDate.substring(0,3)), month = Integer.parseInt(m_ExpirationDate.substring(5,7)), day = Integer.parseInt(m_ExpirationDate.substring(9,11)));
+
+        return ChronoUnit.DAYS.between(insertDate, expirationDate);
+    }
+//year, month, date
 
 }
