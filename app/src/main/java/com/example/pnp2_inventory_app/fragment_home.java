@@ -38,7 +38,6 @@ public class fragment_home extends Fragment {
     private  View rootView;
     private  FirebaseConfig db;
     private List<Item> itemList;
-    List<Item> itemList;
     List<Item> testList;
 
     @Override
@@ -74,10 +73,6 @@ public class fragment_home extends Fragment {
         rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
 
         return rootView;
-    }
-
-    public Context GetContextFragHome(){
-        return getContext();
     }
 
     private void AddToScrollView(Item newItem){
