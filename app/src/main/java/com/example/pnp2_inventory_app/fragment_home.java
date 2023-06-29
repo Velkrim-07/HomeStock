@@ -82,11 +82,20 @@ public class fragment_home extends Fragment {
         buttonEditItem = rootView.findViewById(R.id.ButtonEditItem);
         buttonEditItem.setVisibility(View.VISIBLE); // Set the visibility to always be visible
 
-        //sets a object for the add buttopm
+        ImageButton RefreshBtn = rootView.findViewById(R.id.ImgBtnRefresh);
+        RefreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GetItemsFromDatabase();
+            }
+        });
+
+        //sets a object for the add button
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
         buttonAddItem.setOnClickListener(v -> {
             showDialogToAddItem(itemList);
         });
+
 
         // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
         rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
@@ -160,7 +169,7 @@ public class fragment_home extends Fragment {
         dialog.show();
     }
 
-    private void GetItemsFromdatabase(){
+    private void GetItemsFromDatabase(){
         List<Item> itemList = new ArrayList<>();
 
         db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
@@ -181,11 +190,9 @@ public class fragment_home extends Fragment {
                 }
             }
         });
-
-        for (int i = 0; i < items.length(); i++) {
-
+        for(Item items: itemList){
+            AddToScrollView(items);
         }
-
     }
 
 
