@@ -18,6 +18,18 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp" />
 
+    <ImageButton
+        android:id="@+id/searchButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/lavender"
+        android:src="@drawable/img_rectangle1041"
+        android:contentDescription="@string/Search"/>
+
     <EditText
         android:id="@+id/SearchViewItemSearch"
         android:layout_width="370dp"
@@ -90,6 +102,14 @@
         android:src="@drawable/img_plus"
         />
 
+    <!-- ListView for displaying items -->
+    <ListView
+        android:id="@+id/listViewItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ScrollViewItems"
+        android:layout_marginTop="30dp"
+        android:textColor="@android:color/black"
+        />
 
 </RelativeLayout>
-
