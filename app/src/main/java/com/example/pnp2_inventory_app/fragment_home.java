@@ -141,7 +141,7 @@ public class fragment_home extends Fragment {
                 // this will return to the function when the call returns something!
                 // currently trasnforming to json
                 // TODO: figure if we want json or just convert into item class
-                temp = dbActions.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
+                dbActions.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
                     @Override
                     public void OnCallBack(QuerySnapshot querySnapshot) {
                         for (DocumentSnapshot document : querySnapshot.getDocuments()) {

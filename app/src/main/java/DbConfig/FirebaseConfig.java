@@ -37,28 +37,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class FirebaseConfig {
 
     private FirebaseFirestore db;
-    private Map<String, Object> item;
     private static final String TAG = "DbConnection";
 
     public void ConnectDatabase(){
         db = FirebaseFirestore.getInstance();
-        item = new HashMap<>();
     }
 
-    // creates the item data structure to push into the Db.
-    // some problems: what does an item need?
-    // TODO: figure out what we need inside the Document in the Db
-    // example: expirationDate, name, insertDate, lastUpdated, quantity
-    // suggestion: since we are saving the variable globally in this class, don't
-
-    // think we need to return anything. it can be void, will think about the
-    // implications later!
-    public Map<String, Object> CreateItem(String _key, String _value){
-        item.put(_key, _value);
-
-        return item;
-    }
-
+    // Creates sample item used only for testing
     public Item CreateSampleItem(){
         String date = GetDate();
 
@@ -74,7 +59,8 @@ public class FirebaseConfig {
         return newItem;
     }
 
-    // helper method to grab date!
+    // Helper method to grab date and format it to date/time
+    // yyyy-MM-dd HH:mm:ss
     public String GetDate(){
         // Get the current date and time
         Calendar calendar = Calendar.getInstance();
@@ -88,10 +74,12 @@ public class FirebaseConfig {
     }
 
 
-    // Inserts Item into the Db. Check Item to see the fields that are being pushed.
+    // Inserts Item into the Db.
+    // TODO: Check Item to see the fields that are being pushed. We need something similar to DDD contracts
+    // TODO: It has to have a documentId, name, quantity and expirationDate. The insertedDate&lastUpdated will be handled inside the insertion Method
     public void InsertDb(Item _item){
 
-        // creates random GUID for documentID, insertdate and lastUpdated from current timestamp
+        // creates random GUID for documentID, insertDate and lastUpdated from current timestamp
         _item.CreateGuid();
         _item.insertedDate = GetDate();
         _item.lastUpdated = GetDate();
@@ -134,13 +122,9 @@ public class FirebaseConfig {
     // Gets everything inside the collection
     // PROBLEM: it will be necessary some kind of pagination maybe depending on the amount of items in the collection
     // TODO: implement error handling
-    public List<Map<String, Object>> GetAll(String collection, FirestoreCallback callback){
+    public void GetAll(String collection, FirestoreCallback callback){
 
         CollectionReference reference = db.collection(collection);
-
-        // for testing currently
-        List<Map<String, Object>> resultList = new ArrayList<>();
-
 
                 reference.get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -151,19 +135,9 @@ public class FirebaseConfig {
 
                     }
                 });
-
-        return resultList;
     }
 
-    // Not sure how much this will be used.
-    // If you want to find something in the Db with an specific value, let's say
-    // parameter = "name" and value = "Whole Milk", you can find all the data in the Db that has
-    // these two on it.
-    // PROBLEM: if there are duplicates of the same item in the Db, it will return all of them. Seems like
-    // just the parameter name and its value.
-    // POSSIBLE SOLUTION: add the documentId parameter inside the object.
-    // TODO: in the future, figure out if there will need to be changes here, possibly when we are going to display
-    // everything to the user.
+    // Deprecated. When we implement or start using this I will rewrite it.
     public List<Map<String, Object>> GetByParameterValue(String _parameter, String _value){
 
         // for testing currently
@@ -197,10 +171,21 @@ public class FirebaseConfig {
         return resultList;
     }
 
-    // I think we need the id always.
-    // Updates whatever you want from the Db based on the documentId
-    public void UpdateFromId(String _documentId){
-
+    // Updates specific Item in the Db, requires the documentId.
+    // It changes the Item into a Map since the update method requires a Map. - toMap();
+    public void UpdateFromId(String _documentId, Item _item){
+        db.collection("InventoryItems").document(_documentId).update(_item.toMap())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "DocumentSnapshot successfully UPDATED! ID: " + _item.documentId);
+                        } else {
+                            // Error occurred
+                            Exception exception = task.getException();
+                        }
+                    }
+                });
     }
 
     public interface FirestoreCallback{
