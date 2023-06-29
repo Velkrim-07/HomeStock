@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import androidx.fragment.app.Fragment;
 import android.content.Intent;
+import android.widget.ScrollView;
+//import android.widget.TextView; not used
 
 // DataStructures
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -27,7 +29,6 @@ import java.util.Map;
 import DbConfig.FirebaseConfig;
 
 public class MainActivity extends AppCompatActivity {
-
     private Fragment fragment; //this fragment is used in the camera class
 
     // navigation object is created so we can access the navigation throughout the file
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); //creates the instance of the program
         setContentView(R.layout.activity_main); //sets the current view to the activity
-
         //initialises the Navigation object
         navigation = new Navigation(this);
 
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         cameraClass.OnActivityHelper(requestCode, resultCode, data, fragment);
+        cameraClass.DetectText();
     }
 
     public Navigation getNavigation(){

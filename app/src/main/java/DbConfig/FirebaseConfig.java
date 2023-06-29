@@ -47,15 +47,9 @@ public class FirebaseConfig {
     public Item CreateSampleItem(){
         String date = GetDate();
 
-        Item newItem = new Item();
-        newItem.m_Name = "TestName";
-        newItem.m_Quantity = 1;
-        newItem.m_ExpirationDate = "11/22/33";
+        Item newItem = new Item("TestName", 1,"11/22/33");
         newItem.insertedDate = date;
         newItem.lastUpdated= date;
-
-        newItem.CreateGuid();
-
         return newItem;
     }
 
