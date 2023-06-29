@@ -65,9 +65,12 @@ public class fragment_home extends Fragment {
     private  View rootView;
     private  FirebaseConfig db;
     List<Item> itemList;
+    List<Item> testList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         context = getContext();
@@ -87,6 +90,7 @@ public class fragment_home extends Fragment {
         buttonAddItem.setOnClickListener(v -> {
             showDialogToAddItem(itemList);
         });
+
 
 
         // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
@@ -162,9 +166,10 @@ public class fragment_home extends Fragment {
     }
 
     public void GetItemsFromDatabase(){
-        List<Item> itemList = new ArrayList<>();
         db = new FirebaseConfig();
         db.ConnectDatabase();
+
+        testList = new ArrayList<>();
 
         db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
             @Override
@@ -174,19 +179,25 @@ public class fragment_home extends Fragment {
                     int quantity = document.getLong("quantity").intValue();
                     String expirationDate = document.getString("expirationDate");
                     String documentId = document.getString("documentId");
-                    String insertedDate = document.getString("insertedDate ");
-                    String lastUpdated = document.getString("lastUpdated ");
+                    //String insertedDate = document.getString("insertedDate ");
+                    //String lastUpdated = document.getString("lastUpdated ");
+                    String insertedDate = db.GetDate();
+                    String lastUpdated = db.GetDate();
 
                     Item item = new Item(name, quantity, expirationDate, documentId);
                     item.insertedDate = insertedDate;
                     item.lastUpdated = lastUpdated;
-                    itemList.add(item);
+
+                    if (item != null) {
+                        testList.add(item);
+                    }
+                }
+
+                for(Item items: testList){
+                    AddToScrollView(items);
                 }
             }
         });
-        for(Item items: itemList){
-            AddToScrollView(items);
-        }
     }
 
 

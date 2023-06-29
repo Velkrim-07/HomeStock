@@ -51,6 +51,7 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
         ImageButton RefreshBtn = mainActivity.findViewById(R.id.ImgBtnRefresh);
         RefreshBtn.setOnClickListener(v -> {
             fragment_home.GetItemsFromDatabase();
+
         });
 
         //creates the action bar according to the all the other files created for the navigation screen
