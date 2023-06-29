@@ -26,13 +26,22 @@
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             >
             <ImageButton
+                android:id="@+id/ImgBtnRefresh"
+                android:contentDescription="Allows the user to refresh the page"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="150dp"
+                android:src= "@drawable/updatebutton"
+                />
+
+            <ImageButton
                 android:id="@+id/ImgBtnCam"
                 android:contentDescription="@string/ImageButtonContentDescription"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="150dp"
                 android:src= "@drawable/cam_camera"
                 />
+
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
