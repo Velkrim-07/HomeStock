@@ -1,6 +1,7 @@
 package com.example.pnp2_inventory_app;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,6 +53,10 @@ public class fragment_home extends Fragment {
                 textViewQuantity.setText(String.valueOf(item.getQuantity()));
                 textViewName.setText(item.getName());
                 textViewExpirationDate.setText(item.getExpirationDate());
+
+                textViewQuantity.setTextColor(Color.BLACK);
+                textViewName.setTextColor(Color.BLACK);
+                textViewExpirationDate.setTextColor(Color.BLACK);
 
                 return convertView;
             }
@@ -123,7 +128,6 @@ public class fragment_home extends Fragment {
         return dateFormat.format(calendar.getTime());
     }
 }
-
 
 
 
