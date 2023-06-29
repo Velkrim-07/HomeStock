@@ -159,16 +159,35 @@ public class fragment_home extends Fragment {
         dialog = builder.create();
         dialog.show();
     }
-    /*
+
     private void GetItemsFromdatabase(){
-        String[] Items = new String[];
-        db.GetAll(Items);
+        List<Item> itemList = new ArrayList<>();
+
+        db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
+            @Override
+            public void OnCallBack(QuerySnapshot querySnapshot) {
+                for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                    String name = document.getString("name");
+                    int quantity = document.getLong("quantity").intValue();
+                    String expirationDate = document.getString("expirationDate");
+                    String documentId = document.getString("documentId");
+                    String insertedDate = document.getString("insertedDate ");
+                    String lastUpdated = document.getString("lastUpdated ");
+
+                    Item item = new Item(name, quantity, expirationDate, documentId);
+                    item.insertedDate = insertedDate;
+                    item.lastUpdated = lastUpdated;
+                    itemList.add(item);
+                }
+            }
+        });
+
         for (int i = 0; i < items.length(); i++) {
 
         }
 
     }
-    */
+
 
     private String getFormattedDate(Calendar calendar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
