@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import android.content.Context;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class Navigation implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout; //this is need to create the navigation bar
@@ -46,6 +47,11 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
 
         navigationView = mainActivity.findViewById(R.id.nav_view); //set the navigation menu to what is set up in the menu/nav_view
         navigationView.setNavigationItemSelectedListener(this);//sets the listener to this
+
+        ImageButton RefreshBtn = mainActivity.findViewById(R.id.ImgBtnRefresh);
+        RefreshBtn.setOnClickListener(v -> {
+            fragment_home.GetItemsFromDatabase();
+        });
 
         //creates the action bar according to the all the other files created for the navigation screen
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(mainActivity, drawerLayout, toolbar, R.string.open_nav,R.string.close_nav);

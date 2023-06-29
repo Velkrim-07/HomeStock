@@ -60,7 +60,7 @@ public class fragment_home extends Fragment {
     private AlertDialog dialog; // Declare the dialog as a member variable
     // Rafael Testing, ignore this
     private Button addItem;
-    private TextView items;
+    private ImageButton RefreshBtn;
     private Context context;
     private  View rootView;
     private  FirebaseConfig db;
@@ -81,14 +81,6 @@ public class fragment_home extends Fragment {
         // Find the "Edit" button and set its initial visibility
         buttonEditItem = rootView.findViewById(R.id.ButtonEditItem);
         buttonEditItem.setVisibility(View.VISIBLE); // Set the visibility to always be visible
-
-        ImageButton RefreshBtn = rootView.findViewById(R.id.ImgBtnRefresh);
-        RefreshBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GetItemsFromDatabase();
-            }
-        });
 
         //sets a object for the add button
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
@@ -169,8 +161,10 @@ public class fragment_home extends Fragment {
         dialog.show();
     }
 
-    private void GetItemsFromDatabase(){
+    public void GetItemsFromDatabase(){
         List<Item> itemList = new ArrayList<>();
+        db = new FirebaseConfig();
+        db.ConnectDatabase();
 
         db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
             @Override
