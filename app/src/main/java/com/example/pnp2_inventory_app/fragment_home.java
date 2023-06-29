@@ -1,58 +1,31 @@
 package com.example.pnp2_inventory_app;
 
-import android.app.AlertDialog;
-import android.graphics.Color;
-//import android.content.ClipData;
+//Fragment Usage needs
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-//import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.content.Context;
+
+//Objects
 import android.widget.Button;
-//import android.widget.EditText;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
+import android.app.AlertDialog;
 import android.widget.TextView;
-import android.content.Context;
-
-//import android.widget.RelativeLayout;
-//import android.widget.ScrollView;
-//import android.widget.TextView;
 
 // DbStuff for testing
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-//import org.w3c.dom.Text;
-
-import org.w3c.dom.Text;
-
-import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-
 import DbConfig.FirebaseConfig;
-
-//import java.util.ArrayList;
-//import java.util.Calendar;
-//import java.util.List;
-//import java.util.Map;
-
-//import java.util.ArrayList;
-//import java.util.List;
 import java.util.Locale;
 
 public class fragment_home extends Fragment {
@@ -60,11 +33,10 @@ public class fragment_home extends Fragment {
     private AlertDialog dialog; // Declare the dialog as a member variable
     // Rafael Testing, ignore this
     private Button addItem;
-    private TextView items;
     private Context context;
     private  View rootView;
     private  FirebaseConfig db;
-    List<Item> itemList;
+    private List<Item> itemList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -159,16 +131,6 @@ public class fragment_home extends Fragment {
         dialog = builder.create();
         dialog.show();
     }
-    /*
-    private void GetItemsFromdatabase(){
-        String[] Items = new String[];
-        db.GetAll(Items);
-        for (int i = 0; i < items.length(); i++) {
-
-        }
-
-    }
-    */
 
     private String getFormattedDate(Calendar calendar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
