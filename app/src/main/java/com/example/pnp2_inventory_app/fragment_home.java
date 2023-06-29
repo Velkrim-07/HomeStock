@@ -1,58 +1,31 @@
 package com.example.pnp2_inventory_app;
 
-import android.app.AlertDialog;
-import android.graphics.Color;
-//import android.content.ClipData;
+//Fragment Usage needs
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-//import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.content.Context;
+
+//Objects
 import android.widget.Button;
-//import android.widget.EditText;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
+import android.app.AlertDialog;
 import android.widget.TextView;
-import android.content.Context;
-
-//import android.widget.RelativeLayout;
-//import android.widget.ScrollView;
-//import android.widget.TextView;
 
 // DbStuff for testing
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-//import org.w3c.dom.Text;
-
-import org.w3c.dom.Text;
-
-import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-
 import DbConfig.FirebaseConfig;
-
-//import java.util.ArrayList;
-//import java.util.Calendar;
-//import java.util.List;
-//import java.util.Map;
-
-//import java.util.ArrayList;
-//import java.util.List;
 import java.util.Locale;
 
 public class fragment_home extends Fragment {
@@ -60,9 +33,12 @@ public class fragment_home extends Fragment {
     private AlertDialog dialog; // Declare the dialog as a member variable
     // Rafael Testing, ignore this
     private Button addItem;
-    private TextView items;
     private Context context;
+    private ImageButton RefreshBtn;
     private  View rootView;
+    private  FirebaseConfig db;
+    private List<Item> itemList;
+    List<Item> testList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,59 +46,27 @@ public class fragment_home extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         context = getContext();
 
+        db = new FirebaseConfig();
+        db.ConnectDatabase();
+        GetItemsFromDatabase();
 
         // Create a sample list of items
-        List<Item> itemList = new ArrayList<>();
-        //Item item = new Item("Corn", 5, "2023-06-30");
+        itemList = new ArrayList<>();
 
-        FirebaseConfig db = new FirebaseConfig();
-        Item item = db.CreateSampleItem();
+        ImageButton RefreshBtn = rootView.findViewById(R.id.ButtonRefresh);
+        RefreshBtn.setOnClickListener(v -> {
+            GetItemsFromDatabase();
 
-        itemList.add(item);
+        });
 
-        // Create a custom adapter for the ListView
-        ArrayAdapter<Item> adapter = new ArrayAdapter<Item>(getContext(), R.layout.list_item_layout, itemList) {
-            @NonNull
-            @Override
-            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                // Check if an existing view is being reused, otherwise inflate the view
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_layout, parent, false);
-                }
-
-                // Get the item at the specified position
-                Item item = getItem(position);
-
-                // Set the quantity, name, and expiration date in the item layout
-                TextView textViewQuantity = convertView.findViewById(R.id.textViewQuantity);
-                TextView textViewName = convertView.findViewById(R.id.textViewName);
-                TextView textViewExpirationDate = convertView.findViewById(R.id.textViewExpirationDate);
-
-                textViewQuantity.setText(String.valueOf(item.getQuantity()));
-                textViewName.setText(item.getName());
-                textViewExpirationDate.setText(item.getExpirationDate());
-
-                textViewQuantity.setTextColor(Color.BLACK);
-                textViewName.setTextColor(Color.BLACK);
-                textViewExpirationDate.setTextColor(Color.BLACK);
-
-                return convertView;
-            }
-        };
-
-        /*
-        // Set the adapter to the ListView
-        ListView listViewItems = rootView.findViewById(R.id.listViewItems);
-        listViewItems.setAdapter(adapter);
-*/
         // Find the "Edit" button and set its initial visibility
-
         buttonEditItem = rootView.findViewById(R.id.ButtonEditItem);
         buttonEditItem.setVisibility(View.VISIBLE); // Set the visibility to always be visible
 
+        //sets a object for the add button
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
         buttonAddItem.setOnClickListener(v -> {
-            showDialogToAddItem(adapter);
+            showDialogToAddItem(itemList);
         });
 
         // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
@@ -131,14 +75,8 @@ public class fragment_home extends Fragment {
         return rootView;
     }
 
-//Creates the new item and adds it to the database/ item array
-    private Item Makeitem(String itemName, int amount, int ExpireDay,int ExpireMonth, int ExpireYear){
-        String ExpireDate = ExpireYear + "-" + ExpireMonth+ "-"+ ExpireDay;
-        Item NewItem = new Item(itemName, amount, ExpireDate);
-        return NewItem;
-    }
-
-    private void AddToScrollView(ItemObject newItemObject ){
+    private void AddToScrollView(Item newItem){
+        ItemObject newItemObject = CreateItemObject(newItem, context);
         LinearLayout VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
         LinearLayout InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
         InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -152,17 +90,12 @@ public class fragment_home extends Fragment {
         VerticalLinearView.addView(InsideLinearLayout); //adds the objects to the scrollView
     }
 
-    private ItemObject CreateItemObject(String itemName, int quantity, String expirationDate){
-        //AlertBox Added Here
-        Item newItem = new Item(itemName, quantity, expirationDate);
-        ItemObject NewItemObject = new ItemObject(newItem, context);
+    private ItemObject CreateItemObject(Item NewItem, Context context){
+        ItemObject NewItemObject = new ItemObject(NewItem, context);
         return NewItemObject;
     }
 
-    // Testing the usage of getAll with the new callback function
-    // will leave this here for future reference so we can take a look when we start to implement functions
-
-    private void showDialogToAddItem(ArrayAdapter<Item> adapter) {
+    private void showDialogToAddItem(List<Item> adapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Add Item");
 
@@ -192,9 +125,10 @@ public class fragment_home extends Fragment {
             String itemName = editTextItemName.getText().toString();
             String expirationDate = getFormattedDate(selectedDate);
 
-            ItemObject NewItemObject = CreateItemObject(itemName, quantity, expirationDate);
-            AddToScrollView(NewItemObject);
-            adapter.add(NewItemObject.ItemReference);
+            Item NewItem = new Item(itemName, quantity, expirationDate);
+            AddToScrollView(NewItem);
+            db.InsertDb(NewItem);
+            adapter.add(NewItem);
 
             // Dismiss the dialog after accepting the input
             dialog.dismiss();
@@ -203,10 +137,45 @@ public class fragment_home extends Fragment {
         builder.setNegativeButton("Cancel", (dialog, which) -> {
             dialog.cancel();
         });
-
         dialog = builder.create();
         dialog.show();
     }
+
+    public void GetItemsFromDatabase(){
+        db = new FirebaseConfig();
+        db.ConnectDatabase();
+
+        testList = new ArrayList<>();
+
+        db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
+            @Override
+            public void OnCallBack(QuerySnapshot querySnapshot) {
+                for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                    String name = document.getString("name");
+                    int quantity = document.getLong("quantity").intValue();
+                    String expirationDate = document.getString("expirationDate");
+                    String documentId = document.getString("documentId");
+                    //String insertedDate = document.getString("insertedDate ");
+                    //String lastUpdated = document.getString("lastUpdated ");
+                    String insertedDate = db.GetDate();
+                    String lastUpdated = db.GetDate();
+
+                    Item item = new Item(name, quantity, expirationDate, documentId);
+                    item.insertedDate = insertedDate;
+                    item.lastUpdated = lastUpdated;
+
+                    if (item != null) {
+                        testList.add(item);
+                    }
+                }
+
+                for(Item items: testList){
+                    AddToScrollView(items);
+                }
+            }
+        });
+    }
+
 
     private String getFormattedDate(Calendar calendar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -214,10 +183,6 @@ public class fragment_home extends Fragment {
     }
 
     public void testingThisShit(View view) {
-        FirebaseConfig dbActions;
-        dbActions = new FirebaseConfig();
-        dbActions.ConnectDatabase();
-
         //scrollView testing
         //items = view.findViewById(R.id.textView2);
 
@@ -240,15 +205,13 @@ public class fragment_home extends Fragment {
                 // this will return to the function when the call returns something!
                 // currently trasnforming to json
                 // TODO: figure if we want json or just convert into item class
-                dbActions.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
+                db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
                     @Override
                     public void OnCallBack(QuerySnapshot querySnapshot) {
                         for (DocumentSnapshot document : querySnapshot.getDocuments()) {
                             String json = document.getData().toString();
                             List<String> test = new ArrayList<>();
                             test.add(json);
-
-
                         }
                     }
                 });
