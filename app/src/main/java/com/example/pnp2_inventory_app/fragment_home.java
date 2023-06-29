@@ -34,9 +34,12 @@ public class fragment_home extends Fragment {
     // Rafael Testing, ignore this
     private Button addItem;
     private Context context;
+    private ImageButton RefreshBtn;
     private  View rootView;
     private  FirebaseConfig db;
     private List<Item> itemList;
+    List<Item> itemList;
+    List<Item> testList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,15 +49,22 @@ public class fragment_home extends Fragment {
 
         db = new FirebaseConfig();
         db.ConnectDatabase();
+        GetItemsFromDatabase();
 
         // Create a sample list of items
         itemList = new ArrayList<>();
+
+        ImageButton RefreshBtn = rootView.findViewById(R.id.ButtonRefresh);
+        RefreshBtn.setOnClickListener(v -> {
+            GetItemsFromDatabase();
+
+        });
 
         // Find the "Edit" button and set its initial visibility
         buttonEditItem = rootView.findViewById(R.id.ButtonEditItem);
         buttonEditItem.setVisibility(View.VISIBLE); // Set the visibility to always be visible
 
-        //sets a object for the add buttopm
+        //sets a object for the add button
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
         buttonAddItem.setOnClickListener(v -> {
             showDialogToAddItem(itemList);
@@ -66,8 +76,12 @@ public class fragment_home extends Fragment {
         return rootView;
     }
 
-    private void AddToScrollView(Item newItem ){
-        ItemObject newItemObject = CreateItemObject(newItem);
+    public Context GetContextFragHome(){
+        return getContext();
+    }
+
+    private void AddToScrollView(Item newItem){
+        ItemObject newItemObject = CreateItemObject(newItem, context);
         LinearLayout VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
         LinearLayout InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
         InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -81,7 +95,7 @@ public class fragment_home extends Fragment {
         VerticalLinearView.addView(InsideLinearLayout); //adds the objects to the scrollView
     }
 
-    private ItemObject CreateItemObject(Item NewItem){
+    private ItemObject CreateItemObject(Item NewItem, Context context){
         ItemObject NewItemObject = new ItemObject(NewItem, context);
         return NewItemObject;
     }
@@ -131,6 +145,42 @@ public class fragment_home extends Fragment {
         dialog = builder.create();
         dialog.show();
     }
+
+    public void GetItemsFromDatabase(){
+        db = new FirebaseConfig();
+        db.ConnectDatabase();
+
+        testList = new ArrayList<>();
+
+        db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
+            @Override
+            public void OnCallBack(QuerySnapshot querySnapshot) {
+                for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                    String name = document.getString("name");
+                    int quantity = document.getLong("quantity").intValue();
+                    String expirationDate = document.getString("expirationDate");
+                    String documentId = document.getString("documentId");
+                    //String insertedDate = document.getString("insertedDate ");
+                    //String lastUpdated = document.getString("lastUpdated ");
+                    String insertedDate = db.GetDate();
+                    String lastUpdated = db.GetDate();
+
+                    Item item = new Item(name, quantity, expirationDate, documentId);
+                    item.insertedDate = insertedDate;
+                    item.lastUpdated = lastUpdated;
+
+                    if (item != null) {
+                        testList.add(item);
+                    }
+                }
+
+                for(Item items: testList){
+                    AddToScrollView(items);
+                }
+            }
+        });
+    }
+
 
     private String getFormattedDate(Calendar calendar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());

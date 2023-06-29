@@ -31,11 +31,18 @@ public class Item {
     }*/
 
 
-    public Item(String itemName, int amount, String ExpireDate){
+    public Item(String itemName, int amount, String expireDate){
         m_Name = itemName;
         m_Quantity = amount;
-        m_ExpirationDate = ExpireDate;
+        m_ExpirationDate = expireDate;
         CreateGuid();
+    }
+
+    public Item(String itemName, int amount, String expireDate, String _documentId){
+        m_Name = itemName;
+        m_Quantity = amount;
+        m_ExpirationDate = expireDate;
+        documentId = _documentId;
     }
     public String getName() {
         return m_Name;
