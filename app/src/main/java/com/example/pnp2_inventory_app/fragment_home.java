@@ -56,7 +56,6 @@ import DbConfig.FirebaseConfig;
 import java.util.Locale;
 
 public class fragment_home extends Fragment {
-
     private Button buttonEditItem;
     private AlertDialog dialog; // Declare the dialog as a member variable
     // Rafael Testing, ignore this
@@ -67,7 +66,6 @@ public class fragment_home extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_home, container, false);
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         context = getContext();
@@ -75,7 +73,11 @@ public class fragment_home extends Fragment {
 
         // Create a sample list of items
         List<Item> itemList = new ArrayList<>();
-        Item item = new Item("Corn", 5, "2023-06-30");
+        //Item item = new Item("Corn", 5, "2023-06-30");
+
+        FirebaseConfig db = new FirebaseConfig();
+        Item item = db.CreateSampleItem();
+
         itemList.add(item);
 
         // Create a custom adapter for the ListView
@@ -123,6 +125,7 @@ public class fragment_home extends Fragment {
             showDialogToAddItem(adapter);
         });
 
+        // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
         rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
 
         return rootView;
@@ -213,5 +216,48 @@ public class fragment_home extends Fragment {
     private String getFormattedDate(Calendar calendar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dateFormat.format(calendar.getTime());
+    }
+
+    public void testingThisShit(View view) {
+        FirebaseConfig dbActions;
+        dbActions = new FirebaseConfig();
+        dbActions.ConnectDatabase();
+
+        //scrollView testing
+        //items = view.findViewById(R.id.textView2);
+
+        addItem = view.findViewById(R.id.ButtonAddItem);
+
+        // for testing, deprecated
+        //items = view.findViewById(R.id.textView);
+
+
+        addItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Map<String, Object>> temp;
+
+                //Item newItem = new Item("MilkTest", 1, "12/12/12", dbActions.GetDate(), dbActions.GetDate());
+                //dbActions.testingItemAdd(newItem);
+
+                // it takes a bit of time for the Cloudstore to return the data its getting.
+                // using a callback interface (which is configured and declared inside FirebaseConfig,
+                // this will return to the function when the call returns something!
+                // currently trasnforming to json
+                // TODO: figure if we want json or just convert into item class
+                dbActions.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
+                    @Override
+                    public void OnCallBack(QuerySnapshot querySnapshot) {
+                        for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                            String json = document.getData().toString();
+                            List<String> test = new ArrayList<>();
+                            test.add(json);
+
+
+                        }
+                    }
+                });
+            }
+        });
     }
 }

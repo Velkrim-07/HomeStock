@@ -14,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import DbConfig.FirebaseConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,9 @@ public class fragment_food extends Fragment {
 
         // Create a sample list of items
         List<Item> itemList = new ArrayList<>();
-        Item item = new Item("Corn", 5, "2023-06-30");
+
+        FirebaseConfig db = new FirebaseConfig();
+        Item item = db.CreateSampleItem();
         itemList.add(item);
 
         // Create a custom adapter for the ListView
