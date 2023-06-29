@@ -30,6 +30,13 @@ public class Item {
         this.lastUpdated = _lastUpdated;
     }*/
 
+
+    public Item(String itemName, int amount, String ExpireDate){
+        m_Name = itemName;
+        m_Quantity = amount;
+        m_ExpirationDate = ExpireDate;
+        CreateGuid();
+    }
     public String getName() {
         return m_Name;
     }

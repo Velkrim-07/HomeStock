@@ -161,11 +161,6 @@ public class fragment_home extends Fragment {
 
     // Testing the usage of getAll with the new callback function
     // will leave this here for future reference so we can take a look when we start to implement functions
-    public void testingThisShit(View view) {
-        FirebaseConfig dbActions;
-        dbActions = new FirebaseConfig();
-        dbActions.ConnectDatabase();
-    }
 
     private void showDialogToAddItem(ArrayAdapter<Item> adapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
