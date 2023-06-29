@@ -75,6 +75,7 @@ public class fragment_home extends Fragment {
 
         db = new FirebaseConfig();
         db.ConnectDatabase();
+        GetItemsFromDatabase();
 
         // Create a sample list of items
         itemList = new ArrayList<>();
