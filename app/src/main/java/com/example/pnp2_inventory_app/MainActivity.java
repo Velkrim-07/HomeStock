@@ -1,5 +1,6 @@
 package com.example.pnp2_inventory_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 // map and hash for testing
@@ -10,13 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 // camera and UI
+import android.util.Log;
 import android.widget.ImageButton;
 import androidx.fragment.app.Fragment;
 import android.content.Intent;
 
 // DataStructures
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new fragment_home()).commit(); //Sets the screen to home if nothing is displayed
             navigation.GetNavigationBar().setCheckedItem(R.id.nav_home); //sets the navigation bar to having home selected
         }//this is the end of the navigation bar implementation
+
+        //NOTIFICATION
+        FirebaseMessaging.getInstance().subscribeToTopic("Expiration")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Subscribed";
+                        if (!task.isSuccessful()) {
+                            msg = "Subscribe failed";
+                        }
+                    }
+                });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
