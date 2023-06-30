@@ -28,29 +28,38 @@ import java.util.Map;
 import DbConfig.FirebaseConfig;
 import java.util.Locale;
 
-public class fragment_home extends Fragment {
-    private Button buttonEditItem;
-    private AlertDialog dialog; // Declare the dialog as a member variable
-    // Rafael Testing, ignore this
-    private Button addItem;
-    private Context context;
-    private ImageButton RefreshBtn;
-    private  View rootView;
-    private  FirebaseConfig db;
-    private List<Item> itemList;
+//Contains all the functions for the fragment home
+//Function List
+//AddToScrollView // Takes in an item// returns void// Adds an item object to the scroll view. The item object creation is handled by the CreateItemObject function
+//CreateItemObject // Takes in an item and the context// returns the item object // creates an item object
+//showDialogToAddItem// Takes in an List<Item> // return void// Creates a dialog button that gets an item's attributes from the user and uses the AddToScrollView function to display the data to the user
+//GetItemsFromDatabase// Takes in noting// returns void// Gets information from the database and populates the Layout views. If the view is filled the function will update the view
+//getFormattedDate// Takes in a Calendar // return a string // Takes a data and formats that into a string
 
+public class fragment_home extends Fragment {
+    private Context context;
+    private  View rootView;
     private LinearLayout InsideLinearLayout;
     private LinearLayout VerticalLinearView;
-    List<Item> testList;
+    private Button buttonEditItem;
+    private Button addItem;
+    private AlertDialog dialog; // Declare the dialog as a member variable
+    private FirebaseConfig db;
+    private List<Item> itemList;
+    private List<Item> testList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        //Gets the context for this fragment to be used through the program
         context = getContext();
 
+        //A database connection is made
         db = new FirebaseConfig();
         db.ConnectDatabase();
+
+        //We Initially pull from the database and populate the scrollview
         GetItemsFromDatabase();
 
         // Create a sample list of items
@@ -58,13 +67,15 @@ public class fragment_home extends Fragment {
 
         ImageButton RefreshBtn = rootView.findViewById(R.id.ButtonRefresh);
         RefreshBtn.setOnClickListener(v -> {
+            //whenever the refresh button is clicked we pull from the database and refresh the items in the list
             GetItemsFromDatabase();
-
         });
 
         // Find the "Edit" button and set its initial visibility
         buttonEditItem = rootView.findViewById(R.id.ButtonEditItem);
-        buttonEditItem.setVisibility(View.VISIBLE); // Set the visibility to always be visible
+        //TODO: Edit Button
+        //Should be able to change an item's members
+        //Should be able to send that item to the database without making another
 
         //sets a object for the add button
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
@@ -79,25 +90,34 @@ public class fragment_home extends Fragment {
     }
 
     private void AddToScrollView(Item newItem){
-        ItemObject newItemObject = CreateItemObject(newItem, context);
+        ItemObject newItemObject = CreateItemObject(newItem, context); //Creates an ItemObject based on the item given
+        //sets the Vertical LinearView to the view set in the xml file. This is the actual list that goes down the screen
         VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
+        //creates a new LinearLayout that is horizontal to store the item attributes
         InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
+        //Makes the InsideLinearLayout horzontal so our item's attributes are in a line
         InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
+        //Formatting
         newItemObject.AmountObject.setPadding(0,0,200,0);
+        newItemObject.ExpireDateObject.setPadding(200,0,0,0);
+
+        //Adding the TextViews to the InsideLinearLayout view
         InsideLinearLayout.addView(newItemObject.AmountObject);
         InsideLinearLayout.addView(newItemObject.NameObject);
-        newItemObject.ExpireDateObject.setPadding(300,0,0,0);
         InsideLinearLayout.addView(newItemObject.ExpireDateObject);
 
+        //Adding the InsideLinearLayout view to VerticalLinearView
         VerticalLinearView.addView(InsideLinearLayout); //adds the objects to the scrollView
     }
 
+    //Turns a Item into an ItemObject which hold Textviews with the Item
     private ItemObject CreateItemObject(Item NewItem, Context context){
-        ItemObject NewItemObject = new ItemObject(NewItem, context);
+        ItemObject NewItemObject = new ItemObject(NewItem, context); //takes an Item and adds makes it into an object
         return NewItemObject;
     }
 
+    //Creates a AlertBox that prompts the user for an items information
     private void showDialogToAddItem(List<Item> adapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Add Item");
@@ -105,6 +125,7 @@ public class fragment_home extends Fragment {
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_item, null);
         builder.setView(dialogView);
 
+        //Creates the Alertbox objects used to get the information from the user
         EditText editTextQuantity = dialogView.findViewById(R.id.editTextQuantity);
         EditText editTextItemName = dialogView.findViewById(R.id.editTextItemName);
         CalendarView calendarView = dialogView.findViewById(R.id.calendarView);
@@ -144,16 +165,17 @@ public class fragment_home extends Fragment {
         dialog.show();
     }
 
+    //Gets the item from the database and adds them to the Scroll view
     public void GetItemsFromDatabase(){
         db = new FirebaseConfig();
         db.ConnectDatabase();
 
         testList = new ArrayList<>();
 
+        //if there is already information displayed when we refresh that information is deleted
         if(InsideLinearLayout != null){
-            InsideLinearLayout.removeAllViews();
-            VerticalLinearView.removeAllViews();
-
+            InsideLinearLayout.removeAllViews(); //the information is removed from the inside view
+            VerticalLinearView.removeAllViews(); //the information is removed form the Vertical view
         }
 
         db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
@@ -180,7 +202,7 @@ public class fragment_home extends Fragment {
                 }
 
                 for(Item items: testList){
-                    AddToScrollView(items);
+                    AddToScrollView(items); //the items are added to the scrollview
                 }
             }
         });
