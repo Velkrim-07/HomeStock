@@ -56,15 +56,8 @@ public class fragment_home extends Fragment {
         //A database connection is made
         db = new FirebaseConfig();
         db.ConnectDatabase();
-
         //We Initially pull from the database and populate the scrollview
         GetItemsFromDatabase();
-
-        ImageButton RefreshBtn = rootView.findViewById(R.id.ButtonRefresh);
-        RefreshBtn.setOnClickListener(v -> {
-            //whenever the refresh button is clicked we pull from the database and refresh the items in the list
-            GetItemsFromDatabase();
-        });
 
         // Find the "Edit" button and set its initial visibility
         buttonEditItem = rootView.findViewById(R.id.ButtonEditItem);
