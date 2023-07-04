@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.app.AlertDialog;
-import android.widget.TextView;
 
 // DbStuff for testing
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,9 +23,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import DbConfig.FirebaseConfig;
 import java.util.Locale;
+import java.util.Objects;
 
 //Contains all the functions for the fragment home
 //Function List
@@ -42,16 +41,15 @@ public class fragment_home extends Fragment {
     private LinearLayout InsideLinearLayout;
     private LinearLayout VerticalLinearView;
     private Button buttonEditItem;
-    private Button addItem;
     private AlertDialog dialog; // Declare the dialog as a member variable
     private FirebaseConfig db;
-    private List<Item> itemList;
-    private List<Item> testList;
+    private List<Item> ItemList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
         //Gets the context for this fragment to be used through the program
         context = getContext();
 
@@ -62,9 +60,6 @@ public class fragment_home extends Fragment {
         //We Initially pull from the database and populate the scrollview
         GetItemsFromDatabase();
 
-        // Create a sample list of items
-        itemList = new ArrayList<>();
-
         ImageButton RefreshBtn = rootView.findViewById(R.id.ButtonRefresh);
         RefreshBtn.setOnClickListener(v -> {
             //whenever the refresh button is clicked we pull from the database and refresh the items in the list
@@ -73,15 +68,14 @@ public class fragment_home extends Fragment {
 
         // Find the "Edit" button and set its initial visibility
         buttonEditItem = rootView.findViewById(R.id.ButtonEditItem);
+        buttonEditItem.setVisibility(View.VISIBLE);
         //TODO: Edit Button
         //Should be able to change an item's members
         //Should be able to send that item to the database without making another
 
         //sets a object for the add button
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
-        buttonAddItem.setOnClickListener(v -> {
-            showDialogToAddItem(itemList);
-        });
+        buttonAddItem.setOnClickListener(v -> showDialogToAddItem());
 
         // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
         rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
@@ -90,42 +84,43 @@ public class fragment_home extends Fragment {
     }
 
     private void AddToScrollView(Item newItem){
-        ItemObject newItemObject = CreateItemObject(newItem, context); //Creates an ItemObject based on the item given
+        newItem.ConstructObject(context); //Creates an ItemObject based on the item given
         //sets the Vertical LinearView to the view set in the xml file. This is the actual list that goes down the screen
         VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
         //creates a new LinearLayout that is horizontal to store the item attributes
         InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
-        //Makes the InsideLinearLayout horzontal so our item's attributes are in a line
+        //Makes the InsideLinearLayout horizontal so our item's attributes are in a line
         InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        //Formatting
-        newItemObject.AmountObject.setPadding(0,0,200,0);
-        newItemObject.ExpireDateObject.setPadding(200,0,0,0);
+        //Formatting for the sizes of each individual layout
+        ViewGroup.LayoutParams AmountObjectParams = new ViewGroup.LayoutParams(100, 50);
+        ViewGroup.LayoutParams NameObjectParams = new ViewGroup.LayoutParams(400, 50);
+        ViewGroup.LayoutParams ExpireDateObjectParams = new ViewGroup.LayoutParams(400, 50);
+
+        //Adds the formatting to the objects
+        newItem.AmountObject.setLayoutParams(AmountObjectParams);
+        newItem.NameObject.setLayoutParams(NameObjectParams);
+        newItem.ExpireDateObject.setLayoutParams(ExpireDateObjectParams);
+        newItem.ExpireDateObject.setPadding(200,0,0,0);
 
         //Adding the TextViews to the InsideLinearLayout view
-        InsideLinearLayout.addView(newItemObject.AmountObject);
-        InsideLinearLayout.addView(newItemObject.NameObject);
-        InsideLinearLayout.addView(newItemObject.ExpireDateObject);
+        InsideLinearLayout.addView(newItem.AmountObject);
+        InsideLinearLayout.addView(newItem.NameObject);
+        InsideLinearLayout.addView(newItem.ExpireDateObject);
 
         //Adding the InsideLinearLayout view to VerticalLinearView
         VerticalLinearView.addView(InsideLinearLayout); //adds the objects to the scrollView
     }
 
-    //Turns a Item into an ItemObject which hold Textviews with the Item
-    private ItemObject CreateItemObject(Item NewItem, Context context){
-        ItemObject NewItemObject = new ItemObject(NewItem, context); //takes an Item and adds makes it into an object
-        return NewItemObject;
-    }
-
     //Creates a AlertBox that prompts the user for an items information
-    private void showDialogToAddItem(List<Item> adapter) {
+    private void showDialogToAddItem() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Add Item");
 
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_item, null);
         builder.setView(dialogView);
 
-        //Creates the Alertbox objects used to get the information from the user
+        //Creates the AlertBox objects used to get the information from the user
         EditText editTextQuantity = dialogView.findViewById(R.id.editTextQuantity);
         EditText editTextItemName = dialogView.findViewById(R.id.editTextItemName);
         CalendarView calendarView = dialogView.findViewById(R.id.calendarView);
@@ -149,28 +144,22 @@ public class fragment_home extends Fragment {
             String itemName = editTextItemName.getText().toString();
             String expirationDate = getFormattedDate(selectedDate);
 
-            Item NewItem = new Item(itemName, quantity, expirationDate);
-            AddToScrollView(NewItem);
-            db.InsertDb(NewItem);
-            adapter.add(NewItem);
+            Item NewItem = new Item(itemName, quantity, expirationDate); //creates the object
+            AddToScrollView(NewItem); //adds the new Item to the Scroll View
+            db.InsertDb(NewItem); //Insets the new item into the database
 
             // Dismiss the dialog after accepting the input
             dialog.dismiss();
         });
 
-        builder.setNegativeButton("Cancel", (dialog, which) -> {
-            dialog.cancel();
-        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         dialog = builder.create();
         dialog.show();
     }
 
     //Gets the item from the database and adds them to the Scroll view
     public void GetItemsFromDatabase(){
-        db = new FirebaseConfig();
-        db.ConnectDatabase();
-
-        testList = new ArrayList<>();
+        ItemList = new ArrayList<>(); //creates a list to hold the items we want to get from the database
 
         //if there is already information displayed when we refresh that information is deleted
         if(InsideLinearLayout != null){
@@ -178,36 +167,32 @@ public class fragment_home extends Fragment {
             VerticalLinearView.removeAllViews(); //the information is removed form the Vertical view
         }
 
-        db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
-            @Override
-            public void OnCallBack(QuerySnapshot querySnapshot) {
-                for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                    String name = document.getString("name");
-                    int quantity = document.getLong("quantity").intValue();
-                    String expirationDate = document.getString("expirationDate");
-                    String documentId = document.getString("documentId");
-                    //String insertedDate = document.getString("insertedDate ");
-                    //String lastUpdated = document.getString("lastUpdated ");
-                    String insertedDate = db.GetDate();
-                    String lastUpdated = db.GetDate();
+        db.GetAll("InventoryItems", querySnapshot -> {
+            for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                String name = document.getString("name");
+                int quantity = Objects.requireNonNull(document.getLong("quantity")).intValue();
+                String expirationDate = document.getString("expirationDate");
+                String documentId = document.getString("documentId");
+                //String insertedDate = document.getString("insertedDate ");
+                //String lastUpdated = document.getString("lastUpdated ");
+                String insertedDate = db.GetDate();
+                String lastUpdated = db.GetDate();
 
-                    Item item = new Item(name, quantity, expirationDate, documentId);
-                    item.insertedDate = insertedDate;
-                    item.lastUpdated = lastUpdated;
+                //creates the item object
+                Item item = new Item(name, quantity, expirationDate, documentId);
+                item.insertedDate = insertedDate;
+                item.lastUpdated = lastUpdated;
 
-                    if (item != null) {
-                     //TODO : make sure there are no duplicates
-                        testList.add(item);
-                    }
+                if (item != null) {//placeholder foe new expression
+                 //TODO : make sure there are no duplicates
+                    ItemList.add(item); //adds the item to the list of items
                 }
-
-                for(Item items: testList){
-                    AddToScrollView(items); //the items are added to the scrollview
-                }
+            }
+            for(Item items: ItemList){
+                AddToScrollView(items); //the items are added to the scrollview
             }
         });
     }
-
 
     private String getFormattedDate(Calendar calendar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -218,36 +203,29 @@ public class fragment_home extends Fragment {
         //scrollView testing
         //items = view.findViewById(R.id.textView2);
 
-        addItem = view.findViewById(R.id.ButtonAddItem);
+        Button addItem = view.findViewById(R.id.ButtonAddItem);
 
         // for testing, deprecated
         //items = view.findViewById(R.id.textView);
+        addItem.setOnClickListener(v -> {
+            //Item newItem = new Item("MilkTest", 1, "12/12/12", dbActions.GetDate(), dbActions.GetDate());
+            //dbActions.testingItemAdd(newItem);
 
-
-        addItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Map<String, Object>> temp;
-
-                //Item newItem = new Item("MilkTest", 1, "12/12/12", dbActions.GetDate(), dbActions.GetDate());
-                //dbActions.testingItemAdd(newItem);
-
-                // it takes a bit of time for the Cloudstore to return the data its getting.
-                // using a callback interface (which is configured and declared inside FirebaseConfig,
-                // this will return to the function when the call returns something!
-                // currently trasnforming to json
-                // TODO: figure if we want json or just convert into item class
-                db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
-                    @Override
-                    public void OnCallBack(QuerySnapshot querySnapshot) {
-                        for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                            String json = document.getData().toString();
-                            List<String> test = new ArrayList<>();
-                            test.add(json);
-                        }
+            // it takes a bit of time for the CloudStore to return the data its getting.
+            // using a callback interface (which is configured and declared inside FirebaseConfig,
+            // this will return to the function when the call returns something!
+            // currently transforming to json
+            // TODO: figure if we want json or just convert into item class
+            db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
+                @Override
+                public void OnCallBack(QuerySnapshot querySnapshot) {
+                    for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                        String json = document.getData().toString();
+                        List<String> test = new ArrayList<>();
+                        test.add(json);
                     }
-                });
-            }
+                }
+            });
         });
     }
 }

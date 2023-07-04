@@ -16,15 +16,15 @@
         android:textSize="32sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:background="@color/white"/>
 
     <ImageView
         android:id="@+id/searchButton"
-        android:layout_width="600dp"
+        android:layout_width="900dp"
         android:layout_height="100dp"
         android:layout_marginTop="65dp"
-        android:layout_marginRight="30dp"
-        android:background="@color/lavender"
+        android:layout_marginRight="3dp"
         android:src="@drawable/img_rectangle1041"
         android:contentDescription="@string/Search"/>
 
@@ -32,7 +32,7 @@
         android:id="@+id/SearchViewItemSearch"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="70dp"
         android:layout_marginRight="10dp"
@@ -41,34 +41,35 @@
         android:textSize="30sp" />
 
     <!-- ScrollView for the search functionality -->
+
+    <!-- Button for editing items -->
     <ScrollView
         android:id="@+id/ScrollViewItems"
-        android:layout_width="370dp"
+        android:layout_width="340dp"
         android:layout_height="400dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="21dp"
+        android:layout_marginStart="32dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="140dp"
         android:layout_marginRight="10dp"
-        android:background="@color/lavender"
-        android:contentDescription="@string/ScrollViewText">
+        android:contentDescription="@string/ScrollViewText"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
 
         <LinearLayout
+            android:id="@+id/LinearLayoutOutside"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/LinearLayoutOutside">
+            android:orientation="vertical">
 
-            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
-    <!-- Button for editing items -->
     <Button
         android:id="@+id/ButtonEditItem"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
         android:theme="@style/Base.Theme.PNP2Inventoryapp"
         android:text="@string/Edit"
         android:textSize="20sp"
@@ -104,21 +105,11 @@
         android:id="@+id/ButtonRefresh"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
+        android:layout_marginStart="150dp"
         android:layout_alignParentBottom="true"
         android:theme="@style/Base.Theme.PNP2Inventoryapp"
         android:contentDescription="@string/add_add"
         android:src="@drawable/updatebutton"
-        />
-
-    <!-- ListView for displaying items -->
-    <ListView
-        android:id="@+id/listViewItems"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ScrollViewItems"
-        android:layout_marginTop="30dp"
-        android:textColor="@android:color/black"
         />
 
 </RelativeLayout>
