@@ -27,6 +27,9 @@ import DbConfig.FirebaseConfig;
 import java.util.Locale;
 import java.util.Objects;
 
+import android.widget.RelativeLayout;
+import android.widget.ImageView;
+
 //Contains all the functions for the fragment home
 //Function List
 //AddToScrollView // Takes in an item// returns void// Adds an item object to the scroll view. The item object creation is handled by the CreateItemObject function
@@ -76,33 +79,61 @@ public class fragment_home extends Fragment {
         return rootView;
     }
 
-    private void AddToScrollView(Item newItem){
+    private void AddToScrollView(Item newItem) {
         newItem.ConstructObject(context); //Creates an ItemObject based on the item given
-        //sets the Vertical LinearView to the view set in the xml file. This is the actual list that goes down the screen
-        VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
-        //creates a new LinearLayout that is horizontal to store the item attributes
-        InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
-        //Makes the InsideLinearLayout horizontal so our item's attributes are in a line
-        InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        //Formatting for the sizes of each individual layout
-        ViewGroup.LayoutParams AmountObjectParams = new ViewGroup.LayoutParams(100, 50);
-        ViewGroup.LayoutParams NameObjectParams = new ViewGroup.LayoutParams(400, 50);
-        ViewGroup.LayoutParams ExpireDateObjectParams = new ViewGroup.LayoutParams(400, 50);
+        // Create a RelativeLayout to hold the item views
+        RelativeLayout itemLayout = new RelativeLayout(VerticalLinearView.getContext());
 
-        //Adds the formatting to the objects
-        newItem.AmountObject.setLayoutParams(AmountObjectParams);
-        newItem.NameObject.setLayoutParams(NameObjectParams);
-        newItem.ExpireDateObject.setLayoutParams(ExpireDateObjectParams);
-        newItem.ExpireDateObject.setPadding(200,0,0,0);
+        // Set the layout parameters for the RelativeLayout
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        itemLayout.setLayoutParams(layoutParams);
 
-        //Adding the TextViews to the InsideLinearLayout view
-        InsideLinearLayout.addView(newItem.AmountObject);
-        InsideLinearLayout.addView(newItem.NameObject);
-        InsideLinearLayout.addView(newItem.ExpireDateObject);
+        // Create the left swipe view for the item
+        ImageView leftSwipeView = new ImageView(VerticalLinearView.getContext());
+        RelativeLayout.LayoutParams leftSwipeParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        leftSwipeParams.addRule(RelativeLayout.ALIGN_PARENT_START);
+        leftSwipeParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        leftSwipeView.setLayoutParams(leftSwipeParams);
+        leftSwipeView.setImageResource(R.drawable.baseline_edit_24); // Set the left swipe drawable
+        leftSwipeView.setVisibility(View.GONE); // Initially hide the left swipe view
 
-        //Adding the InsideLinearLayout view to VerticalLinearView
-        VerticalLinearView.addView(InsideLinearLayout); //adds the objects to the scrollView
+        // Create the delete view for the item
+        ImageView deleteView = new ImageView(VerticalLinearView.getContext());
+        RelativeLayout.LayoutParams deleteParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        deleteParams.addRule(RelativeLayout.ALIGN_PARENT_END);
+        deleteParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        deleteView.setLayoutParams(deleteParams);
+        deleteView.setImageResource(R.drawable.baseline_delete_24); // Set the delete drawable
+        deleteView.setVisibility(View.GONE); // Initially hide the delete view
+
+        // Set the OnTouchListener for the item layout to handle left swipe
+        itemLayout.setOnTouchListener(new OnSwipeTouchListener(context) {
+            @Override
+            public void onSwipeLeft() {
+                leftSwipeView.setVisibility(View.VISIBLE); // Show the left swipe view
+                deleteView.setVisibility(View.VISIBLE); // Show the delete view
+            }
+        });
+
+        // Add the item views to the item layout
+        itemLayout.addView(newItem.AmountObject);
+        itemLayout.addView(newItem.NameObject);
+        itemLayout.addView(newItem.ExpireDateObject);
+        itemLayout.addView(leftSwipeView);
+        itemLayout.addView(deleteView);
+
+        // Adding the item layout to VerticalLinearView
+        VerticalLinearView.addView(itemLayout); //adds the item layout to the scrollView
     }
 
     //Creates a AlertBox that prompts the user for an items information

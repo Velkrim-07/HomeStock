@@ -1,4 +1,3 @@
-
 package com.example.pnp2_inventory_app;
 
 import android.content.Context;

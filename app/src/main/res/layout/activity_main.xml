@@ -61,16 +61,4 @@
         app:menu ="@menu/nav_menu"
         />
 
-        <!--To be added
-        app:itemIconTint=""
-        app:itemTextColor="@color/black"
-        app:itemIconTint where we can put a tint on out icons
-        app:itemTextColor changes our text color
-        -->
-
-
-
-
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

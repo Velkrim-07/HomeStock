@@ -1,5 +1,6 @@
 package com.example.pnp2_inventory_app;
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.HashMap;
