@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lavender"
-    tools:context=".fragment_home">
+    tools:context=".fragment_home"
+    android:orientation="vertical">
 
     <!-- TextView displaying the title "HomeStock" -->
     <TextView
@@ -16,89 +17,64 @@
         android:textSize="32sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:background="@color/white"/>
+        android:layout_marginStart="125dp"
+        android:paddingBottom="20dp"/>
 
-    <ImageView
-        android:id="@+id/searchButton"
-        android:layout_width="900dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginRight="3dp"
-        android:src="@drawable/img_rectangle1041"
-        android:contentDescription="@string/Search"/>
-
-    <EditText
-        android:id="@+id/SearchViewItemSearch"
-        android:layout_width="370dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/Search"
-        android:textColor="@color/black"
-        android:textSize="30sp" />
-
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:foregroundGravity="fill_horizontal"
+        android:foregroundTint="@color/peach"
+        android:foregroundTintMode="add"
+        android:paddingBottom="20dp" />
     <!-- ScrollView for the search functionality -->
 
     <!-- Button for editing items -->
     <ScrollView
         android:id="@+id/ScrollViewItems"
         android:layout_width="340dp"
-        android:layout_height="400dp"
-        android:layout_alignParentStart="true"
+        android:layout_height="300dp"
         android:layout_marginStart="32dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginRight="10dp"
+        android:paddingTop="20dp"
         android:contentDescription="@string/ScrollViewText"
         android:scrollbarAlwaysDrawVerticalTrack="true">
 
         <LinearLayout
-            android:id="@+id/LinearLayoutOutside"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/VerticalLinearLayoutForHome"/>
     </ScrollView>
 
-    <Button
-        android:id="@+id/ButtonEditItem"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:theme="@style/Base.Theme.PNP2Inventoryapp"
-        android:text="@string/Edit"
-        android:textSize="20sp"
-        android:visibility="gone" />
-
-    <!-- Button for adding items -->
-    <Button
-        android:id="@+id/ButtonAdd"
-        android:layout_width="90dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:theme="@style/Base.Theme.PNP2Inventoryapp"
-        android:text="@string/add_add"
-        android:textSize="20sp"
-        android:visibility="gone" />
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal"
+        android:padding="40dp">
 
-    <!-- ImageButton for adding items -->
-    <ImageButton
-        android:id="@+id/ButtonAddItem"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:theme="@style/Base.Theme.PNP2Inventoryapp"
-        android:text="@string/AddButton"
-        android:textSize="20sp"
-        android:contentDescription="@string/add_add"
-        android:src="@drawable/img_plus"
-        />
+        <Button
+            android:id="@+id/ButtonEditItem"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:text="@string/Edit"
+            android:textSize="20sp"
+            android:theme="@style/Base.Theme.PNP2Inventoryapp" />
 
-</RelativeLayout>
+        <!-- ImageButton for adding items -->
+        <ImageButton
+            android:id="@+id/ButtonAddItem"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:contentDescription="@string/add_add"
+            android:src="@drawable/img_plus"
+            android:text="@string/AddButton"
+            android:textSize="20sp"
+            android:theme="@style/Base.Theme.PNP2Inventoryapp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

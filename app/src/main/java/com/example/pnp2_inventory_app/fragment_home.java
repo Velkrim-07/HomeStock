@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.app.AlertDialog;
+import android.widget.ScrollView;
 
 // DbStuff for testing
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -71,15 +72,16 @@ public class fragment_home extends Fragment {
         buttonAddItem.setOnClickListener(v -> showDialogToAddItem());
 
         // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
-        rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
+        rootView.setOnClickListener(v -> {});
 
         return rootView;
     }
 
     private void AddToScrollView(Item newItem){
         newItem.ConstructObject(context); //Creates an ItemObject based on the item given
-        //sets the Vertical LinearView to the view set in the xml file. This is the actual list that goes down the screen
-        VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
+        //sets the Vertical LinearView to the view set in the xml file. This is the actual list that goes down the scree
+        VerticalLinearView = rootView.findViewById(R.id.VerticalLinearLayoutForHome);
+        VerticalLinearView.setOrientation(LinearLayout.VERTICAL);
         //creates a new LinearLayout that is horizontal to store the item attributes
         InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
         //Makes the InsideLinearLayout horizontal so our item's attributes are in a line
