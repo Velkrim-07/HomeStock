@@ -28,19 +28,14 @@ public class MainActivity extends AppCompatActivity {
     // cameraClass object allows for the camera to be called from main
     private cameraClass cameraClass;
     private fragment_home Fragment_home;
-    private  ImageButton RefreshBtn;
-    private ImageButton ImgBtnCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); //creates the instance of the program
         setContentView(R.layout.activity_main); //sets the current view to the activity
-        //initialises the Navigation object
-        navigation = new Navigation(this);
-        Fragment_home = new fragment_home();
-        cameraClass = new cameraClass(navigation,this,this);
-        RefreshBtn = this.findViewById(R.id.ImgBtnRefresh);
-        ImgBtnCamera = findViewById(R.id.ImgBtnCam); //this is the camera button on the navigation bar
+        navigation = new Navigation(this); //initialises the Navigation object
+        Fragment_home = new fragment_home(); //initialises home fragment for the refresh button
+        cameraClass = new cameraClass(navigation,this,this); //creates the instance of the cameraClass
 
         //this is the start of the implementation of the navigation bar. the code for the navigation bar is in the Navigation java file
         //The constructor takes in the context from MainActivity(this). The NavigationCreate takes in the mainActivity as the Activity(this)
@@ -54,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void SetButtons() {
+        ImageButton RefreshBtn = this.findViewById(R.id.ImgBtnRefresh); //Intialises the refresh Button
+        ImageButton ImgBtnCamera = findViewById(R.id.ImgBtnCam); //this is the camera button on the navigation bar
+
         RefreshBtn.setOnClickListener(v -> Fragment_home.GetItemsFromDatabase());
 
         ImgBtnCamera.setOnClickListener(v -> {

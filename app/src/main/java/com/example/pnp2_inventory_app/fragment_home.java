@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.app.AlertDialog;
+import android.widget.ScrollView;
 
 // DbStuff for testing
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -51,28 +52,50 @@ public class fragment_home extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        //Gets the context for this fragment to be used through the program
         context = getContext();
+
+        //A database connection is made
         db = new FirebaseConfig();
         db.ConnectDatabase();
+        //We Initially pull from the database and populate the scrollview
         GetItemsFromDatabase();
+
+        // Find the "Edit" button and set its initial visibility
         buttonEditItem = rootView.findViewById(R.id.ButtonEditItem);
         buttonEditItem.setVisibility(View.VISIBLE);
+        //TODO: Edit Button
+        //Should be able to change an item's members
+        //Should be able to send that item to the database without making another
+
+        //sets a object for the add button
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
         buttonAddItem.setOnClickListener(v -> showDialogToAddItem());
-        rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
+
+        // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
+        rootView.setOnClickListener(v -> {});
 
         return rootView;
     }
 
-    private void AddToScrollView(Item newItem) {
-        newItem.ConstructObject(context);
+    private void AddToScrollView(Item newItem){
+        newItem.ConstructObject(context); //Creates an ItemObject based on the item given
+        //sets the Vertical LinearView to the view set in the xml file. This is the actual list that goes down the screen
         VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
+        //creates a new LinearLayout that is horizontal to store the item attributes
         InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
+        //Makes the InsideLinearLayout horizontal so our item's attributes are in a line
         InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        //Formatting for the sizes of each individual layout
         ViewGroup.LayoutParams AmountObjectParams = new ViewGroup.LayoutParams(100, 50);
         ViewGroup.LayoutParams NameObjectParams = new ViewGroup.LayoutParams(400, 50);
         ViewGroup.LayoutParams ExpireDateObjectParams = new ViewGroup.LayoutParams(400, 50);
+
+        //Adds the formatting to the objects
         newItem.AmountObject.setLayoutParams(AmountObjectParams);
         newItem.NameObject.setLayoutParams(NameObjectParams);
         newItem.ExpireDateObject.setLayoutParams(ExpireDateObjectParams);
@@ -94,15 +117,19 @@ public class fragment_home extends Fragment {
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_item, null);
         builder.setView(dialogView);
 
+        //Creates the AlertBox objects used to get the information from the user
         EditText editTextQuantity = dialogView.findViewById(R.id.editTextQuantity);
         EditText editTextItemName = dialogView.findViewById(R.id.editTextItemName);
         CalendarView calendarView = dialogView.findViewById(R.id.calendarView);
         Button buttonAccept = dialogView.findViewById(R.id.buttonAccept);
 
+        // Variable to store the selected date
         final Calendar selectedDate = Calendar.getInstance();
 
+        // Set the initial selected date
         selectedDate.setTimeInMillis(calendarView.getDate());
 
+        // Set the OnDateChangeListener to update the selected date
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             selectedDate.set(Calendar.YEAR, year);
             selectedDate.set(Calendar.MONTH, month);
