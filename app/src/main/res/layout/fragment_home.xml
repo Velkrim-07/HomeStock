@@ -75,6 +75,7 @@
         android:theme="@style/Base.Theme.PNP2Inventoryapp"
         android:text="@string/Edit"
         android:textSize="20sp"
+        android:textColor="@color/black"
         android:visibility="gone" />
 
     <!-- Button for adding items -->
