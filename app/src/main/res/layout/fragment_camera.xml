@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment_camera">
+    tools:context=".fragment_camera"
+    android:background="@color/lavender">
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView
@@ -22,6 +23,8 @@
         android:layout_marginStart="250dp"
         android:layout_marginTop="600dp"
         android:layout_marginEnd="5dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/peach"
         />
 
     <Button
@@ -32,6 +35,18 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="600dp"
         android:layout_marginEnd="5dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/peach"
         />
+
+    <TextView
+        android:id="@+id/ImageToText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="240dp"
+        android:backgroundTint="@color/peach"
+        android:text=""
+        android:textAlignment="center" />
 
 </FrameLayout>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment_office"
+    android:background="@color/lavender"
+    android:name="category_office">
+
+    <!-- TextView displaying the title "Office" -->
+    <TextView
+        android:id="@+id/textViewOffice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Office"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <!-- ScrollView for the search functionality -->
+    <ScrollView
+        android:id="@+id/ScrollViewItems"
+        android:layout_width="370dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/lavender"
+        android:contentDescription="@string/ScrollViewText">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- ImageButton for search -->
+            <ImageButton
+                android:id="@+id/searchButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/lavender"
+                android:src="@drawable/img_rectangle1041"
+                android:contentDescription="@string/searchButtonDescription" />
+
+            <!-- EditText for search query -->
+            <EditText
+                android:id="@+id/SearchViewItemSearch"
+                android:layout_width="370dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/Search"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+            <!-- Your other views inside the ScrollView go here -->
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <!-- Button for editing items -->
+    <Button
+        android:id="@+id/ButtonEditItem"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:theme="@style/Base.Theme.PNP2Inventoryapp"
+        android:text="@string/Edit"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <!-- ImageButton for adding items -->
+    <ImageButton
+        android:id="@+id/ButtonAddItem"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:theme="@style/Base.Theme.PNP2Inventoryapp"
+        android:text="@string/AddButton"
+        android:textSize="20sp"
+        android:src="@drawable/img_plus"
+        android:contentDescription="@string/ButtonAddItemDescription" />
+
+    <!-- ListView for displaying items -->
+    <ListView
+        android:id="@+id/listViewItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ScrollViewItems"
+        android:layout_marginTop="30dp" />
+
+</RelativeLayout>
+

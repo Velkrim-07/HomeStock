@@ -2,10 +2,14 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.PNP2Inventoryapp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="colorPrimary">@color/Blue</item>
-        <item name="android:background"> @color/Cyan</item>
+        <item name="colorPrimary">@color/peach</item>
+        <item name="android:background"> @color/lavender</item>
         <item name="backgroundTint">@color/lavender</item>
-        <item name="colorSecondary">@color/Blue</item>
+        <item name="colorSecondary">@color/peach</item>
+        <item name="dialogTheme">@color/peach</item>
     </style>
-    <style name="Theme.PNP2Inventoryapp" parent="Base.Theme.PNP2Inventoryapp" />
+    <style name="Theme.PNP2Inventoryapp" parent="Base.Theme.PNP2Inventoryapp">
+        <item name="colorSecondary">@color/peach</item>
+    </style>
+
 </resources>
