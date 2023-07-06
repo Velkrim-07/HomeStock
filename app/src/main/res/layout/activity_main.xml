@@ -30,7 +30,7 @@
                 android:contentDescription="Allows the user to refresh the page"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="150dp"
+                android:layout_marginStart="100dp"
                 android:src= "@drawable/updatebutton"
                 />
 
@@ -61,4 +61,10 @@
         app:menu ="@menu/nav_menu"
         />
 
+        <!--To be added
+        app:itemIconTint=""
+        app:itemTextColor="@color/black"
+        app:itemIconTint where we can put a tint on out icons
+        app:itemTextColor changes our text color
+        -->
 </androidx.drawerlayout.widget.DrawerLayout>
