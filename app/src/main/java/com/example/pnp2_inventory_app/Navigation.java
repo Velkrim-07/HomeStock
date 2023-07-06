@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import android.content.Context;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 public class Navigation implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout; //this is need to create the navigation bar
@@ -48,18 +47,10 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
         navigationView = mainActivity.findViewById(R.id.nav_view); //set the navigation menu to what is set up in the menu/nav_view
         navigationView.setNavigationItemSelectedListener(this);//sets the listener to this
 
-
-
-
-
         //creates the action bar according to the all the other files created for the navigation screen
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(mainActivity, drawerLayout, toolbar, R.string.open_nav,R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-    }
-    public Context GetContextFragHome(Context FragHoemContext){
-        Context FragmentHomeConext = FragHoemContext;
-        return FragmentHomeConext;
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) { //should switch the screen between the different fragments
@@ -67,6 +58,7 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
         //would love to use a switch but it does not work
         if(itemId == R.id.nav_home) { // id of the home menu
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_home).commit();
+
         }
         else if(itemId == R.id.nav_settings) {//id of the settings menu
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_settings).commit();
