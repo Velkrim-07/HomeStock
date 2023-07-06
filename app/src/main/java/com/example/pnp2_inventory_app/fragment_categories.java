@@ -1,23 +1,19 @@
 package com.example.pnp2_inventory_app;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -51,37 +47,12 @@ public class fragment_categories extends Fragment {
         db = new FirebaseConfig();
         db.ConnectDatabase();
 
-        ImageButton AddCategory = view.findViewById(R.id.ButtonAddCategory);
-        AddCategory.setOnClickListener(v -> {
-            AlertBox();//opens the dialog box
-        });
-
-        //Button is used to direct to food category page
-        Button foodButton = (Button) view.findViewById(R.id.ButtonFoodCategory);
-        foodButton.setOnClickListener(this::navigateToFoodFragment);
-
-        Button officeButton = (Button) view.findViewById(R.id.ButtonOfficeCategory);
-        officeButton.setOnClickListener(v -> navigateToOfficeFragment());
-
+        Button_Handler.AddCategory(view,R.id.ButtonAddCategory, this);
+        Button_Handler.AddFoodButton(view, R.id.ButtonFoodCategory, this);
+        Button_Handler.AddOfficeButton(view, R.id.ButtonOfficeCategory, this);
         InitialiseButtons(); //initialise user buttons
 
         return view; // Return the inflated view
-    }
-
-    public void navigateToFoodFragment(View view) {
-        Fragment fragment = new fragment_food();
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    public void navigateToOfficeFragment() {
-        Fragment fragment = new fragment_office(); // Replace fragment_office with your office fragment class
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
     //this creates the button object to be used
@@ -111,13 +82,13 @@ public class fragment_categories extends Fragment {
     public void InitialiseButtons(){
         NewButtonArray = navigation.GetButtonArray();
         for (int i = 0; i < NewButtonArray.length; i++ ){
-            if(NewButtonArray[i] == null || Objects.equals((String) NewButtonArray[i].getText(), "")) {break;}
+            if(NewButtonArray[i] == null || Objects.equals(NewButtonArray[i].getText(), "")) {break;}
             else{ButtonLayoutAdder(AddCategory((String)NewButtonArray[i].getText()), i);}
         }
     }
 
     //this pulls up the Alertbox and adds a button the user fills out the data
-    private void AlertBox(){
+    public void AlertBox(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context); //create an alert-box object
         alertBuilder.create(); //creates the objects to be used
         alertBuilder.setTitle("Create Category"); //sets the title the user will see
@@ -125,8 +96,6 @@ public class fragment_categories extends Fragment {
 
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_make_category, null);
         alertBuilder.setView(dialogView);
-
-        LinearLayout AlertBoxLinearLayout = new LinearLayout(alertBuilder.getContext());
 
         final EditText ETName = dialogView.findViewById(R.id.editTextItemName);
 
