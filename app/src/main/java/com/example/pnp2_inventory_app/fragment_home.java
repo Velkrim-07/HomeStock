@@ -37,10 +37,6 @@ import android.widget.ImageView;
 //showDialogToAddItem// Takes in an List<Item> // return void// Creates a dialog button that gets an item's attributes from the user and uses the AddToScrollView function to display the data to the user
 //GetItemsFromDatabase// Takes in noting// returns void// Gets information from the database and populates the Layout views. If the view is filled the function will update the view
 //getFormattedDate// Takes in a Calendar // return a string // Takes a data and formats that into a string
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.widget.TextView;
-
 import androidx.core.content.ContextCompat;
 
 public class fragment_home extends Fragment {
@@ -52,7 +48,6 @@ public class fragment_home extends Fragment {
     private AlertDialog dialog;
     private FirebaseConfig db;
     private List<Item> ItemList;
-    private GestureDetector gestureDetector;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,12 +61,6 @@ public class fragment_home extends Fragment {
         ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
         buttonAddItem.setOnClickListener(v -> showDialogToAddItem());
         rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
-
-        gestureDetector = new GestureDetector(context, new SwipeGestureListener());
-        rootView.setOnTouchListener((v, event) -> {
-            gestureDetector.onTouchEvent(event);
-            return true;
-        });
 
         return rootView;
     }
@@ -87,10 +76,13 @@ public class fragment_home extends Fragment {
         newItem.AmountObject.setLayoutParams(AmountObjectParams);
         newItem.NameObject.setLayoutParams(NameObjectParams);
         newItem.ExpireDateObject.setLayoutParams(ExpireDateObjectParams);
-        newItem.ExpireDateObject.setPadding(200, 0, 0, 0);
+        newItem.ExpireDateObject.setPadding(140, 0, 0, 0);
         InsideLinearLayout.addView(newItem.AmountObject);
         InsideLinearLayout.addView(newItem.NameObject);
         InsideLinearLayout.addView(newItem.ExpireDateObject);
+        // Add padding between each item
+        int paddingBetweenItems = 0;
+        InsideLinearLayout.setPadding(0, paddingBetweenItems, 0, paddingBetweenItems);
         VerticalLinearView.addView(InsideLinearLayout);
     }
 
@@ -123,8 +115,8 @@ public class fragment_home extends Fragment {
             String expirationDate = getFormattedDate(selectedDate);
 
             Item NewItem = new Item(itemName, quantity, expirationDate); //creates the object
-            AddToScrollView(NewItem); //adds the new Item to the Scroll View
             db.InsertDb(NewItem); //Insets the new item into the database
+            AddToScrollView(NewItem); //adds the new Item to the Scroll View
 
             // Dismiss the dialog after accepting the input
             dialog.dismiss();
@@ -206,36 +198,4 @@ public class fragment_home extends Fragment {
             });
         });
     }
-
-    private class SwipeGestureListener extends GestureDetector.SimpleOnGestureListener {
-        private static final int SWIPE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            boolean result = false;
-            float diffX = e2.getX() - e1.getX();
-            float diffY = e2.getY() - e1.getY();
-
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (diffX > 0) {
-                        // Right swipe (not used in this example)
-                    } else {
-                        // Perform left swipe action here
-                        // For example, display the desired drawables and update the item's view
-                        int childCount = VerticalLinearView.getChildCount();
-                        for (int i = 0; i < childCount; i++) {
-                            LinearLayout childLayout = (LinearLayout) VerticalLinearView.getChildAt(i);
-                            TextView childView = (TextView) childLayout.getChildAt(0);
-                            // Update the child view with the desired drawables
-                            childView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_edit_24, 0, R.drawable.baseline_delete_24, 0);
-                        }
-                    }
-                    result = true;
-                }
-            }
-
-            return result;
-        }}
 }

@@ -1,5 +1,6 @@
 package com.example.pnp2_inventory_app;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -85,11 +86,14 @@ public class Item {
         NameObject = new TextView(fragContext);
         NameObject.setTextSize(15);
         NameObject.setText(m_Name);
+        NameObject.setBackgroundColor(Color.parseColor("#e6f2a2"));
         AmountObject = new TextView(fragContext);
         AmountObject.setTextSize(15);
         AmountObject.setText(String.valueOf(m_Quantity));
+        AmountObject.setBackgroundColor(Color.parseColor("#e6f2a2"));
         ExpireDateObject = new TextView(fragContext);
         ExpireDateObject.setTextSize(15);
         ExpireDateObject.setText(m_ExpirationDate);
+        ExpireDateObject.setBackgroundColor(Color.parseColor("#e6f2a2"));
     }
 }
