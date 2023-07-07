@@ -46,11 +46,13 @@ public class fragment_home extends Fragment {
         //A database connection is made
         db = new FirebaseConfig();
         db.ConnectDatabase();
+
         //We Initially pull from the database and populate the scrollview
         GetItemsFromDatabase();
 
         Button_Handler.MakeAddButton(rootView, R.id.ButtonAddItem, this);
         Button_Handler.makeEditButton(rootView, R.id.ButtonEditItem);
+        Button_Handler.MakeDeleteButton(rootView, R.id.ButtonDelete, context, db, this);
 
         return rootView;
     }
@@ -119,6 +121,7 @@ public class fragment_home extends Fragment {
 
             Item NewItem = new Item(itemName, quantity, expirationDate); //creates the object
             db.InsertDb(NewItem); //Insets the new item into the database
+            ItemList.add(NewItem);
             AddToScrollView(NewItem); //adds the new Item to the Scroll View
 
             // Dismiss the dialog after accepting the input
@@ -128,6 +131,10 @@ public class fragment_home extends Fragment {
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         dialog = builder.create();
         dialog.show();
+    }
+
+    public List<Item> getItemList(){
+        return ItemList;
     }
 
     //Gets the item from the database and adds them to the Scroll view

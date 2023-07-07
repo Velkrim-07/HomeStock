@@ -1,6 +1,7 @@
 package com.example.pnp2_inventory_app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -8,6 +9,8 @@ import android.widget.ImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import DbConfig.FirebaseConfig;
 
 //Class for handling all of the button events
 //If need be we can move certain buttons to other classes for ease of access
@@ -86,5 +89,11 @@ public class Button_Handler
             fragmentchanger.beginTransaction().replace(R.id.fragment_container, cameraFragment).commit();
         });
         return camera;
+    }
+
+    public static void MakeDeleteButton(View view, int Id, Context fragcontext, FirebaseConfig db, fragment_home fragmentHome){
+        ImageButton button = view.findViewById(Id);
+        dialog_delete deleteMenu = new dialog_delete();
+        button.setOnClickListener(v -> deleteMenu.AlertBox(db, fragcontext, fragmentHome));
     }
 }
