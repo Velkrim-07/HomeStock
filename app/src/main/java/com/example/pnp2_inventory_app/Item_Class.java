@@ -65,7 +65,7 @@ public class Item_Class
     //This method will be used to show the user the "health" of their food with a food bar
     public String DetermineFoodHealth()
     {
-        //These ints will be used to create the LOcal
+        //These ints will be used to create the Local
         int year;
         int month;
         int day;
