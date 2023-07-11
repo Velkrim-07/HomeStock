@@ -24,6 +24,7 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
     private fragment_categories fragment_categories;
     private fragment_home fragment_home;
     private fragment_Settings fragment_settings;
+    private ProfileFragment fragment_profile_page;
 
     private Button[] categoryButtonArrays;
     public Navigation(Context context){//this is the constructor for the Navigation.
@@ -44,6 +45,7 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
         fragment_home = new fragment_home();
         fragment_categories = new fragment_categories(this, categoryButtonArrays);
         fragment_settings = new fragment_Settings();
+        fragment_profile_page = new ProfileFragment();
 
         navigationView = mainActivity.findViewById(R.id.nav_view); //set the navigation menu to what is set up in the menu/nav_view
         navigationView.setNavigationItemSelectedListener(this);//sets the listener to this
@@ -73,6 +75,9 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
         }
         else if(itemId == R.id.nav_category) {
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_categories).commit();
+        }
+        else if (itemId == R.id.nav_profile) {
+            ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_profile_page).commit();
         }
         else if (itemId == R.id.nav_logout) {
                 FirebaseAuth.getInstance().signOut();

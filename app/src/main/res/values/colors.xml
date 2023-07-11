@@ -27,4 +27,7 @@
     <color name="bluegray_900_7e">#7e303030</color>
     <color name="white_A700">#ffffff</color>
     <color name="peach">#FCC9B6</color>
+
+    <color name="night_mode">#2B104E</color>
+
 </resources>

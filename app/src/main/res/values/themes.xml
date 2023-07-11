@@ -11,5 +11,10 @@
     <style name="Theme.PNP2Inventoryapp" parent="Base.Theme.PNP2Inventoryapp">
         <item name="colorSecondary">@color/peach</item>
     </style>
+    
+    <style name="nightModeSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/night_mode</item>
+        <item name="colorSwitchThumbNormal">@color/white</item>
+    </style>
 
 </resources>

@@ -37,4 +37,8 @@
     <string name="Settings"> Settings</string>
     <string name="ManageHome"> Manage Home</string>
     <string name="categoryContentDescription">Adds a new category</string>
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="notifications">Notifications</string>
+    <string name="family">Family</string>
 </resources>

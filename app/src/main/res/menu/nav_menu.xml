@@ -17,6 +17,14 @@
             android:gravity="center"
             android:titleTextColor="@color/peach" />
 
+        <!-- Creates the item for profile on the menu -->
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/nav_profile"
+            android:title="@string/profile"
+            android:gravity="center"
+            android:titleTextColor="@color/peach" />
+
         <!-- Creates the item for category on the menu -->
         <item
             android:id="@+id/nav_category"
@@ -36,6 +44,7 @@
         <!-- Creates the item for logout on the menu -->
         <item
             android:id="@+id/nav_logout"
+            android:icon="@drawable/nav_logout"
             android:title="@string/logout"
             android:gravity="center"
             android:titleTextColor="@color/peach" />
