@@ -6,6 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import com.google.firebase.firestore.PropertyName;
+
+
+// util class
+import DbConfig.Util;
+
+
 public class Item {
     // was private changed for testing
     @PropertyName("name")
@@ -42,7 +48,7 @@ public class Item {
         m_Name = itemName;
         m_Quantity = amount;
         m_ExpirationDate = expireDate;
-        CreateGuid(); //gets a random document id
+        documentId = DbConfig.Util.CreateGuid(); // gets a random document id
     }
     //Constructor for item inside database
     public Item(String itemName, int amount, String expireDate, String _documentId){
@@ -60,10 +66,6 @@ public class Item {
     }
     public String getExpirationDate() {
         return m_ExpirationDate;
-    }
-
-    public void CreateGuid(){
-        documentId =  UUID.randomUUID().toString();
     }
 
     // Implement the toMap() method

@@ -39,6 +39,10 @@ public class FirebaseConfig {
     private FirebaseFirestore db;
     private static final String TAG = "DbConnection";
 
+    // create collectionRef here
+    String collectionName = "Households"; // Replace with the actual collection name
+    String subcollectionName = "InventoryItems"; // Replace with the actual subcollection name
+
     public void ConnectDatabase(){
         db = FirebaseFirestore.getInstance();
     }
@@ -73,12 +77,23 @@ public class FirebaseConfig {
     // TODO: It has to have a documentId, name, quantity and expirationDate. The insertedDate&lastUpdated will be handled inside the insertion Method
     public void InsertDb(Item _item){
 
+        HouseholdConfig temp = new HouseholdConfig();
+        temp.ConnectDatabase();
+
+        String tempTwo;
+        tempTwo = temp.GetDocumentIdFromHouseHold();
+        tempTwo = temp.GetDocumentIdFromHouseHold();
+        tempTwo = "a2553d61-c3ef-465e-96c0-8f9b75159393"; // for now
+
+        DocumentReference documentRef = db.collection(collectionName).document(tempTwo);
+        CollectionReference subcollectionRef = documentRef.collection(subcollectionName);
+
         // creates random GUID for documentID, insertDate and lastUpdated from current timestamp
-        _item.CreateGuid();
+        _item.documentId = DbConfig.Util.CreateGuid();
         _item.insertedDate = GetDate();
         _item.lastUpdated = GetDate();
 
-        db.collection("InventoryItems").document(_item.documentId).set(_item)
+        subcollectionRef.document(_item.documentId).set(_item)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(Task<Void> task) {
@@ -168,6 +183,10 @@ public class FirebaseConfig {
     // Updates specific Item in the Db, requires the documentId.
     // It changes the Item into a Map since the update method requires a Map. - toMap();
     public void UpdateFromId(String _documentId, Item _item){
+
+        // change lastUpdated field from item
+        _item.lastUpdated = GetDate();
+
         db.collection("InventoryItems").document(_documentId).update(_item.toMap())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
