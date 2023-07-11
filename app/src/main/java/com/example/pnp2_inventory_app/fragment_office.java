@@ -78,9 +78,6 @@ public class fragment_office extends Fragment {
             }
         });
 
-        // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
-        rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
-
         return rootView;
     }
 }

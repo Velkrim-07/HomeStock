@@ -1,47 +1,37 @@
 package com.example.pnp2_inventory_app;
 
 //Fragment Usage needs
+
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.content.Context;
-
-//Objects
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.app.AlertDialog;
 
-// DbStuff for testing
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import DbConfig.FirebaseConfig;
 import java.util.Locale;
 import java.util.Objects;
 
-//Contains all the functions for the fragment home
-//Function List
-//AddToScrollView // Takes in an item// returns void// Adds an item object to the scroll view. The item object creation is handled by the CreateItemObject function
-//CreateItemObject // Takes in an item and the context// returns the item object // creates an item object
-//showDialogToAddItem// Takes in an List<Item> // return void// Creates a dialog button that gets an item's attributes from the user and uses the AddToScrollView function to display the data to the user
-//GetItemsFromDatabase// Takes in noting// returns void// Gets information from the database and populates the Layout views. If the view is filled the function will update the view
-//getFormattedDate// Takes in a Calendar // return a string // Takes a data and formats that into a string
+import DbConfig.FirebaseConfig;
 
 public class fragment_home extends Fragment {
     private Context context;
-    private  View rootView;
+    private View rootView;
     private LinearLayout InsideLinearLayout;
     private LinearLayout VerticalLinearView;
-    private Button buttonEditItem;
-    private AlertDialog dialog; // Declare the dialog as a member variable
+    private AlertDialog dialog;
     private FirebaseConfig db;
     private List<Item> ItemList;
 
@@ -56,31 +46,20 @@ public class fragment_home extends Fragment {
         //A database connection is made
         db = new FirebaseConfig();
         db.ConnectDatabase();
+
         //We Initially pull from the database and populate the scrollview
         GetItemsFromDatabase();
 
-        // Find the "Edit" button and set its initial visibility
-        buttonEditItem = rootView.findViewById(R.id.ButtonEditItem);
-        buttonEditItem.setVisibility(View.VISIBLE);
-        //TODO: Edit Button
-        //Should be able to change an item's members
-        //Should be able to send that item to the database without making another
-
-        //sets a object for the add button
-        ImageButton buttonAddItem = rootView.findViewById(R.id.ButtonAddItem);
-        buttonAddItem.setOnClickListener(v -> showDialogToAddItem());
-
-        // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
-        rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
+        Button_Handler.MakeAddButton(rootView, R.id.ButtonAddItem, this);
+        Button_Handler.makeEditButton(rootView, R.id.ButtonEditItem);
+        Button_Handler.MakeDeleteButton(rootView, R.id.ButtonDelete, context, db, this);
 
         return rootView;
     }
 
-    private void AddToScrollView(Item newItem){
-        newItem.ConstructObject(context); //Creates an ItemObject based on the item given
-        //sets the Vertical LinearView to the view set in the xml file. This is the actual list that goes down the screen
+    private void AddToScrollView(Item newItem) {
+        newItem.ConstructObject(context);
         VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
-        //creates a new LinearLayout that is horizontal to store the item attributes
         InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
         //Makes the InsideLinearLayout horizontal so our item's attributes are in a line
         InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -94,19 +73,22 @@ public class fragment_home extends Fragment {
         newItem.AmountObject.setLayoutParams(AmountObjectParams);
         newItem.NameObject.setLayoutParams(NameObjectParams);
         newItem.ExpireDateObject.setLayoutParams(ExpireDateObjectParams);
-        newItem.ExpireDateObject.setPadding(200,0,0,0);
+        newItem.ExpireDateObject.setPadding(140, 0, 0, 0);
 
         //Adding the TextViews to the InsideLinearLayout view
         InsideLinearLayout.addView(newItem.AmountObject);
         InsideLinearLayout.addView(newItem.NameObject);
         InsideLinearLayout.addView(newItem.ExpireDateObject);
 
-        //Adding the InsideLinearLayout view to VerticalLinearView
-        VerticalLinearView.addView(InsideLinearLayout); //adds the objects to the scrollView
+        // Add padding between each item
+        int paddingBetweenItems = 0;
+
+        InsideLinearLayout.setPadding(0, paddingBetweenItems, 0, paddingBetweenItems);
+        VerticalLinearView.addView(InsideLinearLayout);
     }
 
     //Creates a AlertBox that prompts the user for an items information
-    private void showDialogToAddItem() {
+    public void showDialogToAddItem() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Add Item");
 
@@ -138,8 +120,9 @@ public class fragment_home extends Fragment {
             String expirationDate = getFormattedDate(selectedDate);
 
             Item NewItem = new Item(itemName, quantity, expirationDate); //creates the object
-            AddToScrollView(NewItem); //adds the new Item to the Scroll View
             db.InsertDb(NewItem); //Insets the new item into the database
+            ItemList.add(NewItem);
+            AddToScrollView(NewItem); //adds the new Item to the Scroll View
 
             // Dismiss the dialog after accepting the input
             dialog.dismiss();
@@ -148,6 +131,10 @@ public class fragment_home extends Fragment {
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         dialog = builder.create();
         dialog.show();
+    }
+
+    public List<Item> getItemList(){
+        return ItemList;
     }
 
     //Gets the item from the database and adds them to the Scroll view
@@ -190,35 +177,5 @@ public class fragment_home extends Fragment {
     private String getFormattedDate(Calendar calendar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dateFormat.format(calendar.getTime());
-    }
-
-    public void testingThisShit(View view) {
-        //scrollView testing
-        //items = view.findViewById(R.id.textView2);
-
-        Button addItem = view.findViewById(R.id.ButtonAddItem);
-
-        // for testing, deprecated
-        //items = view.findViewById(R.id.textView);
-        addItem.setOnClickListener(v -> {
-            //Item newItem = new Item("MilkTest", 1, "12/12/12", dbActions.GetDate(), dbActions.GetDate());
-            //dbActions.testingItemAdd(newItem);
-
-            // it takes a bit of time for the CloudStore to return the data its getting.
-            // using a callback interface (which is configured and declared inside FirebaseConfig,
-            // this will return to the function when the call returns something!
-            // currently transforming to json
-            // TODO: figure if we want json or just convert into item class
-            db.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
-                @Override
-                public void OnCallBack(QuerySnapshot querySnapshot) {
-                    for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                        String json = document.getData().toString();
-                        List<String> test = new ArrayList<>();
-                        test.add(json);
-                    }
-                }
-            });
-        });
     }
 }

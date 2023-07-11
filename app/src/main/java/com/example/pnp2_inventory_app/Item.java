@@ -1,11 +1,19 @@
 package com.example.pnp2_inventory_app;
 import android.content.Context;
+import android.graphics.Color;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import com.google.firebase.firestore.PropertyName;
+
+
+// util class
+import DbConfig.Util;
+
+
 public class Item {
     // was private changed for testing
     @PropertyName("name")
@@ -42,7 +50,7 @@ public class Item {
         m_Name = itemName;
         m_Quantity = amount;
         m_ExpirationDate = expireDate;
-        CreateGuid(); //gets a random document id
+        documentId = DbConfig.Util.CreateGuid(); // gets a random document id
     }
     //Constructor for item inside database
     public Item(String itemName, int amount, String expireDate, String _documentId){
@@ -60,10 +68,6 @@ public class Item {
     }
     public String getExpirationDate() {
         return m_ExpirationDate;
-    }
-
-    public void CreateGuid(){
-        documentId =  UUID.randomUUID().toString();
     }
 
     // Implement the toMap() method
@@ -84,11 +88,14 @@ public class Item {
         NameObject = new TextView(fragContext);
         NameObject.setTextSize(15);
         NameObject.setText(m_Name);
+        NameObject.setBackgroundColor(Color.parseColor("#e6f2a2"));
         AmountObject = new TextView(fragContext);
         AmountObject.setTextSize(15);
         AmountObject.setText(String.valueOf(m_Quantity));
+        AmountObject.setBackgroundColor(Color.parseColor("#e6f2a2"));
         ExpireDateObject = new TextView(fragContext);
         ExpireDateObject.setTextSize(15);
         ExpireDateObject.setText(m_ExpirationDate);
+        ExpireDateObject.setBackgroundColor(Color.parseColor("#e6f2a2"));
     }
 }

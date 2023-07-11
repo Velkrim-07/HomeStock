@@ -1,72 +1,45 @@
 package com.example.pnp2_inventory_app;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-// map and hash for testing
-//import com.google.firebase.FirebaseApp;
-
-// buttonTesting
+import android.content.Intent;
 import android.os.Bundle;
 
-// camera and UI
-import android.widget.ImageButton;
-import androidx.fragment.app.Fragment;
-import android.content.Intent;
-
-// DataStructures
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-// DbConnection package!
-import DbConfig.FirebaseConfig;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    //this fragment is used in the camera class
-    private Fragment fragment;
     // navigation object is created so we can access the navigation throughout the file
     private Navigation navigation;
     // cameraClass object allows for the camera to be called from main
-    private cameraClass cameraClass;
-    private fragment_home Fragment_home;
-    private  ImageButton RefreshBtn;
-    private ImageButton ImgBtnCamera;
+    private cameraClass CameraClass;
+    private fragment_home Fragment_Home;
+    private fragment_camera Fragment_Camera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); //creates the instance of the program
         setContentView(R.layout.activity_main); //sets the current view to the activity
-        //initialises the Navigation object
-        navigation = new Navigation(this);
-        Fragment_home = new fragment_home();
-        cameraClass = new cameraClass(navigation,this,this);
-        RefreshBtn = this.findViewById(R.id.ImgBtnRefresh);
-        ImgBtnCamera = findViewById(R.id.ImgBtnCam); //this is the camera button on the navigation bar
 
+        Fragment_Camera = new fragment_camera();
+        Fragment_Home = Button_Handler.AddRefreshButton(R.id.ImgBtnRefresh, this);
+        MakeNavigation(savedInstanceState);
+        CameraClass = Button_Handler.AddCameraButton(R.id.ImgBtnCam, this, getSupportFragmentManager(), navigation, Fragment_Camera);
+    }
+
+    private void MakeNavigation(Bundle savedInstanceState){
+        navigation = new Navigation(this); //initialises the Navigation object
         //this is the start of the implementation of the navigation bar. the code for the navigation bar is in the Navigation java file
         //The constructor takes in the context from MainActivity(this). The NavigationCreate takes in the mainActivity as the Activity(this)
         navigation.NavigationCreate(this); //if the context is not null then it will be used for the navigation bar
         if (savedInstanceState == null) {//if the saved Instance(basically the programs screen) is not active we set the home screen to the fragment being shown
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Fragment_home).commit(); //Sets the screen to home if nothing is displayed
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Fragment_Home).commit(); //Sets the screen to home if nothing is displayed
             navigation.GetNavigationBar().setCheckedItem(R.id.nav_home); //sets the navigation bar to having home selected
-        }//this is the end of the navigation bar implementation
-
-        SetButtons();//has to be at the bottom so the Fragments is set
-    }
-
-    private void SetButtons() {
-        RefreshBtn.setOnClickListener(v -> Fragment_home.GetItemsFromDatabase());
-
-        ImgBtnCamera.setOnClickListener(v -> {
-            cameraClass.dispatchTakePictureIntent(); //this changes the intent to a camera and gets the bitmap of the picture
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new fragment_camera()).commit(); //this changes the screen to the fragment
-        });
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        cameraClass.OnActivityHelper(requestCode, resultCode, data, fragment);
-        cameraClass.DetectText();
+        CameraClass.OnActivityHelper(requestCode, resultCode, data, Fragment_Camera);
+        CameraClass.DetectText();
     }
 
     public Navigation getNavigation(){

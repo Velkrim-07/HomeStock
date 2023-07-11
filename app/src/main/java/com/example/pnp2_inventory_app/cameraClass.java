@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 //import androidx.appcompat.app.AppCompatActivity; not used
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.tasks.OnFailureListener;
 //import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,16 +33,16 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 public class cameraClass {
     private final Navigation navigation;
     private final Activity mainActivity;
-    androidx.fragment.app.FragmentActivity fragmentActivity;
     private static final int REQUEST_IMAGE_CAPTURE = 1; //this allows us to use the camera
     private Bitmap imageTTBitmap; //this will hold the data for the picture
     protected Intent cameraIntent; //this will change the screen to the camera
     private TextView ResultITT; //this is where the text will be shown
+    private FragmentManager fragmentManager;
 
-    cameraClass(Navigation navigation, Activity mainActivity, androidx.fragment.app.FragmentActivity fragmentActivity){
+    cameraClass(Navigation navigation, Activity mainActivity, FragmentManager fragmentManager){
         this.navigation = navigation;
         this.mainActivity = mainActivity;
-        this.fragmentActivity = fragmentActivity;
+        this.fragmentManager = fragmentManager;
     }
 
     @SuppressWarnings("deprecation")
@@ -57,21 +58,19 @@ public class cameraClass {
     }
 
     public void AcceptPictureHandler(View fragmentView){
-        Button AcceptPicture = fragmentView.findViewById(R.id.AcceptPicture);
-        ResultITT = fragmentView.findViewById(R.id.ImageToText);
-        AcceptPicture.setOnClickListener(v -> {
-            DetectText();//scans the text
-            fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new fragment_home()).commit(); //Sets the screen to home if nothing is displayed
-            navigation.GetNavigationBar().setCheckedItem(R.id.nav_home); //sets the navigation bar to having home selected
-        });
+        Button_Handler.makeCameraAcceptButton(fragmentView, R.id.AcceptPicture, this);
+        DetectText();//scans the text
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, new fragment_home()).commit(); //Sets the screen to home if nothing is displayed
+        navigation.GetNavigationBar().setCheckedItem(R.id.nav_home); //sets the navigation bar to having home selected
     }
 
-    public void OnActivityHelper(int requestCode, int resultCode, Intent data, Fragment fragment){
+    public void OnActivityHelper(int requestCode, int resultCode, Intent data, fragment_camera camera){
+        ResultITT = camera.getView().findViewById(R.id.ImageToText); //why is this being done here?
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) { //if the picture is accepted then the data will be used to create the bitmap
             // Picture captured successfully
             // Once the picture has been captured successfully then it will be sent to the detectText class to be converted
             imageTTBitmap = (Bitmap) data.getExtras().get("data");
-            fragment = fragmentActivity.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
             if (fragment != null) {
                 //this allows us to use the buttons from the fragment in main
                 View fragmentView = fragment.getView(); // Access the views in the fragment
