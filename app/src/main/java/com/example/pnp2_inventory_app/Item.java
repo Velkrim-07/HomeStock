@@ -87,14 +87,17 @@ public class Item {
     public void ConstructObject(Context fragContext){
         NameObject = new TextView(fragContext);
         NameObject.setTextSize(15);
+        NameObject.setTextColor(Color.parseColor("#000000"));
         NameObject.setText(m_Name);
         NameObject.setBackgroundColor(Color.parseColor("#e6f2a2"));
         AmountObject = new TextView(fragContext);
         AmountObject.setTextSize(15);
+        AmountObject.setTextColor(Color.parseColor("#000000"));
         AmountObject.setText(String.valueOf(m_Quantity));
         AmountObject.setBackgroundColor(Color.parseColor("#e6f2a2"));
         ExpireDateObject = new TextView(fragContext);
         ExpireDateObject.setTextSize(15);
+        ExpireDateObject.setTextColor(Color.parseColor("#000000"));
         ExpireDateObject.setText(m_ExpirationDate);
         ExpireDateObject.setBackgroundColor(Color.parseColor("#e6f2a2"));
     }
