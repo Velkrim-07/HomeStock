@@ -37,8 +37,9 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
 
         drawerLayout = mainActivity.findViewById(R.id.drawer_layout); //Initialises up the DrawerLayout for the navigation menu in this file
 
-        categoryButtonArrays = new Button[10];
+        categoryButtonArrays = new Button[10]; //this holds the buttons from the categories class
 
+        //initialises the fragments
         fragment_home = new fragment_home();
         fragment_categories = new fragment_categories(this, categoryButtonArrays);
         fragment_settings = new fragment_Settings();
@@ -51,13 +52,13 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) { //should switch the screen between the different fragments
         int itemId = item.getItemId();//gets the id of the item/ fragment the user is currently seeing
         //would love to use a switch but it does not work
         if(itemId == R.id.nav_home) { // id of the home menu
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_home).commit();
+
         }
         else if(itemId == R.id.nav_settings) {//id of the settings menu
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_settings).commit();
@@ -86,9 +87,12 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
     public NavigationView GetNavigationBar(){
         return navigationView; //sends the navigation bar to the MainActivity
     }
+    //this is used in to give the button array to navigation
     public void SetButtonArray(Button[] ButtonArray){
         categoryButtonArrays = ButtonArray;
     }
+
+    //this gets the ButtonArray from navigation to categories
     public Button[] GetButtonArray(){
         return categoryButtonArrays;
     }

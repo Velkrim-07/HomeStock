@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="15dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
@@ -11,64 +12,65 @@
         android:textSize="40sp"
         android:layout_centerHorizontal="true"/>
 
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/RelativeLayout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginTop="75dp"
-        tools:context=".fragment_categories"
-        >
+    <ScrollView
+        android:layout_width="360dp"
+        android:layout_height="450dp"
+        android:layout_marginTop="60dp">
         <LinearLayout
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/LeftLayout"
-            android:orientation="vertical">
+            android:id="@+id/RelativeLayout"
+            android:orientation="horizontal"
+            android:layout_width="360dp"
+            android:layout_height="450dp"
+            tools:context=".fragment_categories">
 
-            <Button
-                android:id="@+id/ButtonOfficeCategory"
-                android:layout_width="165dp"
+            <LinearLayout
+                android:layout_width="180dp"
                 android:layout_height="100dp"
-                android:text="@string/Office"
-                android:layout_marginStart="17.5dp"
-                android:textSize="40sp"
-                android:backgroundTint="@color/peach"
-                android:theme="@style/Base.Theme.PNP2Inventoryapp" />
+                android:id="@+id/LeftLayout"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/ButtonOfficeCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="@string/Office"
+                    android:textSize="40sp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/peach"
+                    android:theme="@style/Base.Theme.PNP2Inventoryapp"/>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:id="@+id/RightLayout"
-            android:orientation="vertical">
-            <Button
-                android:layout_width="165dp"
+            <LinearLayout
+                android:layout_width="180dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="17.5dp"
-                android:id="@+id/ButtonFoodCategory"
-                android:theme="@style/Base.Theme.PNP2Inventoryapp"
-                android:text="@string/Food"
-                android:textSize="40sp"
-                android:backgroundTint="@color/peach"
-                />
+                android:id="@+id/RightLayout"
+                android:orientation="vertical">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:id="@+id/ButtonFoodCategory"
+                    android:theme="@style/Base.Theme.PNP2Inventoryapp"
+                    android:text="@string/Food"
+                    android:textSize="40sp"
+                    android:backgroundTint="@color/peach"
+                    android:textColor="@color/black" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <ImageButton
         android:id="@+id/ButtonAddCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="325dp"
+        android:layout_marginStart="280dp"
         android:layout_marginTop="550dp"
         android:backgroundTint="@color/peach"
         android:contentDescription="@string/categoryContentDescription"
         android:src="@drawable/img_plus"
         android:text="@string/AddButton"
         android:textSize="40sp"
-        android:theme="@style/Base.Theme.PNP2Inventoryapp" />
+        android:theme="@style/Base.Theme.PNP2Inventoryapp"
+        tools:ignore="ImageContrastCheck" />
 
 </RelativeLayout>
 
