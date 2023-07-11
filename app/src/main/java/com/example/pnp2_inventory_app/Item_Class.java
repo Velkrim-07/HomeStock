@@ -2,6 +2,8 @@ package com.example.pnp2_inventory_app;
 
 //This class will be used to create the Variables needed in order to name, group, and delete
 //the items that will be going into the database.
+import android.os.Build;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -68,15 +70,30 @@ public class Item_Class
         int month;
         int day;
         //the current date will always be whatever time it was called
-        LocalDate currentDate = LocalDate.now();
+        LocalDate currentDate = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            currentDate = LocalDate.now();
+        }
         //insertion date will be based of of the substring for the year, month, and day
-        LocalDate insertDate = LocalDate.of(year = Integer.parseInt(m_InsertDate.substring(0,3)), month = Integer.parseInt(m_InsertDate.substring(5,7)), day = Integer.parseInt(m_InsertDate.substring(9,11)));
+        LocalDate insertDate = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            insertDate = LocalDate.of(year = Integer.parseInt(m_InsertDate.substring(0,3)), month = Integer.parseInt(m_InsertDate.substring(5,7)), day = Integer.parseInt(m_InsertDate.substring(9,11)));
+        }
         //The same will be applied for the expiration date
-        LocalDate expirationDate = LocalDate.of(year = Integer.parseInt(m_ExpirationDate.substring(0,3)), month = Integer.parseInt(m_ExpirationDate.substring(5,7)), day = Integer.parseInt(m_ExpirationDate.substring(9,11)));
+        LocalDate expirationDate = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            expirationDate = LocalDate.of(year = Integer.parseInt(m_ExpirationDate.substring(0,3)), month = Integer.parseInt(m_ExpirationDate.substring(5,7)), day = Integer.parseInt(m_ExpirationDate.substring(9,11)));
+        }
 
         //In order to calculate how far along the food is we will need to find the percentage between the days till expiration and the original days till expiration
-        long daysTillExpiration = ChronoUnit.DAYS.between(currentDate, expirationDate);
-        long originalExpirationDays = ChronoUnit.DAYS.between(insertDate, expirationDate);
+        long daysTillExpiration = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            daysTillExpiration = ChronoUnit.DAYS.between(currentDate, expirationDate);
+        }
+        long originalExpirationDays = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            originalExpirationDays = ChronoUnit.DAYS.between(insertDate, expirationDate);
+        }
         //once the days have been calculated we will divide the days till expiration by the original days till expiration to get a double that will look something like this EX: 0.123
         double percentExpired = daysTillExpiration / originalExpirationDays;
 
@@ -84,6 +101,7 @@ public class Item_Class
         Character[] healthBar = {'[', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', ']'};
         //index to note which character to change
         int index = 10;
+        int colorIndex = 0;
 
         //while loop that changes the '#' symbols to '-' symbols depending on what percentage the food is expired
         while (percentExpired >= .1)
@@ -91,11 +109,28 @@ public class Item_Class
             healthBar[index] = '-';
             percentExpired -= .1;
             index--;
+            colorIndex++;
 
             //if the index gets to zero and the percentExpired is still above .1 it doesn't matter and we will break out of the loop because the bar is ready to be displayed
             if (index < 1) break;
         }
 
+        //TODO
+        //Create color index for different percentages EX: 80% and above is green and between 60% and 79% is lime green
+        String ANSI_Color = "";
+
+        if (colorIndex < 4)
+        {
+            ANSI_Color = "\u001B[32m";
+        }
+        else if (colorIndex >= 4 && colorIndex < 8)
+        {
+            ANSI_Color = "\u001B[33m";
+        }
+        else if (colorIndex >= 8)
+        {
+            ANSI_Color = "\u001B[31m";
+        }
         //String to be printed
         String print = "";
 
@@ -105,20 +140,31 @@ public class Item_Class
             print = print + element;
         }
 
-        //Print out the healthbar
-        return print;
+        //Print out the healthBar
+        return ANSI_Color + print;
     }
 
-    //does the same calculation as the above method but just returns the amount of days till expiration insted
+    //does the same calculation as the above method but just returns the amount of days till expiration instead
     public long daysTillExpiration ()
     {
         int year;
         int month;
         int day;
-        LocalDate insertDate = LocalDate.of(year = Integer.parseInt(m_InsertDate.substring(0,3)), month = Integer.parseInt(m_InsertDate.substring(5,7)), day = Integer.parseInt(m_InsertDate.substring(9,11)));
-        LocalDate expirationDate = LocalDate.of(year = Integer.parseInt(m_ExpirationDate.substring(0,3)), month = Integer.parseInt(m_ExpirationDate.substring(5,7)), day = Integer.parseInt(m_ExpirationDate.substring(9,11)));
+        LocalDate insertDate = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            insertDate = LocalDate.of(year = Integer.parseInt(m_InsertDate.substring(0,3)), month = Integer.parseInt(m_InsertDate.substring(5,7)), day = Integer.parseInt(m_InsertDate.substring(9,11)));
+        }
+        LocalDate expirationDate = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            expirationDate = LocalDate.of(year = Integer.parseInt(m_ExpirationDate.substring(0,3)), month = Integer.parseInt(m_ExpirationDate.substring(5,7)), day = Integer.parseInt(m_ExpirationDate.substring(9,11)));
+        }
 
-        return ChronoUnit.DAYS.between(insertDate, expirationDate);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return ChronoUnit.DAYS.between(insertDate, expirationDate);
+        }
+        else {
+            return 8;
+        }
     }
 //year, month, date
 
