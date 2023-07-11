@@ -18,25 +18,13 @@
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:background="@color/white"/>
+        android:background="@color/lavender"/>
 
-    <ImageView
-        android:id="@+id/searchButton"
-        android:layout_width="900dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginEnd="3dp"
-        android:src="@drawable/img_rectangle1041"
-        android:contentDescription="@string/Search"/>
-
-    <EditText
-        android:id="@+id/SearchViewItemSearch"
-        android:layout_width="370dp"
+    <SearchView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="10dp"
+        android:id="@+id/SearchViewItemSearch"
         android:layout_marginTop="70dp"
-        android:layout_marginRight="10dp"
         android:text="@string/Search"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -52,9 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="140dp"
-        android:layout_marginRight="10dp"
+        android:background="@drawable/rounded_background"
         android:contentDescription="@string/ScrollViewText"
         android:scrollbarAlwaysDrawVerticalTrack="true">
 
@@ -64,7 +51,8 @@
             android:layout_height="match_parent"
             android:background="@drawable/rounded_background"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            >
 
         </LinearLayout>
     </ScrollView>
