@@ -37,4 +37,13 @@
     <string name="Settings"> Settings</string>
     <string name="ManageHome"> Manage Home</string>
     <string name="categoryContentDescription">Adds a new category</string>
+    <string name="type_category_name_here">Type Category Name Here</string>
+    <string name="category_description">category Description</string>
+    <string name="select_items_to_add_to_category">Select items to add to category</string>
+    <string name="this_is_where_the_items_are_placed">This is where the items are placed</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
+    <string name="delete">delete</string>
+    <string name="delete_items_menu">Delete items menu</string>
+    <string name="selectitemtodelete">Select Items You Wish To Delete</string>
 </resources>
