@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lavender"
-    android:paddingBottom="20dp"
+    android:padding="20dp"
     tools:context=".fragment_home">
 
     <!-- TextView displaying the title "HomeStock" -->
@@ -49,10 +49,9 @@
     <!-- Button for editing items -->
     <ScrollView
         android:id="@+id/ScrollViewItems"
-        android:layout_width="340dp"
+        android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="32dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="140dp"
         android:layout_marginRight="10dp"
@@ -91,6 +90,7 @@
         android:layout_alignParentBottom="true"
         android:theme="@style/Base.Theme.PNP2Inventoryapp"
         android:text="@string/AddButton"
+        android:background="@color/lavender"
         android:textSize="20sp"
         android:contentDescription="@string/add_add"
         android:src="@drawable/img_plus"
@@ -100,14 +100,14 @@
         android:id="@+id/ButtonDelete"
         android:layout_width="100dp"
         android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginStart="160dp"
-        android:layout_alignParentBottom="true"
-        android:theme="@style/Base.Theme.PNP2Inventoryapp"
+        android:contentDescription="@string/delete_items_menu"
+        android:background="@color/lavender"
+        android:src="@drawable/baseline_delete_24"
         android:text="@string/AddButton"
         android:textSize="20sp"
-        android:contentDescription="@string/delete_items_menu"
-        android:src="@drawable/baseline_delete_24"
-        />
+        android:theme="@style/Base.Theme.PNP2Inventoryapp" />
 
 </RelativeLayout>
