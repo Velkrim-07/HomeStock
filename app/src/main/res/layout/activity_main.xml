@@ -30,6 +30,7 @@
                 android:contentDescription="Allows the user to refresh the page"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:backgroundTint="@color/lavender"
                 android:layout_marginStart="150dp"
                 android:src= "@drawable/updatebutton"
                 />
@@ -39,6 +40,7 @@
                 android:contentDescription="@string/ImageButtonContentDescription"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:backgroundTint="@color/lavender"
                 android:src= "@drawable/cam_camera"
                 />
 
