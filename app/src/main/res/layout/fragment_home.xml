@@ -15,10 +15,10 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:text="@string/HomeStock"
-        android:textSize="32sp"
+        android:textSize="42sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="3dp"
         android:background="@color/lavender"/>
 
     <SearchView
