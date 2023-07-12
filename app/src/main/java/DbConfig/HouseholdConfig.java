@@ -14,6 +14,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 // map and hash for testing
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,10 +52,10 @@ public class HouseholdConfig {
 
     public Household CreateSampleHousehold(){
         List<String> sampleTemp = new ArrayList<>();
-        sampleTemp.add("test@gmail.com");
-        sampleTemp.add("test2@gmail.com");
-        sampleTemp.add("test3@gmail.com");
-        sampleTemp.add("test123@gmail.com");
+        sampleTemp.add("rafatest@gmail.com");
+        sampleTemp.add("judahtest@gmail.com");
+        sampleTemp.add("brandontest@gmail.com");
+        sampleTemp.add("kelltest@gmail.com");
 
         Household newHousehold = new Household("sampleHouse", DbConfig.Util.GetDate(), DbConfig.Util.GetDate(),
                 DbConfig.Util.CreateGuid(), sampleTemp);
@@ -130,29 +131,29 @@ public class HouseholdConfig {
                 });
     }
 
+
     // this methods returns the documentId of the household querying the email that is currently logged in.
-    public String GetDocumentIdFromHouseHold() {
+    // returns a list of households the user is part of, if more than one.
+    public void GetDocumentIdFromHouseHold(HouseholdConfig.FirestoreHouseholdCallback callback) {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         String email = currentUser.getEmail();
 
+        List<String> userList = new ArrayList<>();
+
         db.collection(collectionPath)
                 .whereArrayContains("userList", email)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (DocumentSnapshot document : queryDocumentSnapshots) {
-                        householdId = document.getId();
-                        break;
-                        // Process the document ID as needed
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("MainActivity", "Error querying documents: " + e.getMessage());
-                });
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-        return householdId;
+                        callback.OnCallBack(queryDocumentSnapshots);
+                    }
+                });
     }
+
 
     public interface FirestoreHouseholdCallback{
         void OnCallBack(QuerySnapshot querySnapshot);

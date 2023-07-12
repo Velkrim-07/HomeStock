@@ -50,8 +50,9 @@ public class FirebaseConfig {
         HouseholdConfig householdConnect = new HouseholdConfig();
         householdConnect.ConnectDatabase();
 
+        List<String> tempTest;
         String tempTwo;
-        tempTwo = householdConnect.GetDocumentIdFromHouseHold();
+        tempTest = householdConnect.GetDocumentIdFromHouseHold();
         tempTwo = "a2553d61-c3ef-465e-96c0-8f9b75159393"; // for now
 
         DocumentReference documentRef = db.collection(collectionName).document(tempTwo);

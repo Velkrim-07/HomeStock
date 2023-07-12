@@ -15,7 +15,7 @@ public class fragment_Settings extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        Button_Handler.AddManageHomeButton(view, R.id.buttonManageHome);
+        Button_Handler.AddManageHomeButton(view, R.id.buttonManageHome, this);
         return view;
     }
 
