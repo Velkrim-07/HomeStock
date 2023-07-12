@@ -64,15 +64,17 @@
         android:id="@+id/ButtonAddCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="550dp"
-        android:backgroundTint="@color/peach"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/lavender"
         android:contentDescription="@string/categoryContentDescription"
         android:src="@drawable/img_plus"
         android:text="@string/AddButton"
         android:textSize="40sp"
         android:theme="@style/Base.Theme.PNP2Inventoryapp"
         tools:ignore="ImageContrastCheck" />
+
 
 </RelativeLayout>
 
