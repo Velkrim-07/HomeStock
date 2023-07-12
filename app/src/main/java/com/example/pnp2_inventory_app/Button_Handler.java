@@ -63,11 +63,11 @@ public class Button_Handler
     }
 
 
-    public static void AddManageHomeButton(View view, int Id) {//takes in button, and the view of the object
+    public static void AddManageHomeButton(View view, int Id, fragment_Settings fragment) {//takes in button, and the view of the object
         Button button = view.findViewById(Id);
         button.setOnClickListener(v -> {
             Fragment fragment1 = new fragment_manage_home();
-            FragmentTransaction transaction = fragment1.getParentFragmentManager().beginTransaction();
+            FragmentTransaction transaction = fragment.getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, fragment1);
             transaction.addToBackStack(null);
             transaction.commit();
@@ -95,5 +95,18 @@ public class Button_Handler
         ImageButton button = view.findViewById(Id);
         dialog_delete deleteMenu = new dialog_delete();
         button.setOnClickListener(v -> deleteMenu.AlertBox(db, fragcontext, fragmentHome));
+    }
+
+    public static void MakeBarCodeButton(int Id, Barrcode barcode, Activity main){
+
+    ImageButton button = main.findViewById(Id);
+
+    button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            barcode.ScanCode();
+        }
+    });
+
     }
 }

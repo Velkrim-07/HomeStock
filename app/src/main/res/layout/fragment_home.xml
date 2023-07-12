@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/lavender"
     android:padding="20dp"
+    android:paddingBottom="200dp"
     tools:context=".fragment_home">
 
     <!-- TextView displaying the title "HomeStock" -->
@@ -13,90 +15,92 @@
         android:id="@+id/textViewHomeStock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="@string/HomeStock"
-        android:textSize="42sp"
-        android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="3dp"
-        android:background="@color/lavender"/>
+        android:layout_marginTop="30dp"
+        android:background="@color/lavender"
+        android:text="@string/HomeStock"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" /> />
 
     <SearchView
+        android:id="@+id/SearchViewItemSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/SearchViewItemSearch"
         android:layout_marginTop="70dp"
         android:text="@string/Search"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:importantForAutofill="no"
         android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:hint="type in items to search for"/>
 
     <!-- ScrollView for the search functionality -->
-
-    <!-- Button for editing items -->
     <ScrollView
         android:id="@+id/ScrollViewItems"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_alignParentStart="true"
+        android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
         android:background="@drawable/rounded_background"
         android:contentDescription="@string/ScrollViewText"
-        android:scrollbarAlwaysDrawVerticalTrack="true">
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_max="300dp">
 
         <LinearLayout
             android:id="@+id/LinearLayoutOutside"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/rounded_background"
-            android:orientation="vertical"
-            android:padding="8dp"
-            >
-
+            android:orientation="vertical">
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/ButtonEditItem"
-        android:layout_width="90dp"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:textColor="@color/black"
-        android:theme="@style/Base.Theme.PNP2Inventoryapp"
-        android:text="@string/Edit"
-        android:textSize="20sp" />
-
-
-    <!-- ImageButton for adding items -->
-    <ImageButton
-        android:id="@+id/ButtonAddItem"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:theme="@style/Base.Theme.PNP2Inventoryapp"
-        android:text="@string/AddButton"
-        android:background="@color/lavender"
-        android:textSize="20sp"
-        android:contentDescription="@string/add_add"
-        android:src="@drawable/img_plus"
-        />
-
-    <ImageButton
-        android:id="@+id/ButtonDelete"
-        android:layout_width="100dp"
-        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginStart="160dp"
-        android:contentDescription="@string/delete_items_menu"
-        android:background="@color/lavender"
-        android:src="@drawable/baseline_delete_24"
-        android:text="@string/AddButton"
-        android:textSize="20sp"
-        android:theme="@style/Base.Theme.PNP2Inventoryapp" />
+        android:padding="20dp">
 
+        <Button
+            android:id="@+id/ButtonEditItem"
+            android:layout_width="90dp"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/black"
+            android:theme="@style/Base.Theme.PNP2Inventoryapp"
+            android:text="@string/Edit"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/ButtonDelete"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:contentDescription="@string/delete_items_menu"
+            android:background="@drawable/rounded_background"
+            android:src="@drawable/baseline_delete_24"
+            android:text="@string/AddButton"
+            android:textSize="20sp"
+            android:theme="@style/Base.Theme.PNP2Inventoryapp" />
+
+        <!-- ImageButton for adding items -->
+        <ImageButton
+            android:id="@+id/ButtonAddItem"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/Base.Theme.PNP2Inventoryapp"
+            android:text="@string/AddButton"
+            android:background="@drawable/rounded_background"
+            android:textSize="20sp"
+            android:contentDescription="@string/add_add"
+            android:src="@drawable/img_plus" />
+    </LinearLayout>
 </RelativeLayout>
