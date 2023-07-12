@@ -8,10 +8,11 @@
 
     <!-- TextView displaying the title "ManageHome" -->
     <TextView
-        android:id="@+id/textViewHomeStock"
+        android:id="@+id/textViewManageHomeStock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ManageHome"
+        android:textColor="@color/black"
         android:textSize="32sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
@@ -22,7 +23,7 @@
         android:id="@+id/listViewEmails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewHomeStock"
+        android:layout_below="@id/textViewManageHomeStock"
         android:layout_marginTop="20dp"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp"
