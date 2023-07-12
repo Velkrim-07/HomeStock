@@ -76,6 +76,7 @@ public class fragment_home extends Fragment {
         newItem.ExpireDateObject.setPadding(1, 0, 0, 0);
 
         //Adding the TextViews to the InsideLinearLayout view
+
         InsideLinearLayout.addView(newItem.AmountObject);
         InsideLinearLayout.addView(newItem.NameObject);
         InsideLinearLayout.addView(newItem.ExpireDateObject);

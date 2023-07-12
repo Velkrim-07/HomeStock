@@ -1,9 +1,17 @@
 package com.example.pnp2_inventory_app;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 public class MainActivity extends AppCompatActivity {
     // navigation object is created so we can access the navigation throughout the file
@@ -12,14 +20,24 @@ public class MainActivity extends AppCompatActivity {
     private cameraClass CameraClass;
     private fragment_home Fragment_Home;
     private fragment_camera Fragment_Camera;
+    private Barrcode barcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); //creates the instance of the program
         setContentView(R.layout.activity_main); //sets the current view to the activity
 
+
         Fragment_Camera = new fragment_camera();
         Fragment_Home = Button_Handler.AddRefreshButton(R.id.ImgBtnRefresh, this);
+
+        ImageButton QRcodeScanner = findViewById(R.id.BarcodeBtnCam);
+        QRcodeScanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScanCode();
+            }
+        });
         MakeNavigation(savedInstanceState);
         CameraClass = Button_Handler.AddCameraButton(R.id.ImgBtnCam, this, getSupportFragmentManager(), navigation, Fragment_Camera);
     }
@@ -85,4 +103,30 @@ public class MainActivity extends AppCompatActivity {
         // testing Delete
         //dbActions.DeleteFromId("ySWgoTCrn8vj5p1GG16Q");
     }
+
+    // This method will be used to scan the QR code / barcode
+    public void ScanCode() {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLauncher.launch(options);
+    }
+
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+        // If the content is scanned correctly, it will be displayed in its own text box
+        if (result.getContents() != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Result");
+            builder.setMessage(result.getContents());
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).show();
+        }
+    });
+    // barLauncher will process the image that is sent in
 }
