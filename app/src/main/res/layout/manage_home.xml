@@ -48,7 +48,7 @@
             android:backgroundTint="@color/peach"
             android:textSize="14sp"
             android:textColor="@color/black"
-            android:layout_width="100dp"
+            android:layout_width="110dp"
             android:layout_height="50dp" />
 
         <!-- "Remove" button -->
@@ -59,7 +59,7 @@
             android:backgroundTint="@color/peach"
             android:textSize="14sp"
             android:textColor="@color/black"
-            android:layout_width="100dp"
+            android:layout_width="110dp"
             android:layout_height="50dp" />
 
     </LinearLayout>

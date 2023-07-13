@@ -33,11 +33,10 @@
         android:text="@string/Search"
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:gravity="center"
         android:importantForAutofill="no"
         android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_centerHorizontal="true"
         android:hint="type in items to search for"/>
 
     <!-- ScrollView for the search functionality -->
@@ -46,9 +45,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
+        android:gravity="center"
         android:background="@drawable/rounded_background"
         android:contentDescription="@string/ScrollViewText"
-        android:scrollbarAlwaysDrawVerticalTrack="true">
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:layout_centerHorizontal="true">
 
         <LinearLayout
             android:id="@+id/LinearLayoutOutside"
@@ -79,6 +80,7 @@
             android:layout_height="70dp"
             android:text="@string/add_add"
             android:textColor="@color/black"
+            android:backgroundTint="@color/peach"
             android:textSize="20sp"
             android:theme="@style/Base.Theme.PNP2Inventoryapp" />
 
@@ -93,6 +95,7 @@
             android:layout_height="70dp"
             android:text="@string/Edit"
             android:textColor="@color/black"
+            android:backgroundTint="@color/peach"
             android:textSize="20sp"
             android:theme="@style/Base.Theme.PNP2Inventoryapp" />
 
@@ -108,8 +111,8 @@
             android:layout_height="70dp"
             android:text="@string/delete"
             android:textColor="@color/black"
+            android:backgroundTint="@color/peach"
             android:textSize="20sp"
             android:theme="@style/Base.Theme.PNP2Inventoryapp" />
     </LinearLayout>
 </RelativeLayout>
-

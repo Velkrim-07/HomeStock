@@ -36,7 +36,7 @@ public class Button_Handler
         button.setOnClickListener(v -> fragment.AcceptPictureHandler(view));
     }
     public static void AddCategory(View view, int Id, fragment_categories fragment) {//takes in button, and the view of the object
-        ImageButton button = view.findViewById(Id);
+        Button button = view.findViewById(Id);
         button.setOnClickListener(v -> fragment.AlertBox());
     }
 

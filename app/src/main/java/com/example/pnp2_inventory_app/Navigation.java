@@ -53,26 +53,26 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
         toggle.syncState();
     }
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) { //should switch the screen between the different fragments
-        int itemId = item.getItemId();//gets the id of the item/ fragment the user is currently seeing
-        //would love to use a switch but it does not work
-        if(itemId == R.id.nav_home) { // id of the home menu
-            ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_home).commit();
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
 
-        }
-        else if(itemId == R.id.nav_settings) {//id of the settings menu
+        if (itemId == R.id.nav_home) {
+            ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_home).commit();
+        } else if (itemId == R.id.nav_settings) {
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_settings).commit();
-        }
-        else if(itemId == R.id.nav_category) {
+        } else if (itemId == R.id.nav_category) {
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_categories).commit();
+        } else if (itemId == R.id.nav_shoppinglist) {
+            fragment_shopping_list shoppingListFragment = new fragment_shopping_list();
+            ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, shoppingListFragment).commit();
+        } else if (itemId == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent((AppCompatActivity) context, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(intent);
+            ((AppCompatActivity) context).finish();
         }
-        else if (itemId == R.id.nav_logout) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent((AppCompatActivity)context, Login.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                context.startActivity(intent);
-                ((AppCompatActivity) context).finish();
-        }
+
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
