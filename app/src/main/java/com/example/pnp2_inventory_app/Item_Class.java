@@ -167,5 +167,50 @@ public class Item_Class
         }
     }
 //year, month, date
-
+    public void FrozenFood (String food)
+    {
+        //Local variables used to turn the m_ExpirationDate into a LocalDate object
+        int year = Integer.parseInt(m_InsertDate.substring(0,3));
+        int month = Integer.parseInt(m_InsertDate.substring(5,7));
+        int day = Integer.parseInt(m_InsertDate.substring(9,11));
+        LocalDate previousExpirationDate = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            previousExpirationDate = LocalDate.of(year,month,day);
+        }
+        //switch case takes the String and determines how long to extend the date by
+        switch (food)
+        {
+            case "Processed Meat":
+                //adds a set amount of months onto the Local date and then converts it back to string to be stored in m_ExpirationDate
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    m_ExpirationDate = previousExpirationDate.plusMonths(2).toString();
+                }
+                break;
+            case "Fresh Meat":
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    m_ExpirationDate = previousExpirationDate.plusMonths(4).toString();
+                }
+                break;
+            case "Seafood":
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    m_ExpirationDate = previousExpirationDate.plusMonths(4).toString();
+                }
+                break;
+            case "Eggs":
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    m_ExpirationDate = previousExpirationDate.plusMonths(2).toString();
+                }
+                break;
+            case "Soup":
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    m_ExpirationDate = previousExpirationDate.plusMonths(3).toString();
+                }
+                break;
+            case "Misc":
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    m_ExpirationDate = previousExpirationDate.plusMonths(2).toString();
+                }
+                break;
+        }
+    }
 }
