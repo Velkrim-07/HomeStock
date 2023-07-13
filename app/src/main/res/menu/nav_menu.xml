@@ -9,26 +9,33 @@
     <!-- Creates the navigation menu of the app -->
     <group android:checkableBehavior="single">
 
+
         <!-- Creates the item for home on the menu -->
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/nav_home"
             android:title="@string/Home"
             android:gravity="center"
-            android:titleTextColor="@color/peach" />
+            android:titleTextColor="@color/peach"
+            android:textColor= "@color/black"/>
 
         <!-- Creates the item for category on the menu -->
         <item
             android:id="@+id/nav_category"
-            android:icon="@drawable/nav_category"
             android:title="@string/Categories"
             android:gravity="center"
             android:titleTextColor="@color/peach" />
 
+        <!-- Creates the item for home on the menu -->
+        <item
+            android:id="@+id/nav_shoppinglist"
+            android:title="@string/shopping"
+            android:gravity="center"
+            android:titleTextColor="@color/peach"
+            android:textColor= "@color/black"/>
+
         <!-- Creates the item for settings on the menu -->
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/nav_settings"
             android:title="@string/Setting"
             android:gravity="center"
             android:titleTextColor="@color/peach" />

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,11 +18,12 @@
         android:layout_marginTop="30dp"
         android:background="@color/lavender"
         android:text="@string/HomeStock"
+        android:textColor="@color/black"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /> />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SearchView
         android:id="@+id/SearchViewItemSearch"
@@ -43,64 +43,73 @@
     <!-- ScrollView for the search functionality -->
     <ScrollView
         android:id="@+id/ScrollViewItems"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
         android:background="@drawable/rounded_background"
         android:contentDescription="@string/ScrollViewText"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHeight_max="300dp">
+        android:scrollbarAlwaysDrawVerticalTrack="true">
 
         <LinearLayout
             android:id="@+id/LinearLayoutOutside"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="8dp"
             android:background="@drawable/rounded_background"
             android:orientation="vertical">
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:padding="20dp">
+        android:gravity="center"
+        android:padding="2dp">
 
+        <!-- For spacing the buttons out further apart. -->
+        <Space
+            android:layout_width="3dp"
+            android:layout_height="wrap_content" />
+
+        <!-- ImageButton for adding items -->
         <Button
-            android:id="@+id/ButtonEditItem"
-            android:layout_width="90dp"
+            android:id="@+id/ButtonAddItem"
+            android:layout_width="115dp"
             android:layout_height="70dp"
-            android:layout_alignParentBottom="true"
+            android:text="@string/add_add"
             android:textColor="@color/black"
-            android:theme="@style/Base.Theme.PNP2Inventoryapp"
-            android:text="@string/Edit"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/ButtonDelete"
-            android:layout_width="100dp"
-            android:layout_height="70dp"
-            android:contentDescription="@string/delete_items_menu"
-            android:background="@drawable/rounded_background"
-            android:src="@drawable/baseline_delete_24"
-            android:text="@string/AddButton"
             android:textSize="20sp"
             android:theme="@style/Base.Theme.PNP2Inventoryapp" />
 
-        <!-- ImageButton for adding items -->
-        <ImageButton
-            android:id="@+id/ButtonAddItem"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:theme="@style/Base.Theme.PNP2Inventoryapp"
-            android:text="@string/AddButton"
-            android:background="@drawable/rounded_background"
+        <!-- For spacing the buttons out further apart. -->
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/ButtonEditItem"
+            android:layout_width="115dp"
+            android:layout_height="70dp"
+            android:text="@string/Edit"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            android:contentDescription="@string/add_add"
-            android:src="@drawable/img_plus" />
+            android:theme="@style/Base.Theme.PNP2Inventoryapp" />
+
+
+        <!-- For spacing the buttons out further apart. -->
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/ButtonDelete"
+            android:layout_width="115dp"
+            android:layout_height="70dp"
+            android:text="@string/delete"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:theme="@style/Base.Theme.PNP2Inventoryapp" />
     </LinearLayout>
 </RelativeLayout>
+

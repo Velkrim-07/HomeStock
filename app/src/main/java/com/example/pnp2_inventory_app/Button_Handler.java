@@ -20,7 +20,7 @@ public class Button_Handler
     //This button will add another entry to the database with the information that the
     //user provides
     public static void MakeAddButton(View view, int Id, fragment_home fragment) {//takes in button, and the view of the object
-        ImageButton button = view.findViewById(Id);
+        Button button = view.findViewById(Id);
         button.setOnClickListener(v -> fragment.showDialogToAddItem());
     }
 
@@ -92,7 +92,7 @@ public class Button_Handler
     }
 
     public static void MakeDeleteButton(View view, int Id, Context fragcontext, FirebaseConfig db, fragment_home fragmentHome){
-        ImageButton button = view.findViewById(Id);
+        Button button = view.findViewById(Id);
         dialog_delete deleteMenu = new dialog_delete();
         button.setOnClickListener(v -> deleteMenu.AlertBox(db, fragcontext, fragmentHome));
     }

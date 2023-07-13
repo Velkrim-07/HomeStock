@@ -65,8 +65,8 @@ public class fragment_home extends Fragment {
         InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
         //Formatting for the sizes of each individual layout
-        ViewGroup.LayoutParams AmountObjectParams = new ViewGroup.LayoutParams(100, 50);
-        ViewGroup.LayoutParams NameObjectParams = new ViewGroup.LayoutParams(400, 50);
+        ViewGroup.LayoutParams AmountObjectParams = new ViewGroup.LayoutParams(200, 50);
+        ViewGroup.LayoutParams NameObjectParams = new ViewGroup.LayoutParams(500, 50);
         ViewGroup.LayoutParams ExpireDateObjectParams = new ViewGroup.LayoutParams(400, 50);
 
         //Adds the formatting to the objects
