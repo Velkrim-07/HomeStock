@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lavender"
+    android:id="@+id/profileFragmentLayout"
     android:orientation="vertical"
     tools:context=".ProfileFragment">
 
@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/profile"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <ScrollView
@@ -35,11 +35,16 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Profile Picture"
                 android:src="@drawable/addprofpic"
+                android:background="@drawable/circular_image_border"
                 android:id="@+id/profileImage"/>
 
             <TextView
@@ -47,7 +52,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="@string/HomeStock"
+                android:text="@string/name"
+                android:hint="Name"
+                android:id="@+id/nameofuser"
                 android:textSize="22sp"
                 android:textStyle="bold"/>
 
@@ -100,7 +107,8 @@
                         android:layout_centerVertical="true"
                         android:text="@string/family"
                         android:textStyle="bold"
-                        android:layout_toEndOf="@id/familyicon"/>
+                        android:layout_toEndOf="@id/familyicon"
+                        tools:ignore="RelativeOverlap" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -119,6 +127,7 @@
 
                     <ImageView
                         android:layout_width="40dp"
+                        android:layout_centerVertical="true"
                         android:layout_height="40dp"
                         android:src="@drawable/darkmodeicon"
                         android:id="@+id/darkmodeicon"
@@ -130,11 +139,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="Night Mode"
+                        android:text="@string/night_mode"
                         android:textStyle="bold"
-                        android:layout_toEndOf="@+id/darkmodeicon"/>
+                        android:layout_toEndOf="@+id/darkmodeicon"
+                        tools:ignore="RelativeOverlap" />
 
-                    <com.google.android.material.switchmaterial.SwitchMaterial
+                    <androidx.appcompat.widget.SwitchCompat
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -155,6 +165,7 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/baseline_notifications_24"
                         android:id="@+id/notificationicon"
                         android:background="@drawable/nightmorebgr"
@@ -167,9 +178,10 @@
                         android:layout_centerVertical="true"
                         android:text="@string/notifications"
                         android:textStyle="bold"
-                        android:layout_toEndOf="@+id/notificationicon"/>
+                        android:layout_toEndOf="@+id/notificationicon"
+                        tools:ignore="RelativeOverlap" />
 
-                    <com.google.android.material.switchmaterial.SwitchMaterial
+                    <androidx.appcompat.widget.SwitchCompat
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"

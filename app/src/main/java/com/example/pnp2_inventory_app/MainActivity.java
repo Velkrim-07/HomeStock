@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         cameraClass.OnActivityHelper(requestCode, resultCode, data, fragment);
-        cameraClass.DetectText();
+
     }
 
     public Navigation getNavigation(){
