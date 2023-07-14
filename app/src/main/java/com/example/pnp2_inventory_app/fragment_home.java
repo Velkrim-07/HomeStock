@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -51,13 +52,13 @@ public class fragment_home extends Fragment {
         GetItemsFromDatabase();
 
         Button_Handler.MakeAddButton(rootView, R.id.ButtonAddItem, this);
-        Button_Handler.makeEditButton(rootView, R.id.ButtonEditItem);
+        Button_Handler.makeEditButton(rootView, R.id.ButtonEditItem, context, db, this);
         Button_Handler.MakeDeleteButton(rootView, R.id.ButtonDelete, context, db, this);
 
         return rootView;
     }
 
-    private void AddToScrollView(Item newItem) {
+    public void AddToScrollView(Item newItem) {
         newItem.ConstructObject(context);
         VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
         InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
@@ -175,8 +176,27 @@ public class fragment_home extends Fragment {
         });
     }
 
-    private String getFormattedDate(Calendar calendar) {
+    public String getFormattedDate(Calendar calendar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dateFormat.format(calendar.getTime());
+    }
+
+    public String GetUnformatedDate(String date){
+        String[] NewDate = new String[3];
+        int[] dates = new int[3];
+
+        for (int i = 0; i < 3; i++){
+            for(char character : date.toCharArray()){
+                if (character == '-'){ i++;}
+                else{NewDate[i] += character;}
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            dates[i] = Integer.parseInt(NewDate[i]);
+        }
+
+        double DateInSeconds = ((dates[0] - 1970) * 3.154e+7) + (dates[1] * 2.628e+6) + (dates[2] * 86400);
+        return String.valueOf(DateInSeconds);
     }
 }

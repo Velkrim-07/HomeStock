@@ -19,16 +19,19 @@ public class Household {
     public String houseHoldId;
     public String inventoryId;
 
+    public String householdDescription;
+
     // list of users inside the household
     // if we want to expand later on regarding permissions and such, this would have to be reworked
     // possible solution would be creating a list for admins, and a list for normal users
     public List<String> userList;
 
-    public Household(String _name, String _creationDate, String _lastUpdated, String _inventoryId, List<String> _userList){
+    public Household(String _name, String _creationDate, String _lastUpdated, String _inventoryId, List<String> _userList, String _householdDescription){
             name = _name;
             creationDate = _creationDate;
             lastUpdated = _lastUpdated;
             inventoryId = _inventoryId;
+            householdDescription = _householdDescription;
             userList = _userList;
 
             // calls helperFunction to create GUID
@@ -42,8 +45,12 @@ public class Household {
         map.put("lastUpdated", lastUpdated);
         map.put("inventoryId", inventoryId);
         map.put("householdId", houseHoldId);
+        map.put("householdDescription", householdDescription);
+
         map.put("userList", userList);
 
         return map;
     }
+
+
 }

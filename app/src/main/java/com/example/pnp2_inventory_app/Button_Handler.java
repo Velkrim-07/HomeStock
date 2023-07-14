@@ -24,13 +24,6 @@ public class Button_Handler
         button.setOnClickListener(v -> fragment.showDialogToAddItem());
     }
 
-    public static void makeEditButton(View view, int Id) {//takes in button, and the view of the object
-        Button button = view.findViewById(Id);
-        button.setOnClickListener(v -> {
-            //Nothing here yet
-        });
-    }
-
     public static void makeCameraAcceptButton(View view, int Id, cameraClass fragment) {//takes in button, and the view of the object
         Button button = view.findViewById(Id);
         button.setOnClickListener(v -> fragment.AcceptPictureHandler(view));
@@ -95,6 +88,12 @@ public class Button_Handler
         Button button = view.findViewById(Id);
         dialog_delete deleteMenu = new dialog_delete();
         button.setOnClickListener(v -> deleteMenu.AlertBox(db, fragcontext, fragmentHome));
+    }
+
+    public static void makeEditButton(View view, int Id, Context fragcontext, FirebaseConfig db, fragment_home fragmentHome) {//takes in button, and the view of the object
+        Button button = view.findViewById(Id);
+        dialog_Edit editMenu = new dialog_Edit();
+        button.setOnClickListener(v -> editMenu.AlertBox(db, fragcontext, fragmentHome));
     }
 
     public static void MakeBarCodeButton(int Id, Barrcode barcode, Activity main){
