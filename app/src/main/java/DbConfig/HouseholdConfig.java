@@ -57,7 +57,7 @@ public class HouseholdConfig {
         sampleTemp.add("test123@gmail.com");
 
         Household newHousehold = new Household("sampleHouse", DbConfig.Util.GetDate(), DbConfig.Util.GetDate(),
-                DbConfig.Util.CreateGuid(), sampleTemp);
+                DbConfig.Util.CreateGuid(), sampleTemp, "");
 
         return newHousehold;
     }
@@ -132,7 +132,6 @@ public class HouseholdConfig {
 
     // this methods returns the documentId of the household querying the email that is currently logged in.
     public String GetDocumentIdFromHouseHold() {
-
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         String email = currentUser.getEmail();
@@ -152,6 +151,30 @@ public class HouseholdConfig {
                 });
 
         return householdId;
+    }
+
+    public Household GetHousehold(String _householdId) {
+        Household household = CreateSampleHousehold();
+
+        db.collection("Households").document(_householdId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        household.name = documentSnapshot.getString("name");
+                        household.householdDescription = documentSnapshot.getString("householdDescription");
+                        household.creationDate = documentSnapshot.getString("creationDate");
+                        household.lastUpdated = documentSnapshot.getString("lastUpdated");
+                        household.houseHoldId = documentSnapshot.getString("houseHoldId");
+                        household.inventoryId = documentSnapshot.getString("inventoryId");
+                    } else {
+
+                    }
+
+                }).addOnFailureListener(e -> {
+                    // Error occurred while retrieving the document
+                    // Handle the failure case
+                });
+
+        return household;
     }
 
     public interface FirestoreHouseholdCallback{

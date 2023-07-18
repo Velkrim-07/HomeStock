@@ -32,7 +32,6 @@ public class fragment_office extends Fragment {
 
         FirebaseConfig db = new FirebaseConfig();
         Item item = db.CreateSampleItem();
-        itemList.add(item);
 
         // Create a custom adapter for the ListView
         ArrayAdapter<Item> adapter = new ArrayAdapter<Item>(getContext(), R.layout.list_item_layout, itemList) {
@@ -77,6 +76,9 @@ public class fragment_office extends Fragment {
                 buttonEditItem.setVisibility(View.VISIBLE);
             }
         });
+
+        // Add OnClickListener to hide the "Edit" button when the user clicks anywhere on the screen
+        rootView.setOnClickListener(v -> buttonEditItem.setVisibility(View.GONE));
 
         return rootView;
     }

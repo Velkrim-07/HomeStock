@@ -43,7 +43,8 @@
     <string name="this_is_where_the_items_are_placed">This is where the items are placed</string>
     <string name="cancel">Cancel</string>
     <string name="accept">Accept</string>
-    <string name="delete">delete</string>
+    <string name="delete">Delete</string>
+    <string name="shopping">Shopping List</string>
     <string name="delete_items_menu">Delete items menu</string>
     <string name="selectitemtodelete">Select Items You Wish To Delete</string>
 </resources>

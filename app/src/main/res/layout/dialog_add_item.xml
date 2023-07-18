@@ -23,13 +23,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <!-- Check mark box -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="start|center_vertical">
+
+        <CheckBox
+            android:id="@+id/checkBoxFrozen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/peach" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Frozen"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/buttonAccept"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:backgroundTint="@color/peach"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:text="Accept" />
 
 </LinearLayout>

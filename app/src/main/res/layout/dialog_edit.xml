@@ -7,7 +7,7 @@
     android:padding="20dp">
 
     <ScrollView
-        android:id="@+id/deleteCheckedItemScrollBar"
+        android:id="@+id/EditCheckedItemScrollBar"
         android:layout_width="370dp"
         android:layout_height="200dp"
         android:layout_marginTop="20dp"

@@ -2,10 +2,14 @@ package com.example.pnp2_inventory_app;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -14,11 +18,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import DbConfig.FirebaseConfig;
 
-public class dialog_delete extends Fragment {
+public class dialog_Edit extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,15 +35,15 @@ public class dialog_delete extends Fragment {
     public void AlertBox(FirebaseConfig db, Context fragContext, fragment_home fragmentHome){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(fragContext); //create an alert-box object
         alertBuilder.create(); //creates the objects to be used
-        alertBuilder.setTitle("Delete Items"); //sets the title the user will see
-        alertBuilder.setMessage("Select Which Items You Wish To Delete"); //sets the message the user will see
-        View dialogView = LayoutInflater.from(fragContext).inflate(R.layout.dialog_delete, null);
+        alertBuilder.setTitle("Edit Items"); //sets the title the user will see
+        alertBuilder.setMessage("Select the item You Wish To Edit"); //sets the message the user will see
+        View dialogView = LayoutInflater.from(fragContext).inflate(R.layout.dialog_edit, null);
         alertBuilder.setView(dialogView);
 
-        ScrollView deleteViewScrollBar = dialogView.findViewById(R.id.deleteCheckedItemScrollBar); //connect the scrollbar to the xml
+        ScrollView deleteViewScrollBar = dialogView.findViewById(R.id.EditCheckedItemScrollBar); //connect the scrollbar to the xml
         deleteViewScrollBar.addView(loadItemsFromDatabase(fragContext, fragmentHome)); //load up the items for the database inside the scrollbar
 
-        alertBuilder.setPositiveButton("Detele Items", (dialog, id) -> deleteSelectedItems(db, (LinearLayout)deleteViewScrollBar.getChildAt(0), fragmentHome) );
+        alertBuilder.setPositiveButton("Edit Item", (dialog, id) -> EditSelectedItems(db, (LinearLayout)deleteViewScrollBar.getChildAt(0), fragmentHome, fragContext) );
         alertBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
         alertBuilder.show(); //shows the alert box
@@ -80,7 +86,7 @@ public class dialog_delete extends Fragment {
         return CheckBoxItemList;
     }
 
-    private void deleteSelectedItems(FirebaseConfig db, LinearLayout scrollBarLayout, fragment_home fragmentHome) {
+    private void EditSelectedItems(FirebaseConfig db, LinearLayout scrollBarLayout, fragment_home fragmentHome, Context fragContext) {
         int childCount = scrollBarLayout.getChildCount();
 
         class VerificationItem { //used to store the name and amount of item to check if it was selected to be deleted
@@ -107,6 +113,7 @@ public class dialog_delete extends Fragment {
             for (Item items : fragmentHome.getItemList()) {
                 //if the name of the object and the amount of the object is the same we delete the object
                 if (VerificationItems.CheckedAmount.equals(String.valueOf(items.m_Quantity)) && VerificationItems.CheckedName.equals(items.m_Name)) {
+                    showDialogToAddItem(items, db, fragmentHome, fragContext);
                     db.DeleteFromId(items.documentId); //deletes item or items from database
                     int itemsDeleted = 0; itemsDeleted++; // an int is used to keep check of the amount of items being deleted
                     if(itemsDeleted == itemsToDelete.size()){//if the items deleted is equal to the amount of items in the delete list we break
@@ -116,5 +123,52 @@ public class dialog_delete extends Fragment {
             }
         }
         fragmentHome.GetItemsFromDatabase(); // refreshes home
+    }
+
+    public void showDialogToAddItem(Item EditItem, FirebaseConfig db, fragment_home fragmentHome, Context fragContext) {;
+        List<Item> ItemList = fragmentHome.getItemList();
+        AlertDialog.Builder builder = new AlertDialog.Builder(fragContext);
+        builder.setTitle("Add Item");
+
+        View dialogView = LayoutInflater.from(fragContext).inflate(R.layout.dialog_add_item, null);
+        builder.setView(dialogView);
+        AlertDialog dialogAlert = builder.create();
+
+        //Creates the AlertBox objects used to get the information from the user
+        EditText editTextQuantity = dialogView.findViewById(R.id.editTextQuantity);
+        editTextQuantity.setText(String.valueOf(EditItem.getQuantity()));
+        EditText editTextItemName = dialogView.findViewById(R.id.editTextItemName);
+        editTextItemName.setText(EditItem.getName());
+        CalendarView calendarView = dialogView.findViewById(R.id.calendarView);
+        //calendarView.setDate(Long.getLong(fragmentHome.GetUnformatedDate(EditItem.getExpirationDate())));
+        // Variable to store the selected date
+        final Calendar selectedDate = Calendar.getInstance();
+
+        // Set the initial selected date
+        selectedDate.setTimeInMillis(calendarView.getDate());
+
+        // Set the OnDateChangeListener to update the selected date
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            selectedDate.set(Calendar.YEAR, year);
+            selectedDate.set(Calendar.MONTH, month);
+            selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        });
+
+        Button AcceptEdit = dialogView.findViewById(R.id.buttonAccept);
+
+        AcceptEdit.setOnClickListener(v -> {
+            int quantity = Integer.parseInt(editTextQuantity.getText().toString());
+            String itemName = editTextItemName.getText().toString();
+            String expirationDate = fragmentHome.getFormattedDate(selectedDate);
+
+            Item NewItem = new Item(itemName, quantity, expirationDate); //creates the object
+            db.InsertDb(NewItem); //Insets the new item into the database
+            ItemList.add(NewItem);
+            fragmentHome.AddToScrollView(NewItem); //adds the new Item to the Scroll View
+            dialogAlert.dismiss();
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        dialogAlert.show();
     }
 }

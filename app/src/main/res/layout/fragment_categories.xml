@@ -8,7 +8,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:text="@string/Categories"
+        android:textStyle="bold"
         android:textSize="40sp"
         android:layout_centerHorizontal="true"/>
 
@@ -58,20 +60,18 @@
         </LinearLayout>
     </ScrollView>
 
-    <ImageButton
+    <Button
         android:id="@+id/ButtonAddCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="550dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:layout_width="115dp"
+        android:layout_height="70dp"
+        android:text="@string/add_add"
+        android:textColor="@color/black"
         android:backgroundTint="@color/peach"
-        android:contentDescription="@string/categoryContentDescription"
-        android:src="@drawable/img_plus"
-        android:text="@string/AddButton"
-        android:textSize="40sp"
-        android:theme="@style/Base.Theme.PNP2Inventoryapp"
-        tools:ignore="ImageContrastCheck" />
-
+        android:textSize="20sp"
+        android:theme="@style/Base.Theme.PNP2Inventoryapp" />/>
 </RelativeLayout>
 
 

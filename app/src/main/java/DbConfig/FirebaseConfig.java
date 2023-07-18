@@ -42,9 +42,20 @@ public class FirebaseConfig {
     // create collectionRef here
     String collectionName = "Households"; // Replace with the actual collection name
     String subcollectionName = "InventoryItems"; // Replace with the actual subcollection name
+    CollectionReference subcollectionRef;
 
     public void ConnectDatabase(){
         db = FirebaseFirestore.getInstance();
+
+        HouseholdConfig householdConnect = new HouseholdConfig();
+        householdConnect.ConnectDatabase();
+
+        String tempTwo;
+        tempTwo = householdConnect.GetDocumentIdFromHouseHold();
+        tempTwo = "a2553d61-c3ef-465e-96c0-8f9b75159393"; // for now
+
+        DocumentReference documentRef = db.collection(collectionName).document(tempTwo);
+        subcollectionRef = documentRef.collection(subcollectionName);
     }
 
     // Creates sample item used only for testing
@@ -77,17 +88,6 @@ public class FirebaseConfig {
     // TODO: It has to have a documentId, name, quantity and expirationDate. The insertedDate&lastUpdated will be handled inside the insertion Method
     public void InsertDb(Item _item){
 
-        HouseholdConfig temp = new HouseholdConfig();
-        temp.ConnectDatabase();
-
-        String tempTwo;
-        tempTwo = temp.GetDocumentIdFromHouseHold();
-        tempTwo = temp.GetDocumentIdFromHouseHold();
-        tempTwo = "a2553d61-c3ef-465e-96c0-8f9b75159393"; // for now
-
-        DocumentReference documentRef = db.collection(collectionName).document(tempTwo);
-        CollectionReference subcollectionRef = documentRef.collection(subcollectionName);
-
         // creates random GUID for documentID, insertDate and lastUpdated from current timestamp
         _item.documentId = DbConfig.Util.CreateGuid();
         _item.insertedDate = GetDate();
@@ -112,7 +112,7 @@ public class FirebaseConfig {
     // TODO: only deletes from InventoryItems collection, maybe add another parameter for the collection
     public void DeleteFromId(String _documentId){
 
-        db.collection("InventoryItems").document(_documentId)
+        subcollectionRef.document(_documentId)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -133,9 +133,8 @@ public class FirebaseConfig {
     // TODO: implement error handling
     public void GetAll(String collection, FirestoreCallback callback){
 
-        CollectionReference reference = db.collection(collection);
-
-                reference.get()
+                // collection1 Household -> collection2 inside household is InventoryItems
+                    subcollectionRef.get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -187,7 +186,7 @@ public class FirebaseConfig {
         // change lastUpdated field from item
         _item.lastUpdated = GetDate();
 
-        db.collection("InventoryItems").document(_documentId).update(_item.toMap())
+        subcollectionRef.document(_documentId).update(_item.toMap())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(Task<Void> task) {
