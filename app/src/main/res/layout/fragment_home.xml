@@ -8,15 +8,15 @@
     tools:context=".fragment_home">
 
     <!-- TextView displaying the title "HomeStock" -->
-    <TextView
+    <ImageView
         android:id="@+id/textViewHomeStock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/HomeStock"
+        android:layout_width="200dp"
+        android:layout_height="120dp"
+        android:src="@drawable/hslogo"
         android:textSize="32sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="-20dp" />
 
     <ImageView
         android:id="@+id/searchButton"

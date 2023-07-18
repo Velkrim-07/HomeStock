@@ -111,7 +111,7 @@ public class MakeProfileActivity extends AppCompatActivity {
                     return;
                 }
 
-                //creates the user and inputs the data to firebase
+                //creates the profile and inputs the data to firebase
 
                 UserProfileChangeRequest profileName = new UserProfileChangeRequest.Builder()
                         .setDisplayName(firstname + " " + lastname)
@@ -125,7 +125,6 @@ public class MakeProfileActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(MakeProfileActivity.this, "Profile Created", Toast.LENGTH_SHORT).show();
 
-                                    // Pass the photo URI to ProfileFragment
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                     finish();

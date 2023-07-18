@@ -10,6 +10,11 @@
     android:background="@color/lavender"
     tools:context=".RegistrationActivity">
 
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="-100dp"
+        android:src="@drawable/hslogo" />
     <TextView
         android:text="Create new account"
         android:textSize="40dp"
