@@ -11,8 +11,9 @@
         android:hint="@string/type_category_name_here"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:inputType="text" />
+        android:textSize="24sp"
+        android:inputType="text"
+        android:autofillHints="" />
 
 
     <EditText
@@ -21,8 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textSize="20dp"
-        android:inputType="text" />
+        android:textSize="20sp"
+        android:inputType="text"
+        android:importantForAutofill="no" />
 
     <TextView
         android:layout_width="370dp"
@@ -53,8 +55,9 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:backgroundTint="@color/peach"
-            android:text="Cancel"
-            android:layout_marginEnd="8dp"/>
+            android:text="@string/cancel"
+            android:layout_marginEnd="8dp"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/buttonAcceptEdit"
@@ -62,7 +65,8 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:backgroundTint="@color/peach"
-            android:text="Accept" />
+            android:text="@string/accept"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 
