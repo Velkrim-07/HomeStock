@@ -97,11 +97,12 @@ public class fragment_home extends Fragment {
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_item, null);
         builder.setView(dialogView);
 
-        //Creates the AlertBox objects used to get the information from the user
+        // Creates the AlertBox objects used to get the information from the user
         EditText editTextQuantity = dialogView.findViewById(R.id.editTextQuantity);
         EditText editTextItemName = dialogView.findViewById(R.id.editTextItemName);
         CalendarView calendarView = dialogView.findViewById(R.id.calendarView);
         Button buttonAccept = dialogView.findViewById(R.id.buttonAccept);
+        Button buttonCancel = dialogView.findViewById(R.id.buttonCancel);
 
         // Variable to store the selected date
         final Calendar selectedDate = Calendar.getInstance();
@@ -117,6 +118,7 @@ public class fragment_home extends Fragment {
         });
 
         buttonAccept.setOnClickListener(v -> {
+            // Code to handle the Accept button click event
             int quantity = Integer.parseInt(editTextQuantity.getText().toString());
             String itemName = editTextItemName.getText().toString();
             String expirationDate = getFormattedDate(selectedDate);
@@ -130,7 +132,11 @@ public class fragment_home extends Fragment {
             dialog.dismiss();
         });
 
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        buttonCancel.setOnClickListener(v -> {
+            // Code to handle the Cancel button click event
+            dialog.dismiss();
+        });
+
         dialog = builder.create();
         dialog.show();
     }
