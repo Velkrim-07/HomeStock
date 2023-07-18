@@ -52,7 +52,7 @@ public class fragment_home extends Fragment {
         GetItemsFromDatabase();
 
         Button_Handler.MakeAddButton(rootView, R.id.ButtonAddItem, this);
-        Button_Handler.makeEditButton(rootView, R.id.ButtonEditItem, context, db, this);
+        Button_Handler.makeEditButton(rootView, R.id.ButtonEditItem, db, this);
         Button_Handler.MakeDeleteButton(rootView, R.id.ButtonDelete, context, db, this);
 
         return rootView;
@@ -145,6 +145,8 @@ public class fragment_home extends Fragment {
         return ItemList;
     }
 
+
+
     //Gets the item from the database and adds them to the Scroll view
     public void GetItemsFromDatabase(){
         ItemList = new ArrayList<>(); //creates a list to hold the items we want to get from the database
@@ -182,13 +184,26 @@ public class fragment_home extends Fragment {
         });
     }
 
+    class DateCreator{
+        int m_day;
+        int m_month;
+        int m_year;
+
+        DateCreator(int day, int month, int year){
+            m_day = day;
+            m_month = month;
+            m_year = year;
+        }
+    }
+
     public String getFormattedDate(Calendar calendar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dateFormat.format(calendar.getTime());
     }
 
-    public String GetUnformatedDate(String date){
+    public DateCreator GetUnformatedDate(String date){
         String[] NewDate = new String[3];
+        NewDate[0] =  ("");NewDate[1] =  ("");NewDate[2] =  ("");
         int[] dates = new int[3];
 
         for (int i = 0; i < 3; i++){
@@ -201,8 +216,7 @@ public class fragment_home extends Fragment {
         for (int i = 0; i < 3; i++) {
             dates[i] = Integer.parseInt(NewDate[i]);
         }
-
-        double DateInSeconds = ((dates[0] - 1970) * 3.154e+7) + (dates[1] * 2.628e+6) + (dates[2] * 86400);
-        return String.valueOf(DateInSeconds);
+        DateCreator Expecteddate = new DateCreator(dates[2], dates[1], dates[0]);
+        return Expecteddate;
     }
 }

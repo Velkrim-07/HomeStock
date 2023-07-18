@@ -90,10 +90,10 @@ public class Button_Handler
         button.setOnClickListener(v -> deleteMenu.AlertBox(db, fragcontext, fragmentHome));
     }
 
-    public static void makeEditButton(View view, int Id, Context fragcontext, FirebaseConfig db, fragment_home fragmentHome) {//takes in button, and the view of the object
+    public static void makeEditButton(View view, int Id, FirebaseConfig db, fragment_home fragmentHome) {//takes in button, and the view of the object
         Button button = view.findViewById(Id);
         dialog_Edit editMenu = new dialog_Edit();
-        button.setOnClickListener(v -> editMenu.AlertBox(db, fragcontext, fragmentHome));
+        button.setOnClickListener(v -> editMenu.AlertBox(db, fragmentHome));
     }
 
     public static void MakeBarCodeButton(int Id, Barrcode barcode, Activity main){
