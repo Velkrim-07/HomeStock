@@ -32,7 +32,6 @@ public class fragment_food extends Fragment {
 
         FirebaseConfig db = new FirebaseConfig();
         Item item = db.CreateSampleItem();
-        itemList.add(item);
 
         // Create a custom adapter for the ListView
         ArrayAdapter<Item> adapter = new ArrayAdapter<Item>(getContext(), R.layout.list_item_layout, itemList) {

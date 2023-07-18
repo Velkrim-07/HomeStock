@@ -77,7 +77,7 @@
         <Button
             android:id="@+id/ButtonAddItem"
             android:layout_width="115dp"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:text="@string/add_add"
             android:textColor="@color/black"
             android:backgroundTint="@color/peach"
@@ -92,7 +92,7 @@
         <Button
             android:id="@+id/ButtonEditItem"
             android:layout_width="115dp"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:text="@string/Edit"
             android:textColor="@color/black"
             android:backgroundTint="@color/peach"
@@ -108,7 +108,7 @@
         <Button
             android:id="@+id/ButtonDelete"
             android:layout_width="115dp"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:text="@string/delete"
             android:textColor="@color/black"
             android:backgroundTint="@color/peach"
