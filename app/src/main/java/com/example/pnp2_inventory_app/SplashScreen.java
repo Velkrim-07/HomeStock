@@ -14,8 +14,6 @@ import android.widget.VideoView;
 
 public class SplashScreen extends AppCompatActivity {
 
-    VideoView videoView;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
