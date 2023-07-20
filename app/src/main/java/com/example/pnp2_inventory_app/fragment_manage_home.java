@@ -47,19 +47,19 @@ public class fragment_manage_home extends Fragment {
         db = new FirebaseConfig();
         db.ConnectDatabase();
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+       /* btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertBox(getContext());
             }
-        });
+        });*/
 
 
         // Inflate the layout for this fragment
         return view;
     }
 
-    public void AlertBox(Context fragContext){
+   /* public void AlertBox(Context fragContext){
         androidx.appcompat.app.AlertDialog.Builder alertBuilder = new AlertDialog.Builder(fragContext); //create an alert-box object
         alertBuilder.create(); //creates the objects to be used
         alertBuilder.setTitle("Delete Items"); //sets the title the user will see
@@ -73,10 +73,10 @@ public class fragment_manage_home extends Fragment {
         alertBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
         alertBuilder.show(); //shows the alert box
-    }
+    }*/
 
 
-    public void AddNewMember(EditText userEmail){
+    /*public void AddNewMember(EditText userEmail){
 
         String NewMemberEmail = userEmail.getText().toString();
         HouseholdConfig householdConfig = new HouseholdConfig();
@@ -85,6 +85,6 @@ public class fragment_manage_home extends Fragment {
         Household household = householdConfig.GetHousehold(Id);
         household.userList.add(NewMemberEmail);
         householdConfig.UpdateHousehold(household);
-    }
+    }*/
 }
 

@@ -195,31 +195,6 @@ public class HouseholdConfig {
                 });
     }
 
-
-    public Household GetHousehold(String _householdId) {
-        Household household = CreateSampleHousehold();
-
-        db.collection("Households").document(_householdId).get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        household.name = documentSnapshot.getString("name");
-                        household.householdDescription = documentSnapshot.getString("householdDescription");
-                        household.creationDate = documentSnapshot.getString("creationDate");
-                        household.lastUpdated = documentSnapshot.getString("lastUpdated");
-                        household.houseHoldId = documentSnapshot.getString("houseHoldId");
-                        household.inventoryId = documentSnapshot.getString("inventoryId");
-                    } else {
-
-                    }
-
-                }).addOnFailureListener(e -> {
-                    // Error occurred while retrieving the document
-                    // Handle the failure case
-                });
-
-        return household;
-    }
-
     public interface FirestoreHouseholdCallback{
         void OnCallBack(QuerySnapshot querySnapshot);
     }

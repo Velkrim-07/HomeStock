@@ -20,7 +20,6 @@ public class Household {
     public String houseHoldId;
     public String inventoryId;
 
-    public String householdDescription;
 
     // list of users inside the household
     // if we want to expand later on regarding permissions and such, this would have to be reworked
