@@ -30,6 +30,6 @@ public class SplashScreen extends AppCompatActivity {
 
         Handler h = new Handler();
         // The Runnable will be executed after the given delay time
-        h.postDelayed(r, 4750); // will be delayed for 4.7 seconds
+        h.postDelayed(r, 4725); // will be delayed for 4.7 seconds
     }
 }

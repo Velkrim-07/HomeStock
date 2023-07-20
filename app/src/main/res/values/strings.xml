@@ -46,6 +46,7 @@
     <string name="name">Name</string>
     <string name="my_family">My Family</string>
     <string name="add_family_member">Add Family Member</string>
+    <string name="change_profile_picture">Change profile picture</string>
 
     <string-array name="image_sources">
         <item>Camera</item>
