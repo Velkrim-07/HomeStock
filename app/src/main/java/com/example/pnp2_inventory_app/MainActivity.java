@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
@@ -56,9 +58,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        CameraClass.OnActivityHelper(requestCode, resultCode, data, Fragment_Camera);
-        CameraClass.DetectText();
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null && result.getContents() != null) {
+            showScanResult(result.getContents());
+        }
     }
+
 
     public Navigation getNavigation(){
         return navigation;
@@ -106,12 +111,12 @@ public class MainActivity extends AppCompatActivity {
 
     // This method will be used to scan the QR code / barcode
     public void ScanCode() {
-        ScanOptions options = new ScanOptions();
-        options.setPrompt("Volume up to flash on");
-        options.setBeepEnabled(true);
-        options.setOrientationLocked(true);
-        options.setCaptureActivity(CaptureAct.class);
-        barLauncher.launch(options);
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setPrompt("Volume up to flash on");
+        integrator.setBeepEnabled(true);
+        integrator.setOrientationLocked(true);
+        integrator.setCaptureActivity(CaptureAct.class);
+        integrator.initiateScan();
     }
 
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
@@ -128,5 +133,18 @@ public class MainActivity extends AppCompatActivity {
             }).show();
         }
     });
+
+    private void showScanResult(String content) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Result");
+        builder.setMessage(content);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).show();
+    }
+
     // barLauncher will process the image that is sent in
 }
