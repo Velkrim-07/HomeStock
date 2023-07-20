@@ -8,10 +8,11 @@
 
     <!-- TextView displaying the title "ManageHome" -->
     <TextView
-        android:id="@+id/textViewHomeStock"
+        android:id="@+id/textViewManageHomeStock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ManageHome"
+        android:textColor="@color/black"
         android:textSize="32sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
@@ -22,7 +23,7 @@
         android:id="@+id/listViewEmails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewHomeStock"
+        android:layout_below="@id/textViewManageHomeStock"
         android:layout_marginTop="20dp"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp"
@@ -31,38 +32,59 @@
 
     <!-- LinearLayout containing the buttons -->
     <LinearLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:padding="2dp">
 
-        <!-- "Add" button -->
+        <!-- For spacing the buttons out further apart. -->
+        <Space
+            android:layout_width="3dp"
+            android:layout_height="wrap_content" />
+
+        <!-- ImageButton for adding items -->
         <Button
-            android:id="@+id/buttonAdd"
-            android:text="Add"
-            android:backgroundTint="@color/peach"
-            android:textSize="14sp"
+            android:id="@+id/ButtonAddItem"
+            android:layout_width="115dp"
+            android:layout_height="60dp"
+            android:text="@string/add_add"
             android:textColor="@color/black"
-            android:layout_width="100dp"
-            android:layout_height="50dp" />
+            android:backgroundTint="@color/peach"
+            android:textSize="20sp"
+            android:theme="@style/Base.Theme.PNP2Inventoryapp" />
 
-        <!-- "Remove" button -->
+        <!-- For spacing the buttons out further apart. -->
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
         <Button
-            android:id="@+id/buttonRemove"
-            android:text="Remove"
-            android:layout_marginLeft="10dp"
-            android:backgroundTint="@color/peach"
-            android:textSize="14sp"
+            android:id="@+id/ButtonEditItem"
+            android:layout_width="115dp"
+            android:layout_height="60dp"
+            android:text="@string/Edit"
             android:textColor="@color/black"
-            android:layout_width="100dp"
-            android:layout_height="50dp" />
+            android:backgroundTint="@color/peach"
+            android:textSize="20sp"
+            android:theme="@style/Base.Theme.PNP2Inventoryapp" />
 
+
+        <!-- For spacing the buttons out further apart. -->
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/ButtonDelete"
+            android:layout_width="115dp"
+            android:layout_height="60dp"
+            android:text="@string/delete"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/peach"
+            android:textSize="20sp"
+            android:theme="@style/Base.Theme.PNP2Inventoryapp" />
     </LinearLayout>
-
 </RelativeLayout>
 
 

@@ -7,12 +7,12 @@
     android:padding="20dp">
 
     <ScrollView
-        android:id="@+id/deleteCheckedItemScrollBar"
+        android:id="@+id/EditCheckedItemScrollBar"
         android:layout_width="370dp"
         android:layout_height="200dp"
         android:layout_marginTop="20dp"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:contentDescription="@string/this_is_where_the_items_are_placed"/>
+        android:contentDescription="@string/this_is_where_the_items_are_placed" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,9 +26,8 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:backgroundTint="@color/peach"
-            android:text="@string/cancel"
-            android:layout_marginEnd="8dp"
-            tools:ignore="ButtonStyle" />
+            android:text="Cancel"
+            android:layout_marginEnd="8dp"/>
 
         <Button
             android:id="@+id/buttonAcceptEdit"
@@ -36,8 +35,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:backgroundTint="@color/peach"
-            android:text="@string/accept"
-            tools:ignore="ButtonStyle" />
+            android:text="Accept" />
 
     </LinearLayout>
 </LinearLayout>

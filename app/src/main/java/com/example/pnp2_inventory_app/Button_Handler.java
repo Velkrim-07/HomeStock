@@ -20,15 +20,8 @@ public class Button_Handler
     //This button will add another entry to the database with the information that the
     //user provides
     public static void MakeAddButton(View view, int Id, fragment_home fragment) {//takes in button, and the view of the object
-        ImageButton button = view.findViewById(Id);
-        button.setOnClickListener(v -> fragment.showDialogToAddItem());
-    }
-
-    public static void makeEditButton(View view, int Id) {//takes in button, and the view of the object
         Button button = view.findViewById(Id);
-        button.setOnClickListener(v -> {
-            //Nothing here yet
-        });
+        button.setOnClickListener(v -> fragment.showDialogToAddItem());
     }
 
     public static void makeCameraAcceptButton(View view, int Id, cameraClass fragment) {//takes in button, and the view of the object
@@ -36,7 +29,7 @@ public class Button_Handler
         button.setOnClickListener(v -> fragment.AcceptPictureHandler(view));
     }
     public static void AddCategory(View view, int Id, fragment_categories fragment) {//takes in button, and the view of the object
-        ImageButton button = view.findViewById(Id);
+        Button button = view.findViewById(Id);
         button.setOnClickListener(v -> fragment.AlertBox());
     }
 
@@ -92,8 +85,27 @@ public class Button_Handler
     }
 
     public static void MakeDeleteButton(View view, int Id, Context fragcontext, FirebaseConfig db, fragment_home fragmentHome){
-        ImageButton button = view.findViewById(Id);
+        Button button = view.findViewById(Id);
         dialog_delete deleteMenu = new dialog_delete();
         button.setOnClickListener(v -> deleteMenu.AlertBox(db, fragcontext, fragmentHome));
+    }
+
+    public static void makeEditButton(View view, int Id, FirebaseConfig db, fragment_home fragmentHome) {//takes in button, and the view of the object
+        Button button = view.findViewById(Id);
+        dialog_Edit editMenu = new dialog_Edit();
+        button.setOnClickListener(v -> editMenu.AlertBox(db, fragmentHome));
+    }
+
+    public static void MakeBarCodeButton(int Id, Barrcode barcode, Activity main){
+
+    ImageButton button = main.findViewById(Id);
+
+    button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            barcode.ScanCode();
+        }
+    });
+
     }
 }

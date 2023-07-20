@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -22,27 +23,38 @@ public class dialog_delete extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.dialog_delete, container, false);
     }
 
     //this pulls up the AlertBox and adds a button the user fills out the data
-    public void AlertBox(FirebaseConfig db, Context fragContext, fragment_home fragmentHome){
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(fragContext); //create an alert-box object
-        alertBuilder.create(); //creates the objects to be used
-        alertBuilder.setTitle("Delete Items"); //sets the title the user will see
-        alertBuilder.setMessage("Select Which Items You Wish To Delete"); //sets the message the user will see
+    public void AlertBox(FirebaseConfig db, Context fragContext, fragment_home fragmentHome) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(fragContext);
+        alertBuilder.setTitle("Delete Items");
+        alertBuilder.setMessage("Select Which Items You Wish To Delete");
+
         View dialogView = LayoutInflater.from(fragContext).inflate(R.layout.dialog_delete, null);
         alertBuilder.setView(dialogView);
 
-        ScrollView deleteViewScrollBar = dialogView.findViewById(R.id.deleteCheckedItemScrollBar); //connect the scrollbar to the xml
-        deleteViewScrollBar.addView(loadItemsFromDatabase(fragContext, fragmentHome)); //load up the items for the database inside the scrollbar
+        ScrollView deleteViewScrollBar = dialogView.findViewById(R.id.deleteCheckedItemScrollBar);
+        deleteViewScrollBar.addView(loadItemsFromDatabase(fragContext, fragmentHome));
 
-        alertBuilder.setPositiveButton("Detele Items", (dialog, id) -> deleteSelectedItems(db, (LinearLayout)deleteViewScrollBar.getChildAt(0), fragmentHome) );
-        alertBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        AlertDialog dialogAlert = alertBuilder.create();
 
-        alertBuilder.show(); //shows the alert box
+        dialogAlert.setOnShowListener(dialog -> {
+            Button buttonDeleteItems = dialogView.findViewById(R.id.buttonAcceptEdit);
+            buttonDeleteItems.setOnClickListener(v -> {
+                deleteSelectedItems(db, (LinearLayout) deleteViewScrollBar.getChildAt(0), fragmentHome);
+                dialogAlert.dismiss();
+            });
+
+            Button buttonCancel = dialogView.findViewById(R.id.buttonCancelEdit);
+            buttonCancel.setOnClickListener(v -> dialogAlert.dismiss());
+        });
+
+        dialogAlert.show();
     }
+
+
 
     private LinearLayout loadItemsFromDatabase(Context fragContext, fragment_home fragmentHome) {
         LinearLayout scrollBarLayout = new LinearLayout(fragContext);

@@ -32,7 +32,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -60,7 +59,7 @@ public class HouseholdConfig {
         sampleTemp.add("kelltest@gmail.com");
 
         Household newHousehold = new Household("sampleHouse", DbConfig.Util.GetDate(), DbConfig.Util.GetDate(),
-                DbConfig.Util.CreateGuid(), sampleTemp);
+                DbConfig.Util.CreateGuid(), sampleTemp, "");
 
         return newHousehold;
     }
@@ -195,7 +194,6 @@ public class HouseholdConfig {
                     }
                 });
     }
-
 
     public interface FirestoreHouseholdCallback{
         void OnCallBack(QuerySnapshot querySnapshot);

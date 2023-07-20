@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -52,13 +53,13 @@ public class fragment_home extends Fragment {
         GetItemsFromDatabase();
 
         Button_Handler.MakeAddButton(rootView, R.id.ButtonAddItem, this);
-        Button_Handler.makeEditButton(rootView, R.id.ButtonEditItem);
+        Button_Handler.makeEditButton(rootView, R.id.ButtonEditItem, db, this);
         Button_Handler.MakeDeleteButton(rootView, R.id.ButtonDelete, context, db, this);
 
         return rootView;
     }
 
-    private void AddToScrollView(Item newItem) {
+    public void AddToScrollView(Item newItem) {
         newItem.ConstructObject(context);
         VerticalLinearView = rootView.findViewById(R.id.LinearLayoutOutside);
         InsideLinearLayout = new LinearLayout(VerticalLinearView.getContext());
@@ -66,17 +67,18 @@ public class fragment_home extends Fragment {
         InsideLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
         //Formatting for the sizes of each individual layout
-        ViewGroup.LayoutParams AmountObjectParams = new ViewGroup.LayoutParams(100, 50);
-        ViewGroup.LayoutParams NameObjectParams = new ViewGroup.LayoutParams(400, 50);
+        ViewGroup.LayoutParams AmountObjectParams = new ViewGroup.LayoutParams(200, 50);
+        ViewGroup.LayoutParams NameObjectParams = new ViewGroup.LayoutParams(500, 50);
         ViewGroup.LayoutParams ExpireDateObjectParams = new ViewGroup.LayoutParams(400, 50);
 
         //Adds the formatting to the objects
         newItem.AmountObject.setLayoutParams(AmountObjectParams);
         newItem.NameObject.setLayoutParams(NameObjectParams);
         newItem.ExpireDateObject.setLayoutParams(ExpireDateObjectParams);
-        newItem.ExpireDateObject.setPadding(140, 0, 0, 0);
+        newItem.ExpireDateObject.setPadding(1, 0, 0, 0);
 
         //Adding the TextViews to the InsideLinearLayout view
+
         InsideLinearLayout.addView(newItem.AmountObject);
         InsideLinearLayout.addView(newItem.NameObject);
         InsideLinearLayout.addView(newItem.ExpireDateObject);
@@ -96,11 +98,12 @@ public class fragment_home extends Fragment {
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_item, null);
         builder.setView(dialogView);
 
-        //Creates the AlertBox objects used to get the information from the user
+        // Creates the AlertBox objects used to get the information from the user
         EditText editTextQuantity = dialogView.findViewById(R.id.editTextQuantity);
         EditText editTextItemName = dialogView.findViewById(R.id.editTextItemName);
         CalendarView calendarView = dialogView.findViewById(R.id.calendarView);
         Button buttonAccept = dialogView.findViewById(R.id.buttonAccept);
+        Button buttonCancel = dialogView.findViewById(R.id.buttonCancel);
 
         // Variable to store the selected date
         final Calendar selectedDate = Calendar.getInstance();
@@ -116,6 +119,7 @@ public class fragment_home extends Fragment {
         });
 
         buttonAccept.setOnClickListener(v -> {
+            // Code to handle the Accept button click event
             int quantity = Integer.parseInt(editTextQuantity.getText().toString());
             String itemName = editTextItemName.getText().toString();
             String expirationDate = getFormattedDate(selectedDate);
@@ -129,7 +133,11 @@ public class fragment_home extends Fragment {
             dialog.dismiss();
         });
 
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        buttonCancel.setOnClickListener(v -> {
+            // Code to handle the Cancel button click event
+            dialog.dismiss();
+        });
+
         dialog = builder.create();
         dialog.show();
     }
@@ -137,6 +145,8 @@ public class fragment_home extends Fragment {
     public List<Item> getItemList(){
         return ItemList;
     }
+
+
 
     //Gets the item from the database and adds them to the Scroll view
     public void GetItemsFromDatabase(){
@@ -175,8 +185,39 @@ public class fragment_home extends Fragment {
         });
     }
 
-    private String getFormattedDate(Calendar calendar) {
+    class DateCreator{
+        int m_day;
+        int m_month;
+        int m_year;
+
+        DateCreator(int day, int month, int year){
+            m_day = day;
+            m_month = month;
+            m_year = year;
+        }
+    }
+
+    public String getFormattedDate(Calendar calendar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dateFormat.format(calendar.getTime());
+    }
+
+    public DateCreator GetUnformatedDate(String date){
+        String[] NewDate = new String[3];
+        NewDate[0] =  ("");NewDate[1] =  ("");NewDate[2] =  ("");
+        int[] dates = new int[3];
+
+        for (int i = 0; i < 3; i++){
+            for(char character : date.toCharArray()){
+                if (character == '-'){ i++;}
+                else{NewDate[i] += character;}
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            dates[i] = Integer.parseInt(NewDate[i]);
+        }
+        DateCreator Expecteddate = new DateCreator(dates[2], dates[1], dates[0]);
+        return Expecteddate;
     }
 }
