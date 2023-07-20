@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -30,6 +31,7 @@ public class dialog_Edit extends Fragment {
     public FirebaseConfig db;
     public ScrollBarLayoutBox ScrollHandler;
     List<Item> itemList;
+    public CheckBox checkBox;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -141,7 +143,7 @@ public class dialog_Edit extends Fragment {
         dialogAlert.show();
 
         //checkbox for frozen food option
-        CheckBox checkBox = dialogView.findViewById(R.id.checkBoxFrozen);
+        checkBox = dialogView.findViewById(R.id.checkBoxFrozen);
         checkBox.setOnClickListener(v -> {
             frozen.set(true);
         });

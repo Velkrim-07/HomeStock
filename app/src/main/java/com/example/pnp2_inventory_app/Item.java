@@ -159,7 +159,6 @@ public class Item {
             if (index < 1) break;
         }
 
-        //TODO
         //Create color index for different percentages EX: 80% and above is green and between 60% and 79% is lime green
         String ANSI_Color = "";
 
