@@ -12,10 +12,11 @@ import DbConfig.Util;
 
 public class Household {
 
+
     public String name;
+    public String householdDescription;
     public String creationDate;
     public String lastUpdated;
-
     public String houseHoldId;
     public String inventoryId;
 
