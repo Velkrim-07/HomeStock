@@ -47,4 +47,5 @@
     <string name="shopping">Shopping List</string>
     <string name="delete_items_menu">Delete items menu</string>
     <string name="selectitemtodelete">Select Items You Wish To Delete</string>
+    <string name="quantity">Quantity</string>
 </resources>

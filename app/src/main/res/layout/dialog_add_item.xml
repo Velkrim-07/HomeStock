@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -9,14 +10,16 @@
         android:id="@+id/editTextQuantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Quantity"
-        android:inputType="number" />
+        android:hint="@string/quantity"
+        android:inputType="number"
+        tools:ignore="Autofill" />
 
     <EditText
         android:id="@+id/editTextItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Item Name" />
+        android:hint="Item Name"
+        tools:ignore="Autofill" />
 
     <CalendarView
         android:id="@+id/calendarView"
@@ -27,9 +30,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="16dp"
-        android:gravity="start|center_vertical">
+        android:gravity="end|center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Frozen"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <CheckBox
             android:id="@+id/checkBoxFrozen"
@@ -37,25 +48,33 @@
             android:layout_height="wrap_content"
             android:buttonTint="@color/peach" />
 
-        <TextView
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Frozen"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_marginStart="8dp" />
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/buttonCancel"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/peach"
+                android:text="Cancel"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/buttonAccept"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/peach"
+                android:text="Accept"
+                android:textColor="@android:color/black" />
+
+        </LinearLayout>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonAccept"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:backgroundTint="@color/peach"
-        android:textColor="@android:color/black"
-        android:text="Accept" />
-
 </LinearLayout>
-
-
