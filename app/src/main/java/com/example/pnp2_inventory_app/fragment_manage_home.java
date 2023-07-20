@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import DbConfig.Category;
+import DbConfig.CategoryConfig;
 import DbConfig.FirebaseConfig;
 import DbConfig.Household;
 import DbConfig.HouseholdConfig;
@@ -42,17 +44,14 @@ public class fragment_manage_home extends Fragment {
         Button btnAdd = view.findViewById(R.id.buttonAdd);
         TextView idk = view.findViewById(R.id.textViewHomeStock);
 
-        HouseholdConfig dbH = new HouseholdConfig();
+        CategoryConfig dbC = new CategoryConfig();
+        dbC.ConnectDatabase();
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //Item sample = db.CreateSampleItem();
-               //db.InsertDb(sample);
-                dbH.ConnectDatabase();
-                dbH.GetDocumentIdFromHouseHold(querySnapshot -> {
-                        TestDB(querySnapshot);
-                });
+                Category temp = dbC.CreateSampleCategory();
+                dbC.InsertDb(temp);
             }
         });
 
