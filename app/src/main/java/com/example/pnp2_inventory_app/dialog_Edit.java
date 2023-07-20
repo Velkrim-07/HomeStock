@@ -127,7 +127,8 @@ public class dialog_Edit extends Fragment {
         AcceptEdit.setOnClickListener(v -> {
             EditItem.m_Quantity = Integer.parseInt(editTextQuantity.getText().toString());
             EditItem.m_Name = editTextItemName.getText().toString();
-            EditItem.m_ExpirationDate = fragmentHome.getFormattedDate(selectedDate);
+            if (frozen.get()) { EditItem.m_ExpirationDate = EditItem.FrozenFood();}
+            else { EditItem.m_ExpirationDate = fragmentHome.getFormattedDate(selectedDate);}
             for (Item items: ItemList) {
                 if (items.documentId == EditItem.documentId){
                     items = EditItem;

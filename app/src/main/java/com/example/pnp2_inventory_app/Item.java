@@ -189,27 +189,27 @@ public class Item {
     //does the same calculation as the above method but just returns the amount of days till expiration instead
     public int daysTillExpiration ()
     {
-        int iYear = Integer.parseInt(insertedDate.substring(0,3)) * 365;
+        int iYear = Integer.parseInt(insertedDate.substring(0,4)) * 365;
         int iMonth = Integer.parseInt(insertedDate.substring(5,7)) * 31;
-        int iDay = Integer.parseInt(insertedDate.substring(9,11));
+        int iDay = Integer.parseInt(insertedDate.substring(8,10));
         //totals days from 0/0/0. will be used to calculated days between the insertion date and expiration date
         int insertDateDays = iYear + iMonth + iDay;
 
-        int eYear = Integer.parseInt(m_ExpirationDate.substring(0,3)) * 365;
+        int eYear = Integer.parseInt(m_ExpirationDate.substring(0,4)) * 365;
         int eMonth = Integer.parseInt(m_ExpirationDate.substring(5,7)) * 31;
-        int eDay = Integer.parseInt(m_ExpirationDate.substring(9,11));
+        int eDay = Integer.parseInt(m_ExpirationDate.substring(8,10));
         //total days from 0/0/0. will be used to calculate days between the insertion date and expiration date
         int expirationDateDays = eYear + eMonth + eDay;
 
         return expirationDateDays - insertDateDays;
     }
     //year, month, date
-    public void FrozenFood ()
+    public String FrozenFood ()
     {
         //Local variables used to turn the m_ExpirationDate into a LocalDate object
-        int year = Integer.parseInt(insertedDate.substring(0,3));
+        int year = Integer.parseInt(insertedDate.substring(0,4));
         int month = Integer.parseInt(insertedDate.substring(5,7));
-        int day = Integer.parseInt(insertedDate.substring(9,11));
+        int day = Integer.parseInt(insertedDate.substring(8,10));
         String newExpirationDate = "";
 
         if (month + 2 > 12)
@@ -225,7 +225,7 @@ public class Item {
         newExpirationDate += '-';
         newExpirationDate += day;
 
-        m_ExpirationDate = newExpirationDate;
+        return newExpirationDate;
 
     }
 }

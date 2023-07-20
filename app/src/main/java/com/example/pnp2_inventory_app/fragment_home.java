@@ -36,6 +36,7 @@ public class fragment_home extends Fragment {
     private AlertDialog dialog;
     private FirebaseConfig db;
     private List<Item> ItemList;
+    public CheckBox checkBox;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -133,7 +134,7 @@ public class fragment_home extends Fragment {
             AddToScrollView(NewItem); //adds the new Item to the Scroll View
             if (frozen.get())
             {
-                NewItem.FrozenFood();
+                NewItem.m_ExpirationDate = NewItem.FrozenFood();
             }
 
             // Dismiss the dialog after accepting the input
@@ -149,7 +150,7 @@ public class fragment_home extends Fragment {
         dialog.show();
 
         //checkbox for frozen food option
-        CheckBox checkBox = dialogView.findViewById(R.id.checkBoxFrozen);
+        checkBox = dialogView.findViewById(R.id.checkBoxFrozen);
         checkBox.setOnClickListener(v -> {
             frozen.set(true);
         });
