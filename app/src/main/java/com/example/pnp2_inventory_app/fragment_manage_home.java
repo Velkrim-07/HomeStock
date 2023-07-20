@@ -40,7 +40,9 @@ public class fragment_manage_home extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.manage_home, container, false);
 
-        Button btnAdd = view.findViewById(R.id.buttonAdd);
+        Button btnAdd = view.findViewById(R.id.ButtonAddItem);
+        Button btnEdit = view.findViewById(R.id.ButtonEditItem);
+        Button btnDelete = view.findViewById(R.id.ButtonDelete);
 
         db = new FirebaseConfig();
         db.ConnectDatabase();
