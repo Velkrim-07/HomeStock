@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import DbConfig.FirebaseConfig;
 
@@ -156,6 +157,9 @@ public class dialog_Edit extends Fragment {
 
         Button AcceptEdit = dialogView.findViewById(R.id.buttonAccept);
 
+        //Variable to check whether or not the food will be frozen
+        AtomicBoolean frozen = new AtomicBoolean(false);
+
         AcceptEdit.setOnClickListener(v -> {
             int quantity = Integer.parseInt(editTextQuantity.getText().toString());
             String itemName = editTextItemName.getText().toString();
@@ -165,10 +169,20 @@ public class dialog_Edit extends Fragment {
             db.InsertDb(NewItem); //Insets the new item into the database
             ItemList.add(NewItem);
             fragmentHome.AddToScrollView(NewItem); //adds the new Item to the Scroll View
+            if (frozen.get())
+            {
+                NewItem.FrozenFood();
+            }
             dialogAlert.dismiss();
         });
 
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         dialogAlert.show();
+
+        //checkbox for frozen food option
+        CheckBox checkBox = dialogView.findViewById(R.id.checkBoxFrozen);
+        checkBox.setOnClickListener(v -> {
+            frozen.set(true);
+        });
     }
 }

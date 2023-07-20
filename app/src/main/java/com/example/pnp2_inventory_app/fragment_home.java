@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -20,10 +21,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import DbConfig.FirebaseConfig;
 
@@ -106,6 +107,9 @@ public class fragment_home extends Fragment {
         // Variable to store the selected date
         final Calendar selectedDate = Calendar.getInstance();
 
+        //Variable to check whether or not the food will be frozen
+        AtomicBoolean frozen = new AtomicBoolean(false);
+
         // Set the initial selected date
         selectedDate.setTimeInMillis(calendarView.getDate());
 
@@ -125,6 +129,10 @@ public class fragment_home extends Fragment {
             db.InsertDb(NewItem); //Insets the new item into the database
             ItemList.add(NewItem);
             AddToScrollView(NewItem); //adds the new Item to the Scroll View
+            if (frozen.get())
+            {
+                NewItem.FrozenFood();
+            }
 
             // Dismiss the dialog after accepting the input
             dialog.dismiss();
@@ -133,6 +141,12 @@ public class fragment_home extends Fragment {
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         dialog = builder.create();
         dialog.show();
+
+        //checkbox for frozen food option
+        CheckBox checkBox = dialogView.findViewById(R.id.checkBoxFrozen);
+        checkBox.setOnClickListener(v -> {
+            frozen.set(true);
+        });
     }
 
     public List<Item> getItemList(){
