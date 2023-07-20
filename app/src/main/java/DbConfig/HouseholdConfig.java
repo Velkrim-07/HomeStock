@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 // map and hash for testing
@@ -31,6 +32,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -46,11 +48,11 @@ public class HouseholdConfig {
     private final String collectionPath = "Households";
     public String householdId;
 
-    public void ConnectDatabase(){
+    public void ConnectDatabase() {
         db = FirebaseFirestore.getInstance();
     }
 
-    public Household CreateSampleHousehold(){
+    public Household CreateSampleHousehold() {
         List<String> sampleTemp = new ArrayList<>();
         sampleTemp.add("rafatest@gmail.com");
         sampleTemp.add("judahtest@gmail.com");
@@ -63,7 +65,7 @@ public class HouseholdConfig {
         return newHousehold;
     }
 
-    public void InsertHousehold(Household _household){
+    public void InsertHousehold(Household _household) {
         db.collection("Households").document(_household.houseHoldId).set(_household)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -78,7 +80,7 @@ public class HouseholdConfig {
                 });
     }
 
-    public void UpdateHousehold(Household _household){
+    public void UpdateHousehold(Household _household) {
         // change lastUpdated field from item
         _household.lastUpdated = DbConfig.Util.GetDate();
 
@@ -96,7 +98,7 @@ public class HouseholdConfig {
                 });
     }
 
-    public void DeleteHouseholdFromId(String _householdId){
+    public void DeleteHouseholdFromId(String _householdId) {
         db.collection("Households").document(_householdId)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -116,7 +118,7 @@ public class HouseholdConfig {
     // Gets everything inside the collection
     // PROBLEM: it will be necessary some kind of pagination maybe depending on the amount of items in the collection
     // TODO: implement error handling
-    public void GetAll(String collection, HouseholdConfig.FirestoreHouseholdCallback callback){
+    public void GetAll(String collection, HouseholdConfig.FirestoreHouseholdCallback callback) {
 
         CollectionReference reference = db.collection(collection);
 
@@ -129,6 +131,46 @@ public class HouseholdConfig {
 
                     }
                 });
+    }
+
+    // gets household if you have an Id
+    public void GetHouseholdUsers(HouseholdConfig.FirestoreHouseholdCallback callback, String householdId) {
+
+        db.collection("Household")
+                .whereEqualTo("householdId", householdId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        callback.OnCallBack(querySnapshot);
+                    }
+                });
+    }
+
+    // Gets Household after you already know what is the householdId. returns as household
+    // WORKING! TODO: maybe some error handling in else
+    public Household GetHousehold(String _householdId) {
+        Household household = CreateSampleHousehold();
+
+        db.collection("Households").document(_householdId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        household.name = documentSnapshot.getString("name");
+                        household.householdDescription = documentSnapshot.getString("householdDescription");
+                        household.creationDate = documentSnapshot.getString("creationDate");
+                        household.lastUpdated = documentSnapshot.getString("lastUpdated");
+                        household.houseHoldId = documentSnapshot.getString("houseHoldId");
+                        household.inventoryId = documentSnapshot.getString("inventoryId");
+                    } else {
+
+                    }
+
+                }).addOnFailureListener(e -> {
+                    // Error occurred while retrieving the document
+                    // Handle the failure case
+                });
+
+        return household;
     }
 
 

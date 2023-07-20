@@ -43,6 +43,7 @@ public class FirebaseConfig {
     String collectionName = "Households"; // Replace with the actual collection name
     String subcollectionName = "InventoryItems"; // Replace with the actual subcollection name
     CollectionReference subcollectionRef;
+    List<String> tempTest;
 
     public void ConnectDatabase(){
         db = FirebaseFirestore.getInstance();
@@ -50,13 +51,26 @@ public class FirebaseConfig {
         HouseholdConfig householdConnect = new HouseholdConfig();
         householdConnect.ConnectDatabase();
 
-        List<String> tempTest;
-        String tempTwo;
-        tempTest = householdConnect.GetDocumentIdFromHouseHold();
-        tempTwo = "a2553d61-c3ef-465e-96c0-8f9b75159393"; // for now
+        tempTest = new ArrayList<>();
 
-        DocumentReference documentRef = db.collection(collectionName).document(tempTwo);
+        // tempTest = householdConnect.GetDocumentIdFromHouseHold();
+        DocumentReference documentRef = db.collection(collectionName).document("a2553d61-c3ef-465e-96c0-8f9b75159393");
         subcollectionRef = documentRef.collection(subcollectionName);
+    }
+
+    public List<String> TestDB(QuerySnapshot temp) {
+
+        String householdId;
+        List<String> userList = new ArrayList<>();
+
+        for (DocumentSnapshot document : temp) {
+            householdId = document.getId();
+            // maybe remove break?
+            // break;
+            userList.add(householdId);
+        }
+
+        return userList;
     }
 
     // Creates sample item used only for testing
