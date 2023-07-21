@@ -103,7 +103,7 @@ public class dialog_Edit extends Fragment {
         EditText editTextItemName = dialogView.findViewById(R.id.editTextItemName);
         editTextItemName.setText(EditItem.getName());
         CalendarView calendarView = dialogView.findViewById(R.id.calendarView);
-        fragment_home.DateCreator Date = fragmentHome.GetUnformatedDate(EditItem.getExpirationDate());
+        DateCreator Date = fragmentHome.GetUnformatedDate(EditItem.getExpirationDate());
         Calendar CalInstance = Calendar.getInstance();
         CalInstance.set(Date.m_year, Date.m_month, Date.m_day);
 

@@ -2,6 +2,7 @@ package com.example.pnp2_inventory_app;
 
 //Fragment Usage needs
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -12,11 +13,15 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,6 +41,9 @@ public class fragment_home extends Fragment {
     private AlertDialog dialog;
     private FirebaseConfig db;
     private List<Item> ItemList;
+    private OfflineUsage SaveAndReadFromFile;
+    private File FileTOUse;
+    Activity main;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,9 +57,26 @@ public class fragment_home extends Fragment {
         db = new FirebaseConfig();
         db.ConnectDatabase();
 
-        //We Initially pull from the database and populate the scrollview
-        GetItemsFromDatabase();
+        main = this.getActivity(); //used so we dont need to get the activity over and over
 
+        SaveAndReadFromFile = new OfflineUsage(main);//initialises the OfflineUsage class
+        FileTOUse = new File(this.getActivity().getFilesDir(), "Config.txt"); //creates a file to save data in(Should be using the file in teh program)
+
+        //checks if we are connected to the internet
+        if(SaveAndReadFromFile.isNetworkAvailable() == true) {
+            GetItemsFromDatabase(); //if we are then we will get the information from the internet
+            Toast.makeText(context, "Connected to database.", Toast.LENGTH_SHORT).show();//we give the user the message telling them the internet is connected
+        }
+        else{
+            String stringItems = null;//if we are then we will get the information from the the text file
+            try {
+                stringItems = SaveAndReadFromFile.getStringFromFile(FileTOUse); //gets the file from the File
+                ReadListOfItems(stringItems); //turns the string into a list of items
+                Toast.makeText(context, "No connection to database.", Toast.LENGTH_SHORT).show();//we give the user the message telling them the internet is not connected
+            } catch (Exception e) {throw new RuntimeException(e);}
+        }
+
+        //creates the buttons used in the fragment
         Button_Handler.MakeAddButton(rootView, R.id.ButtonAddItem, this);
         Button_Handler.makeEditButton(rootView, R.id.ButtonEditItem, db, this);
         Button_Handler.MakeDeleteButton(rootView, R.id.ButtonDelete, context, db, this);
@@ -78,7 +103,6 @@ public class fragment_home extends Fragment {
         newItem.ExpireDateObject.setPadding(1, 0, 0, 0);
 
         //Adding the TextViews to the InsideLinearLayout view
-
         InsideLinearLayout.addView(newItem.AmountObject);
         InsideLinearLayout.addView(newItem.NameObject);
         InsideLinearLayout.addView(newItem.ExpireDateObject);
@@ -146,8 +170,6 @@ public class fragment_home extends Fragment {
         return ItemList;
     }
 
-
-
     //Gets the item from the database and adds them to the Scroll view
     public void GetItemsFromDatabase(){
         ItemList = new ArrayList<>(); //creates a list to hold the items we want to get from the database
@@ -158,42 +180,90 @@ public class fragment_home extends Fragment {
             VerticalLinearView.removeAllViews(); //the information is removed form the Vertical view
         }
 
-        db.GetAll("InventoryItems", querySnapshot -> {
-            for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                String name = document.getString("name");
-                int quantity = Objects.requireNonNull(document.getLong("quantity")).intValue();
-                String expirationDate = document.getString("expirationDate");
-                String documentId = document.getString("documentId");
-                //String insertedDate = document.getString("insertedDate ");
-                //String lastUpdated = document.getString("lastUpdated ");
-                String insertedDate = db.GetDate();
-                String lastUpdated = db.GetDate();
+        if(SaveAndReadFromFile.isNetworkAvailable()) {
+            db.GetAll("InventoryItems", querySnapshot -> {
+                Toast.makeText(context, "Connected to database.", Toast.LENGTH_SHORT).show();
+                for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                    String name = document.getString("name");
+                    int quantity = Objects.requireNonNull(document.getLong("quantity")).intValue();
+                    String expirationDate = document.getString("expirationDate");
+                    String documentId = document.getString("documentId");
+                    //String insertedDate = document.getString("insertedDate ");
+                    //String lastUpdated = document.getString("lastUpdated ");
+                    String insertedDate = db.GetDate();
+                    String lastUpdated = db.GetDate();
 
-                //creates the item object
-                Item item = new Item(name, quantity, expirationDate, documentId);
-                item.insertedDate = insertedDate;
-                item.lastUpdated = lastUpdated;
+                    //creates the item object
+                    Item item = new Item(name, quantity, expirationDate, documentId);
+                    item.insertedDate = insertedDate;
+                    item.lastUpdated = lastUpdated;
 
-                if (item != null) {//placeholder foe new expression
-                 //TODO : make sure there are no duplicates
-                    ItemList.add(item); //adds the item to the list of items
+                    if (item != null) {//placeholder foe new expression
+                        //TODO : make sure there are no duplicates
+                        ItemList.add(item); //adds the item to the list of items
+                    }
                 }
+                for (Item items : ItemList) {
+                    AddToScrollView(items); //the items are added to the scrollview
+                }
+                SaveAndReadFromFile.writeToFile(ItemList, FileTOUse); //writes to the file
+            });
+        }
+        else {
+            Toast.makeText(context, "No connection to database.", Toast.LENGTH_SHORT).show();//we give the user the message telling them the internet is not connected
+            try {ReadListOfItems(SaveAndReadFromFile.getStringFromFile(FileTOUse));}
+            //gets the string from the file and parses the data to get each attribute of the items in the list
+            //this will save to the Items list
+            catch (Exception e) {throw new RuntimeException(e);}
+            for (Item items: ItemList) {
+                AddToScrollView(items);//adds each item to the scroll view
+                SaveAndReadFromFile.writeToFile(ItemList, FileTOUse); //saves the data to the file
             }
-            for(Item items: ItemList){
-                AddToScrollView(items); //the items are added to the scrollview
-            }
-        });
+        }
     }
 
-    class DateCreator{
-        int m_day;
-        int m_month;
-        int m_year;
-
-        DateCreator(int day, int month, int year){
-            m_day = day;
-            m_month = month;
-            m_year = year;
+    public void ReadListOfItems(String ReadItem){
+        ItemList = new ArrayList<>(); //creates a list of items
+        int CaseSetter = 0; //sets a counter for the amount of variables an item
+        //creates the strings that hold each attribute of an item
+        String Name = "", Id = "", Expiration = "", ItemObject = "", insertdate = "", LastUpdated = ""; int Amount = 0;
+        for (char character : ReadItem.toCharArray()) {//loops through the string
+            if (character == ',') { //checks for "," if a comman is found we send data to an attribute depending on the attribute we are on
+                switch (CaseSetter) {
+                    case 0:
+                        Id = ItemObject;//sets the Id
+                        ItemObject = ""; //resets the Item Object
+                        break;
+                    case 1:
+                        Name = ItemObject;//sets the Name to the string
+                        ItemObject = "";//resets the Item Object
+                        break;
+                    case 2:
+                        Amount = Integer.parseInt(ItemObject);//sets the Amount to the string
+                        ItemObject = "";//resets the Item Object
+                        break;
+                    case 3:
+                        Expiration = ItemObject;//sets the Expiration date to the string
+                        ItemObject = "";//resets the Item Object
+                        break;
+                    case 4:
+                        insertdate = ItemObject; //sets the insert date to the string
+                        ItemObject = "";//resets the Item Object
+                        break;
+                    case 5:
+                        LastUpdated = ItemObject;//sets the last update to the string
+                        ItemObject = "";//resets the Item Object
+                        break;
+                }
+                CaseSetter++; //increase the CaseSetter so when the next comma is found we update a different attribute
+            } else if (character == '\n') {//if a newline is found we are at the end of an object
+                Item NewReadItem = new Item(Name, Amount, Expiration, Id); //creates the new item without the insertdate of lastupdate because they are not set in the intialiser
+                NewReadItem.lastUpdated = LastUpdated; //last update is set here
+                NewReadItem.insertedDate = insertdate;//insert date is set here
+                ItemList.add(NewReadItem); //we add the item to the itemlist
+                //we reset the attributes for the item
+                Expiration = ""; Name = ""; Id = ""; insertdate = ""; LastUpdated = ""; Amount = 0; CaseSetter = 0;
+            } else {ItemObject = ItemObject + character;} //if there are no commas or newlines we add the character to the string holding the attribute we are adding to
         }
     }
 

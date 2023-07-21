@@ -1,8 +1,11 @@
 package com.example.pnp2_inventory_app;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 ScanCode();
             }
         });
+
         MakeNavigation(savedInstanceState);
         CameraClass = Button_Handler.AddCameraButton(R.id.ImgBtnCam, this, getSupportFragmentManager(), navigation, Fragment_Camera);
     }
@@ -67,46 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
     public Navigation getNavigation(){
         return navigation;
-    }
-
-    public void test(){
-
-        // Initialize Firebase!!
-        // FirebaseApp.initializeApp(this);
-        // FirebaseConfig dbActions = new FirebaseConfig();
-
-        // initialize stuff
-        // dbActions.ConnectDatabase();
-
-        // testing create method
-        // Creates sample Item for testing.
-        // Item item = dbActions.CreateSampleItem();
-
-        // testing pushToDb method, pushes Item objects
-        // TODO: error or null inserts handling, check the "insides" of the object before sending it
-        //dbActions.InsertDb(temp);
-
-        // getAll testing
-        // TODO: gets all and it is handled in callback.
-        // dbActions.GetAll("InventoryItems", new FirebaseConfig.FirestoreCallback() {
-            // @Override
-            // public void OnCallBack(QuerySnapshot querySnapshot) {
-                // for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                    // String json = document.getData().toString();
-                    // List<String> test = new ArrayList<>();
-                    // test.add(json);
-               // }
-           // }
-       // });
-
-
-        // GetByParameter testing
-        // TODO: needs rework
-        // resultList = new ArrayList<>();
-        // resultList = dbActions.GetByParameterValue("Milk", "1l");
-
-        // testing Delete
-        //dbActions.DeleteFromId("ySWgoTCrn8vj5p1GG16Q");
     }
 
     // This method will be used to scan the QR code / barcode

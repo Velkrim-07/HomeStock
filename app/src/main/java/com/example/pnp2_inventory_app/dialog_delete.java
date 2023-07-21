@@ -39,7 +39,6 @@ public class dialog_delete extends Fragment {
         deleteViewScrollBar.addView(loadItemsFromDatabase(fragContext, fragmentHome));
 
         AlertDialog dialogAlert = alertBuilder.create();
-
         dialogAlert.setOnShowListener(dialog -> {
             Button buttonDeleteItems = dialogView.findViewById(R.id.buttonAcceptEdit);
             buttonDeleteItems.setOnClickListener(v -> {
