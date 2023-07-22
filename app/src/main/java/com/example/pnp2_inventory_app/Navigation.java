@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import android.content.Context;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 public class Navigation implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout; //this is need to create the navigation bar
@@ -50,31 +49,30 @@ public class Navigation implements NavigationView.OnNavigationItemSelectedListen
         navigationView = mainActivity.findViewById(R.id.nav_view); //set the navigation menu to what is set up in the menu/nav_view
         navigationView.setNavigationItemSelectedListener(this);//sets the listener to this
 
-
-
-
-
         //creates the action bar according to the all the other files created for the navigation screen
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(mainActivity, drawerLayout, toolbar, R.string.open_nav,R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
-    public Context GetContextFragHome(Context FragHoemContext){
-        Context FragmentHomeConext = FragHoemContext;
-        return FragmentHomeConext;
-    }
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) { //should switch the screen between the different fragments
-        int itemId = item.getItemId();//gets the id of the item/ fragment the user is currently seeing
-        //would love to use a switch but it does not work
-        if(itemId == R.id.nav_home) { // id of the home menu
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.nav_home) {
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_home).commit();
-        }
-        else if(itemId == R.id.nav_settings) {//id of the settings menu
+        } else if (itemId == R.id.nav_settings) {
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_settings).commit();
-        }
-        else if(itemId == R.id.nav_category) {
+        } else if (itemId == R.id.nav_category) {
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_categories).commit();
+        } else if (itemId == R.id.nav_shoppinglist) {
+            fragment_shopping_list shoppingListFragment = new fragment_shopping_list();
+            ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, shoppingListFragment).commit();
+        } else if (itemId == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent((AppCompatActivity) context, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(intent);
+            ((AppCompatActivity) context).finish();
         }
         else if (itemId == R.id.nav_profile) {
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment_profile_page).commit();

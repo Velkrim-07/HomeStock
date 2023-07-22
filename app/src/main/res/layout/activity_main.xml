@@ -23,23 +23,52 @@
             android:elevation="4dp"
             android:background="@color/lavender"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-            <ImageButton
-                android:id="@+id/ImgBtnRefresh"
-                android:contentDescription="Allows the user to refresh the page"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="150dp"
-                android:src= "@drawable/updatebutton"
-                />
 
-            <ImageButton
-                android:id="@+id/ImgBtnCam"
-                android:contentDescription="@string/ImageButtonContentDescription"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src= "@drawable/cam_camera"
-                />
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/BarcodeBtnCam"
+                    android:contentDescription="@string/ImageButtonContentDescription"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@color/lavender"
+                    android:src= "@drawable/baseline_qr_code_scanner_24"
+                    android:layout_margin="8dp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/ImgBtnCam"
+                    android:contentDescription="@string/ImageButtonContentDescription"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@color/lavender"
+                    android:src= "@drawable/cam_camera"
+                    android:layout_margin="8dp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/ImgBtnRefresh"
+                    android:contentDescription="Allows the user to refresh the page"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@color/lavender"
+                    android:src= "@drawable/updatebutton"
+                    android:layout_margin="8dp"
+                    />
+
+            </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -59,17 +88,5 @@
         app:headerLayout="@layout/nav_header"
         app:menu ="@menu/nav_menu"
         />
-
-        <!--To be added
-        app:itemIconTint=""
-        app:itemTextColor="@color/black"
-        app:itemIconTint where we can put a tint on out icons
-        app:itemTextColor changes our text color
-        -->
-
-
-
-
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
