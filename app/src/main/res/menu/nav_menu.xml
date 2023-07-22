@@ -12,6 +12,7 @@
         <item
             android:id="@+id/nav_home"
             android:title="@string/Home"
+            android:icon="@drawable/baseline_home_24"
             android:gravity="center"
             android:titleTextColor="@color/peach"
             android:textColor="@color/black" />
@@ -27,6 +28,7 @@
         <!-- Creates the item for category on the menu -->
         <item
             android:id="@+id/nav_category"
+            android:icon="@drawable/nav_category"
             android:title="@string/Categories"
             android:gravity="center"
             android:titleTextColor="@color/peach" />
@@ -34,6 +36,7 @@
         <!-- Creates the item for home on the menu -->
         <item
             android:id="@+id/nav_shoppinglist"
+            android:icon="@drawable/baseline_shopping_cart_24"
             android:title="@string/shopping"
             android:gravity="center"
             android:titleTextColor="@color/peach"
@@ -42,6 +45,7 @@
         <!-- Creates the item for settings on the menu -->
         <item
             android:id="@+id/nav_settings"
+            android:icon="@drawable/nav_settings"
             android:title="@string/Setting"
             android:gravity="center"
             android:titleTextColor="@color/peach" />
