@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,31 +48,28 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class ProfileFragment extends Fragment {
-    private static final int REQUEST_IMAGE_PICKER = 2;
     private static final int REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1;
 
     TextInputEditText editTextFirstName, editTextLastName;
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
     public Uri imageUri;
     public SwitchCompat nightModeSwitch;
     private boolean isNightModeEnabled = false; // Track the current night mode state
     private AlertDialog dialog;
-    private ImageView arrowFamily;
-    private SwitchCompat notifswitch;
-    private Button editProfileButton;
-    private Button continueBtn;
-    private TextView emailTextView, nameTextView;
+    private TextView nameTextView;
     private ImageView profileImage;
-    private FirebaseAuth firebaseAuth;
+    private ImageView changeprofpic;
     private FirebaseUser currentUser;
-    private FirebaseStorage storage; //calls fb storage
     private StorageReference storageReference;
+    // Constants for image picker
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -82,20 +79,19 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile_page, container, false);
 
         // Initialize Firebase Authentication
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
-        storage = FirebaseStorage.getInstance();
+        //calls fb storage
+        FirebaseStorage storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
         // Initialize views
         nightModeSwitch = view.findViewById(R.id.nightmodebtn);
-        arrowFamily = view.findViewById(R.id.arrowFamilybtn);
-        notifswitch = view.findViewById(R.id.notifswitchbtn);
-        editProfileButton = view.findViewById(R.id.editProfileButton);
-        emailTextView = view.findViewById(R.id.email);
+        ImageView arrowFamily = view.findViewById(R.id.arrowFamilybtn);
+        SwitchCompat notifswitch = view.findViewById(R.id.notifswitchbtn);
+        Button editProfileButton = view.findViewById(R.id.editProfileButton);
+        TextView emailTextView = view.findViewById(R.id.email);
         nameTextView  = view.findViewById(R.id.nameofuser);
-        editTextFirstName = view.findViewById(R.id.firstname);
-        editTextLastName = view.findViewById(R.id.lastname);
         profileImage = view.findViewById(R.id.profileImage);
 
         String name = currentUser.getDisplayName();
@@ -112,14 +108,15 @@ public class ProfileFragment extends Fragment {
                     REQUEST_PERMISSION_READ_EXTERNAL_STORAGE);
         }
 
-        //on click listener for profileImage
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Launch the image picker
-                choosePicture();
-            }
-        });
+//        //TODO- need to implement VIEW IMAGE instead of choosing a new photo
+//        //this can also just be left alone(no need to view full image)
+//        profileImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Launch the image picker
+//                openImagePicker();
+//            }
+//        });
 
         //loads profile image after upload
         loadUserProfileImage();
@@ -176,11 +173,12 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void choosePicture() {
+    // Method to open the image picker
+    private void openImagePicker() {
         Intent intent = new Intent();
-        intent.setType("image/");
+        intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
     @Override
@@ -193,6 +191,7 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    //Method to upload photo to Firebase Storage
     private void uploadPicture() {
 
         final ProgressDialog pd = new ProgressDialog(getContext());
@@ -200,7 +199,7 @@ public class ProfileFragment extends Fragment {
         pd.show();
 
 
-        final String randomKey = UUID.randomUUID().toString();
+        final String randomKey = currentUser.getDisplayName() + UUID.randomUUID();
         // Create a reference to images
         StorageReference reference = storageReference.child("images/" + randomKey);
 
@@ -218,6 +217,16 @@ public class ProfileFragment extends Fragment {
                                 // Store the download URL in Firebase Firestore
                                 String imageUrl = downloadUri.toString();
                                 saveImageUrlToDatabase(imageUrl);
+
+                                Glide.with(requireContext())
+                                        .load(downloadUri)
+                                        .apply(new RequestOptions().transforms(new CircleCrop()).skipMemoryCache(true))
+                                        .into(profileImage);
+
+                                Glide.with(requireContext())
+                                        .load(downloadUri)
+                                        .apply(new RequestOptions().transforms(new CircleCrop()).skipMemoryCache(true))
+                                        .into(changeprofpic);
                             }
                         });
                     }
@@ -288,13 +297,14 @@ public class ProfileFragment extends Fragment {
 
                         // Load the profile image into the ImageView using Glide
                         if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                            // Use Glide's CircleCrop transformation directly and skip cache
                             RequestOptions requestOptions = new RequestOptions()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache both the original and resized image
-                                    .circleCrop(); // Apply a circular transformation
+                                    .transforms(new CircleCrop())
+                                    .skipMemoryCache(true);
 
                             Glide.with(requireContext())
                                     .load(profileImageUrl)
-                                    .apply(requestOptions)
+                                    .apply(RequestOptions.circleCropTransform())
                                     .into(profileImage);
                         }
                     } else {
@@ -372,14 +382,48 @@ public class ProfileFragment extends Fragment {
     }
 
     //method to open edit profile fragment to edit current users info
-    //TODO- FIX CRASH
     private void openEditProfileActivity(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_edit_profile_view, null);
         builder.setView(dialogView);
 
-        continueBtn = dialogView.findViewById(R.id.continuebtneditprof);
+        changeprofpic = dialogView.findViewById(R.id.profileImage);
+        editTextFirstName = dialogView.findViewById(R.id.firstname);
+        editTextLastName = dialogView.findViewById(R.id.lastname);
+        progressBar = dialogView.findViewById(R.id.progressBarz);
+        Button continueBtn = dialogView.findViewById(R.id.continuebtneditprof);
+
+        // Load the current profile image in the edit profile dialog using Glide
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference userRef = db.collection("users").document(uid);
+
+            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        // User document exists, retrieve the profile image URL from the document
+                        String profileImageUrl = documentSnapshot.getString("profileImageUrl");
+
+                        // Load the profile image into the ImageView using Glide
+                        if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                            // Use Glide's CircleCrop transformation directly and skip cache
+                            RequestOptions requestOptions = new RequestOptions()
+                                    .transforms(new CircleCrop())
+                                    .skipMemoryCache(true);
+
+                            Glide.with(requireContext())
+                                    .load(profileImageUrl)
+                                    .apply(RequestOptions.circleCropTransform())
+                                    .into(changeprofpic);
+                        }
+                    }
+                }
+            });
+        }
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -403,14 +447,22 @@ public class ProfileFragment extends Fragment {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     Log.e("HomeStock", "Profile edited successfully");
-                                }
-                                else {
-
+                                    String updatedName = firstname + " " + lastname;
+                                    nameTextView.setText(updatedName);
+                                    nameTextView.setGravity(Gravity.CENTER);
                                 }
                             }
                         });
 
                 dialog.dismiss();
+            }
+        });
+
+        //on click listener for changeprofpic button to open the image picker
+        changeprofpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openImagePicker();
             }
         });
 
