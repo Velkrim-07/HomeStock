@@ -12,5 +12,24 @@
     <style name="Theme.PNP2Inventoryapp" parent="Base.Theme.PNP2Inventoryapp">
         <item name="colorSecondary">@color/peach</item>
     </style>
+    
+    <style name="nightModeSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/night_mode</item>
+        <item name="colorSwitchThumbNormal">@color/white</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:windowBackground">@color/night_mode</item>
+    </style>
+
+    <style name="Base.Theme.PNP2Inventoryapp.Night" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:background">@color/night_mode</item>
+        <item name="backgroundTint">@color/lavender</item>
+        <item name="colorSecondary">@color/bluegray_900_7e</item>
+        <item name="dialogTheme">@color/bluegray_900_7e</item>
+        <!-- Add other night mode specific attributes -->
+    </style>
+
 
 </resources>

@@ -6,71 +6,72 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="20dp"
+    android:layout_marginTop="100dp"
     android:layout_height="match_parent"
-    android:background="@color/lavender"
-    tools:context=".Login">
+    android:background="@color/lavender">
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="500dp"
-        android:layout_marginBottom="-130dp"
-        android:layout_marginTop="-200dp"
+        android:layout_height="wrap_content"
+        android:text="Edit Profile"
+        android:textStyle="bold"
+        android:textSize="30dp" />
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
-        android:layout_marginEnd="-20dp"
-        android:src="@drawable/hslogo" />
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="Profile Picture"
+        android:src="@drawable/addprofpic"
+        android:background="@drawable/circular_image_border"
+        android:id="@+id/profileImage"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/change_profile_picture"
+        android:layout_marginBottom="30dp"/>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email"
-            android:hint="@string/email"
+            android:id="@+id/firstname"
+            android:hint="Edit first name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:passwordToggleEnabled="true">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password"
-            android:hint="@string/password"
-            android:inputType="textPassword"
+            android:id="@+id/lastname"
+            android:hint="Edit last name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progressBarz"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/login_butt"
-        android:text="@string/login"
+        android:id="@+id/continuebtneditprof"
+        android:text="Continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
         android:backgroundTint="@color/peach"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Don't have a HomeStock account?"/>
-
-    <Button
-        android:id="@+id/reglogin"
-        android:text="@string/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/peach"/>
 
 </LinearLayout>

@@ -37,6 +37,23 @@
     <string name="Settings"> Settings</string>
     <string name="ManageHome"> Manage Home</string>
     <string name="categoryContentDescription">Adds a new category</string>
+
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="notifications">Notifications</string>
+    <string name="family">Family</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="first_name">First name</string>
+    <string name="name">Name</string>
+    <string name="my_family">My Family</string>
+    <string name="add_family_member">Add Family Member</string>
+    <string name="change_profile_picture">Change profile picture</string>
+
+    <string-array name="image_sources">
+        <item>Camera</item>
+        <item>Gallery</item>
+    </string-array>
+
     <string name="type_category_name_here">Type Category Name Here</string>
     <string name="category_description">category Description</string>
     <string name="select_items_to_add_to_category">Select items to add to category</string>
@@ -48,4 +65,5 @@
     <string name="delete_items_menu">Delete items menu</string>
     <string name="selectitemtodelete">Select Items You Wish To Delete</string>
     <string name="quantity">Quantity</string>
+
 </resources>

@@ -9,21 +9,16 @@
     android:paddingBottom="200dp"
     tools:context=".fragment_home">
 
-    <!-- TextView displaying the title "HomeStock" -->
-    <TextView
-        android:id="@+id/textViewHomeStock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:background="@color/lavender"
-        android:text="@string/HomeStock"
-        android:textColor="@color/black"
+
+    <!-- ImageView displaying the the logo -->
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="97dp"
+        android:src="@drawable/applogo"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-16dp" />
 
     <SearchView
         android:id="@+id/SearchViewItemSearch"

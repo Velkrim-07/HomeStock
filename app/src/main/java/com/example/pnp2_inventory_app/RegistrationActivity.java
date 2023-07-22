@@ -132,7 +132,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                     // Sign in success, update UI with the signed-in user's information
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    Intent intent = new Intent(getApplicationContext(), MakeProfileActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
